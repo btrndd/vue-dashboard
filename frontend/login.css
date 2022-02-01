@@ -1,0 +1,70 @@
+* {
+    font-family: 'Merriweather Sans', sans-serif;
+    margin: 0;
+    /*Reset's every elements apperance*/
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
+    border-spacing: 0;
+    color: #26589F;
+    font-family: 'PT Sans Narrow',sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 1.42rem;
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    text-decoration: none;
+    text-indent: 0;
+}
+
+.form-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid gray;
+    border-radius: 3px;
+    width: 400px;
+    height: auto;
+    padding-bottom: 15px;
+}
+
+.form-input {
+    width: 350px;
+    height: 30px;
+    border-radius: 3px;
+    border-width: 1px;
+    border-color: gray;
+    margin-top: 15px;
+    padding: 5px 10px 5px 10px;
+}
+
+#login-btn {
+    width: 350px;
+    height: 40px;
+    border-radius: 50px;
+    margin-top: 15px;
+    color: white;
+    background-color: indigo;
+}
+
+.form-title {
+    background-color: indigo;
+    color: white;
+    width: 400px;
+    height: 40px;
+    text-align: center;
+    margin: 0;
+    padding-top: 20px;
+}
+
+.logo-login {
+    width: 200px;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
