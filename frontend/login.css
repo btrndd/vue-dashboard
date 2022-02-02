@@ -43,6 +43,7 @@ button, button:focus{
     margin-top: 15px;
     color: white;
     background-color: indigo;
+    font-weight: 600;
 }
 
 .form-title {
