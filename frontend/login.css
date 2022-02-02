@@ -47,12 +47,12 @@ button:active{
     border-radius: 50px;
     margin-top: 15px;
     color: white;
-    background-color: indigo;
+    background-color: #00174a;
     font-weight: 600;
 }
 
 .form-title {
-    background-color: indigo;
+    background-color: #00174a;
     color: white;
     width: 400px;
     height: 40px;
