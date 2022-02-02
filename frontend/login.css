@@ -2,7 +2,7 @@
     font-family: 'Merriweather Sans', sans-serif;
     margin: 0;
     /*Reset's every elements apperance*/
-    background: none repeat scroll 0 0 transparent;
+    /* background: none repeat scroll 0 0 transparent;
     border: medium none;
     border-spacing: 0;
     color: #26589F;
@@ -15,7 +15,7 @@
     padding: 0;
     text-align: left;
     text-decoration: none;
-    text-indent: 0;
+    text-indent: 0; */
 }
 
 .form-card {
