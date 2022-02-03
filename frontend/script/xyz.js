@@ -1,43 +1,58 @@
 const menuBtn = document.querySelectorAll('.menu-btn');
 const showSidebar = document.querySelector('.show-sidebar');
 
+const unhideSidebar = () => {
+  const logo = document.querySelector('.logo-hidden');
+  const menus = document.querySelectorAll('.menu-btn-hidden');
+  const sidebar = document.querySelector('.menu-lateral-hidden');
+  const main = document.querySelector('.main-hidden');
+  const header = document.querySelector('.header-hidden');
+  menus.forEach((menu, index) => {
+    let menuFromLS = localStorage.getItem(`menu${index}`);
+    menu.innerHTML = JSON.parse(menuFromLS);
+    menu.classList.remove('menu-btn-hidden');
+    menu.classList.add('menu-btn');
+  });
+  logo.classList.remove('logo-hidden');
+  logo.classList.add('logo')
+  sidebar.classList.remove('menu-lateral-hidden');
+  sidebar.classList.add('menu-lateral');
+  main.classList.remove('main-hidden');
+  main.classList.add('main')
+  header.classList.remove('header-hidden');
+  header.classList.add('header')
+  localStorage.clear();
+};
+
 const hideSidebar = () => {
   const windowWidth = window.innerWidth;
   if(windowWidth <=768) {
     return;
   }
-  const logo = document.querySelector('.logo');
-  const menus = document.querySelectorAll('.menu-btn');
-  const sidebar = document.querySelector('.menu-lateral');
-  const main = document.querySelector('.main');
-  const header = document.querySelector('.header');
   const menuLS = localStorage.getItem('menu0');
   if (!menuLS) {
+    const logo = document.querySelector('.logo');
+    const menus = document.querySelectorAll('.menu-btn');
+    const sidebar = document.querySelector('.menu-lateral');
+    const main = document.querySelector('.main');
+    const header = document.querySelector('.header');
     menus.forEach((menu, index) => {
       localStorage.setItem(`menu${index}`, JSON.stringify(menu.innerHTML));
       const child = menu.lastChild;
       menu.removeChild(child);
-      menu.style.width = '60px';
+      menu.classList.remove('menu-btn');
+      menu.classList.add('menu-btn-hidden');
     });
-    logo.style.display = 'none';
-    sidebar.style.width = '60px';
-    sidebar.classList.remove('manu-lateral');
+    logo.classList.remove('logo');
+    logo.classList.add('logo-hidden')
+    sidebar.classList.remove('menu-lateral');
     sidebar.classList.add('menu-lateral-hidden');
-    main.style.marginLeft = '60px';
-    header.style.marginLeft = '60px';
+    main.classList.remove('main');
+    main.classList.add('main-hidden')
+    header.classList.remove('header');
+    header.classList.add('header-hidden')
   } else {
-    menus.forEach((menu, index) => {
-      let menuFromLS = localStorage.getItem(`menu${index}`);
-      menu.innerHTML = JSON.parse(menuFromLS);
-      menu.style.width = '250px';
-    });
-    logo.style.display = '';
-    sidebar.style.width = '250px';
-    sidebar.classList.remove('menu-lateral-hidden');
-    sidebar.classList.add('menu-lateral');
-    main.style.marginLeft = '250px';
-    header.style.marginLeft = '250px';
-    localStorage.clear();
+    unhideSidebar();
   }
 };
 
