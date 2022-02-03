@@ -6,10 +6,22 @@
 
 .menu-lateral {
   width: 250px;
-  height: 800px;
+  height: 2160px;
   background-color: #00174a;
   display: flex;
   align-items: center;
+  flex-direction: column;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.menu-lateral-hidden {
+  width: 250px;
+  height: 2160px;
+  background-color: #00174a;
+  display: flex;
+  padding-top: 120px;
   flex-direction: column;
   position: absolute;
   left: 0;
@@ -99,7 +111,7 @@ button:active{
 .main {
   position: relative;
   margin-left: 250px;
-  height: 680px;
+  height: 2040px;
   background-color: white;
   border: 30px solid #fafafa;
 }
@@ -107,4 +119,24 @@ button:active{
 .title {
   text-align: center;
   margin-top: 80px;
+}
+
+@media only screen and (max-width: 768px) {
+  .main {
+    margin-left: 60px;
+  }
+
+  .menu-lateral {
+    width: 60px;
+    padding-top: 120px;
+    align-items: flex-start;
+  }
+
+  .header {
+    margin-left: 60px;
+  }
+
+  .logo {
+    display: none;
+  }
 }

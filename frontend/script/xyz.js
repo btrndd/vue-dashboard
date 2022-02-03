@@ -1,4 +1,45 @@
 const menuBtn = document.querySelectorAll('.menu-btn');
+const showSidebar = document.querySelector('.show-sidebar');
+
+const hideSidebar = () => {
+  const windowWidth = window.innerWidth;
+  if(windowWidth <=768) {
+    return;
+  }
+  const logo = document.querySelector('.logo');
+  const menus = document.querySelectorAll('.menu-btn');
+  const sidebar = document.querySelector('.menu-lateral');
+  const main = document.querySelector('.main');
+  const header = document.querySelector('.header');
+  const menuLS = localStorage.getItem('menu0');
+  if (!menuLS) {
+    menus.forEach((menu, index) => {
+      localStorage.setItem(`menu${index}`, JSON.stringify(menu.innerHTML));
+      const child = menu.lastChild;
+      menu.removeChild(child);
+      menu.style.width = '60px';
+    });
+    logo.style.display = 'none';
+    sidebar.style.width = '60px';
+    sidebar.classList.remove('manu-lateral');
+    sidebar.classList.add('menu-lateral-hidden');
+    main.style.marginLeft = '60px';
+    header.style.marginLeft = '60px';
+  } else {
+    menus.forEach((menu, index) => {
+      let menuFromLS = localStorage.getItem(`menu${index}`);
+      menu.innerHTML = JSON.parse(menuFromLS);
+      menu.style.width = '250px';
+    });
+    logo.style.display = '';
+    sidebar.style.width = '250px';
+    sidebar.classList.remove('menu-lateral-hidden');
+    sidebar.classList.add('menu-lateral');
+    main.style.marginLeft = '250px';
+    header.style.marginLeft = '250px';
+    localStorage.clear();
+  }
+};
 
 const isBtnFocused = () => {
   console.log('sucesso');
@@ -40,3 +81,4 @@ const toggleArrow = (ev) => {
 
 menuBtn.forEach((btn) => btn.addEventListener('blur', isBtnFocused));
 menuBtn.forEach((btn) => btn.addEventListener('click', toggleArrow));
+showSidebar.addEventListener('click', hideSidebar);
