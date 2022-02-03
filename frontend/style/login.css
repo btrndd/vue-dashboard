@@ -9,11 +9,16 @@ button, button:focus{
     border: 1px solid transparent;
   }
   
-  button:active{
+button:active{
     outline: none;
     background: transparent;
     border: 1px solid grey;
-  }
+}
+
+/* .wrapper {
+    display: flex;
+    align-items: center;
+} */
 
 .form-card {
     display: flex;
@@ -42,12 +47,12 @@ button, button:focus{
     border-radius: 50px;
     margin-top: 15px;
     color: white;
-    background-color: indigo;
+    background-color: #00174a;
     font-weight: 600;
 }
 
 .form-title {
-    background-color: indigo;
+    background-color: #00174a;
     color: white;
     width: 400px;
     height: 40px;
@@ -62,8 +67,15 @@ button, button:focus{
 
 .login-container {
     display: flex;
+    height: 500px;
+    margin: auto;
     flex-direction: column;
-    align-items: center;
+    align-items: center;   
+    position: absolute;
+    top: 0; 
+    bottom: 0;
+    left: 0; 
+    right: 0;
 }
 
 @media only screen and (max-width: 460px) {
