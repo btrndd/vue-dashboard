@@ -170,4 +170,12 @@ button:active{
   .logo {
     display: none;
   }
+
+  .show-sidebar {
+    display: none;
+  }
+
+  .avatar-wrapper{
+    margin:auto
+  }
 }

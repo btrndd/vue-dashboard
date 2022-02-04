@@ -1,5 +1,6 @@
 const menuBtn = document.querySelectorAll('.menu-btn');
 const showSidebar = document.querySelector('.show-sidebar');
+const main = document.querySelector('.main');
 
 const unhideSidebar = () => {
   const logo = document.querySelector('.logo-hidden');
@@ -38,7 +39,7 @@ const hideSidebar = () => {
     const header = document.querySelector('.header');
     menus.forEach((menu, index) => {
       localStorage.setItem(`menu${index}`, JSON.stringify(menu.innerHTML));
-      const child = menu.lastChild;
+      const child = menu.firstElementChild.nextSibling;
       menu.removeChild(child);
       menu.classList.remove('menu-btn');
       menu.classList.add('menu-btn-hidden');
@@ -94,6 +95,40 @@ const toggleArrow = (ev) => {
   }
 }
 
+const usersList = (ev) => {  
+  const { id } = ev.target;
+  const btns = document.getElementsByTagName('button');
+  let btn;
+  for (let index = 0; index < btns.length; index += 1) {
+    if (btns[index].id === id) {
+      btn = btns[index];
+    };
+  };
+  main.innerHTML = '';
+  const title = document.createElement('h2');
+  title.textContent = 'Usuários';
+  const searchBar = document.createElement('input');
+  searchBar.placeholder = 'Buscar usuários';
+  const addButton = document.createElement('button');
+  addButton.type = 'button';
+  addButton.textContent = 'Adicionar';
+  main.appendChild(title);
+  main.appendChild(searchBar);
+  main.appendChild(addButton);
+}
+
+const handleClick = (ev) => {
+  toggleArrow(ev)
+  usersList(ev);
+}
+
 menuBtn.forEach((btn) => btn.addEventListener('blur', isBtnFocused));
-menuBtn.forEach((btn) => btn.addEventListener('click', toggleArrow));
+menuBtn.forEach((btn) => {
+  if (btn.id === 'usuarios-btn') {
+    btn.addEventListener('click', handleClick);
+  } 
+  if (btn.id === 'dash-btn') {
+    btn.addEventListener('click', toggleArrow);
+  }
+});
 showSidebar.addEventListener('click', hideSidebar);
