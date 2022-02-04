@@ -1,0 +1,173 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Merriweather Sans', sans-serif;
+}
+
+.menu-lateral {
+  width: 250px;
+  height: 2160px;
+  background-color: #00174a;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.menu-lateral-hidden {
+  width: 60px;
+  height: 2160px;
+  background-color: #00174a;
+  display: flex;
+  padding-top: 120px;
+  flex-direction: column;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.logo {
+  width: 180px;
+}
+
+.logo-hidden {
+  width: 180px;
+  display: none;
+}
+
+ul {
+  list-style: none;
+}
+
+button, button:focus{
+  outline: none;
+  background: transparent;
+  border: 1px solid transparent;
+}
+
+button:active{
+  outline: none;
+  background: transparent;
+  border: 1px solid grey;
+}
+
+.menu-btn {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  width: 250px;
+  background-color: #001033;
+  color: white;
+  font-size: 18px;
+  height: 40px;
+  opacity: 0.5;
+}
+
+.menu-btn-hidden {
+  width: 60px;
+  background-color: #001033;
+  color: white;
+  font-size: 18px;
+  height: 40px;
+  opacity: 0.5;
+}
+
+.menu-btn i {
+  margin: 0 30px 0 20px;
+}
+
+.arrow {
+  position: absolute;
+  left: 200px;
+}
+
+.menu-btn:focus {
+  background-color: #001033;
+  opacity: 1;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 250px;
+  height: 60px;
+  background-color: white;
+}
+
+.header-hidden {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 60px;
+  height: 60px;
+  background-color: white;
+}
+
+.avatar {
+  height: 50px;
+  border-radius: 50%;
+}
+
+.avatar-wrapper {
+  display: flex;
+}
+
+.logoff-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 5px 20px 0 10px;
+}
+
+.logoff-wrapper button {
+  color: gray;
+}
+
+.show-sidebar {
+  margin-left: 20px;
+  color: royalblue;
+}
+
+.main {
+  position: relative;
+  margin-left: 250px;
+  height: 2040px;
+  background-color: white;
+  border: 30px solid #fafafa;
+}
+
+.main-hidden {
+  position: relative;
+  margin-left: 60px;
+  height: 2040px;
+  background-color: white;
+  border: 30px solid #fafafa;
+}
+
+.title {
+  text-align: center;
+  margin-top: 80px;
+}
+
+@media only screen and (max-width: 768px) {
+  .main {
+    margin-left: 60px;
+  }
+
+  .menu-lateral {
+    width: 60px;
+    padding-top: 120px;
+    align-items: flex-start;
+  }
+
+  .header {
+    margin-left: 60px;
+  }
+
+  .logo {
+    display: none;
+  }
+}

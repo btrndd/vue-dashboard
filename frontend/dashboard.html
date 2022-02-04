@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <link rel="stylesheet" type="text/css" href="./style/dashboard.css" media="screen" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/7e467a41f8.js" crossorigin="anonymous"></script>
+  <title>Dashboard</title>
+</head>
+<body>
+  <header class="header">
+    <button type="button" class="show-sidebar"><i class="fas fa-align-right fa-lg"></i></button>
+    <div class="avatar-wrapper">
+      <img src="./img/avatar.png" alt="Imagem de perfil" class="avatar" />
+      <div class="logoff-wrapper">
+        <p>Nome de Usuário</p>
+        <button type="button">Sair</button>
+      </div>
+    </div>
+  </header>
+  <aside class="menu-lateral">
+    <img src="./img/logo-branca.png" alt="Logo da Lyncas" class="logo" />
+    <ul>
+      <li class="menu-wrapper" id="dash-btn">
+        <button
+          type="button"
+          id="dash-btn"
+          class="menu-btn">
+          <i class="fas fa-th-large" id="dash-btn"></i>
+          Dashboard
+        </button>
+      </li>
+      <li class="menu-wrapper" id="usuarios-btn">
+        <button
+        type="button"
+        id="usuarios-btn"
+        class="menu-btn">
+        <i class="fas fa-users" id="usuarios-btn"></i>
+        Usuários
+      </button>
+      </li>
+    </ul>
+  </aside>
+  <main class="main">
+    <h1 class="title">Bem vindo a Lyncas</h1>    
+  </main>
+  <script src="./script/dashboard.js"></script>
+</body>
+</html>
