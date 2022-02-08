@@ -1,11 +1,38 @@
 const main = document.querySelector('.main');
 
+const arrowButtons = (th) => {
+  const arrowsWrapper = document.createElement('div');
+  const btnArrowUp = document.createElement('button');
+  btnArrowUp.type = 'button';
+  const btnArrowDown = document.createElement('button');
+  btnArrowDown.type = 'button';
+  const arrowUp = document.createElement('i');
+  arrowUp.classList.add('fas');
+  arrowUp.classList.add('fa-arrow-up')
+  btnArrowUp.appendChild(arrowUp);
+  arrowsWrapper.appendChild(btnArrowUp);
+  const arrowDown = document.createElement('i');
+  arrowDown.classList.add('fas');
+  arrowDown.classList.add('fa-arrow-down');
+  btnArrowDown.appendChild(arrowDown);
+  arrowsWrapper.appendChild(btnArrowDown);
+  th.appendChild(arrowsWrapper);
+}
+
 const insertAvatar = async (user, index) => {
   const firstTds = document.querySelectorAll('.user-row');
+  firstTds[index].firstChild.textContent = '';
+  const wrapper = document.createElement('div');
+  wrapper.classList.add('name-wrapper');
   const img = document.createElement('img');
   img.classList.add('list-avatar');
   img.src = user.avatar;
-  firstTds[index].firstChild.prepend(img);
+  const name = document.createElement('p');
+  name.classList.add('name-text');
+  name.textContent = user.name;
+  wrapper.appendChild(img);
+  wrapper.appendChild(name);
+  firstTds[index].firstChild.appendChild(wrapper);
 }
 
 const table = async () => {
@@ -18,7 +45,13 @@ const table = async () => {
   titles.forEach((title) => {
     const th = document.createElement('th');
     th.classList.add('header-items');
-    th.textContent = title;
+    const thWrapper = document.createElement('div');
+    thWrapper.classList.add('th-wrapper');
+    const titleText = document.createElement('p');
+    titleText.textContent = title;
+    thWrapper.appendChild(titleText);
+    arrowButtons(thWrapper);
+    th.appendChild(thWrapper);
     trTitles.appendChild(th);
   });
   const response = await fetch('data.json');
@@ -45,11 +78,27 @@ const table = async () => {
         const td = document.createElement('td');
         td.textContent = user[key];
         tr.appendChild(td);
-      }     
+      }    
     });
     insertAvatar(user, index);
     const acoes = document.createElement('td');
-    acoes.textContent = 'i';
+    const acoesWrapper = document.createElement('div');
+    acoesWrapper.classList.add('acoes-wrapper');
+    const edit = document.createElement('i');
+    edit.classList.add('fas');
+    edit.classList.add('fa-edit');
+    const editBtn = document.createElement('button');
+    editBtn.type = 'button';
+    editBtn.appendChild(edit);
+    acoesWrapper.appendChild(editBtn);
+    const removeBtn = document.createElement('button');
+    removeBtn.type = 'button';
+    const remove = document.createElement('i');
+    remove.classList.add('fas');
+    remove.classList.add('fa-trash');
+    removeBtn.appendChild(remove);
+    acoesWrapper.appendChild(removeBtn);
+    acoes.appendChild(acoesWrapper);
     tr.appendChild(acoes);      
   })
 }
