@@ -1,5 +1,4 @@
 const main = document.querySelector('.main');
-
 const arrowButtons = (th) => {
   const arrowsWrapper = document.createElement('div');
   const btnArrowUp = document.createElement('button');
@@ -68,11 +67,17 @@ const table = async () => {
     filteredKey.forEach((key) => {
       if (user[key] === true) {
         const td = document.createElement('td');
-        td.textContent = 'Ativo';
+        const text = document.createElement('p');
+        text.textContent = 'Ativo';
+        text.classList.add('active');
+        td.appendChild(text);
         tr.appendChild(td);
       } else if (user[key] === false) {
         const td = document.createElement('td');
-        td.textContent = 'Inativo';
+        const text = document.createElement('p');
+        text.textContent = 'Inativo';
+        text.classList.add('inactive');
+        td.appendChild(text);
         tr.appendChild(td);
       } else {
         const td = document.createElement('td');
@@ -123,12 +128,18 @@ const usersList = (ev) => {
   const searchBar = document.createElement('input');
   searchBar.classList.add('search-bar');
   searchBar.placeholder = 'Buscar usuários';
+  const searchLabel = document.createElement('label');
+  const lupa = document.createElement('i');
+  lupa.classList.add('fas');
+  lupa.classList.add('fa-search');
+  searchLabel.appendChild(lupa);
   const addButton = document.createElement('button');
   addButton.classList.add('add-button');
   addButton.type = 'button';
   addButton.textContent = 'Adicionar';
   container.appendChild(title);
   container.appendChild(searchWrapper);
+  searchWrapper.appendChild(searchLabel);
   searchWrapper.appendChild(searchBar);
   searchWrapper.appendChild(addButton);
   table();
