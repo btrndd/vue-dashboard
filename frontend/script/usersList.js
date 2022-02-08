@@ -1,5 +1,13 @@
 const main = document.querySelector('.main');
 
+const insertAvatar = async (user, index) => {
+  const firstTds = document.querySelectorAll('.user-row');
+  const img = document.createElement('img');
+  img.classList.add('list-avatar');
+  img.src = user.avatar;
+  firstTds[index].firstChild.prepend(img);
+}
+
 const table = async () => {
   const tableElement = document.createElement('table');
   main.appendChild(tableElement);
@@ -16,14 +24,14 @@ const table = async () => {
   const response = await fetch('data.json');
   const data = await response.json();
   const tr = document.createElement('tr');
-    tr.classList.add('separator');
-    tableElement.appendChild(tr);
-  data.forEach((user) => {
+  tr.classList.add('separator');
+  tableElement.appendChild(tr);
+  data.forEach((user, index) => {
     const tr = document.createElement('tr');
     tr.classList.add('user-row');
     tableElement.appendChild(tr);
     const keys = Object.keys(user);
-    const filteredKey = keys.slice(1,6);
+    const filteredKey = keys.slice(2,7);
     filteredKey.forEach((key) => {
       if (user[key] === true) {
         const td = document.createElement('td');
@@ -39,6 +47,7 @@ const table = async () => {
         tr.appendChild(td);
       }     
     });
+    insertAvatar(user, index);
     const acoes = document.createElement('td');
     acoes.textContent = 'i';
     tr.appendChild(acoes);      

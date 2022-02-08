@@ -1,6 +1,7 @@
 [
     {
         "id": 0,
+        "avatar": "./img/avatar.png",
         "name": "André Stanlley",
         "phonenumber": "(47) 99988-9988",
         "email": "usuario@lyncas.net",
@@ -9,6 +10,7 @@
     },
     {
         "id": 1,
+        "avatar": "./img/avatar.png",
         "name": "Bruno Trindade",
         "phonenumber": "(47) 99988-9988",
         "email": "usuario@lyncas.net",
@@ -17,6 +19,7 @@
     },
     {
         "id": 2,
+        "avatar": "./img/avatar.png",
         "name": "Gabriel Moya",
         "phonenumber": "(47) 99988-9988",
         "email": "usuario@lyncas.net",
@@ -25,6 +28,7 @@
     },
     {
         "id": 3,
+        "avatar": "./img/avatar.png",
         "name": "Genara de Souza",
         "phonenumber": "(47) 99988-9988",
         "email": "usuario@lyncas.net",
@@ -33,6 +37,7 @@
     },
     {
         "id": 4,
+        "avatar": "./img/avatar.png",
         "name": "Henrique Carvalho",
         "phonenumber": "(47) 99988-9988",
         "email": "usuario@lyncas.net",
@@ -41,6 +46,7 @@
     },
     {
         "id": 5,
+        "avatar": "./img/avatar.png",
         "name": "Laila Santos",
         "phonenumber": "(47) 99988-9988",
         "email": "usuario@lyncas.net",
@@ -49,6 +55,7 @@
     },
     {
         "id": 6,
+        "avatar": "./img/avatar.png",
         "name": "Mauricio Costa",
         "phonenumber": "(47) 99988-9988",
         "email": "usuario@lyncas.net",
@@ -57,6 +64,7 @@
     },
     {
         "id": 7,
+        "avatar": "./img/avatar.png",
         "name": "Renato Ganske",
         "phonenumber": "(47) 99988-9988",
         "email": "usuario@lyncas.net",
@@ -65,6 +73,7 @@
     },
     {
         "id": 8,
+        "avatar": "./img/avatar.png",
         "name": "Thalisson Monteiro",
         "phonenumber": "(47) 99988-9988",
         "email": "usuario@lyncas.net",
@@ -73,6 +82,7 @@
     },
     {
         "id": 9,
+        "avatar": "./img/avatar.png",
         "name": "Vanessa Eich",
         "phonenumber": "(47) 99988-9988",
         "email": "usuario@lyncas.net",

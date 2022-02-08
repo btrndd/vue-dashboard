@@ -146,6 +146,7 @@ button:active{
   height: 2040px;
   background-color: white;
   border: 30px solid #fafafa;
+  padding: 20px;
 }
 
 .title {
@@ -173,6 +174,11 @@ table {
 td {
   border-bottom: 10px solid white;
 }
+
+/* .user-row td:first-child {
+  display: inline-table;
+  padding-left: 20px;
+} */
 
 .user-row td {
   height: 50px;
@@ -207,6 +213,11 @@ td {
   margin-left: 20px;
   width: 20%;
   background-color: #001033;
+}
+
+.list-avatar {
+  height: 40px;
+  border-radius: 50%;
 }
 
 @media only screen and (max-width: 768px) {
