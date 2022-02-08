@@ -137,6 +137,7 @@ button:active{
   height: 2040px;
   background-color: white;
   border: 30px solid #fafafa;
+  padding: 20px;
 }
 
 .main-hidden {
@@ -150,6 +151,62 @@ button:active{
 .title {
   text-align: center;
   margin-top: 80px;
+}
+
+table {
+  width: 100%;
+  margin-top: 40px;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.table-header {
+  border: solid 1px lightgray;
+  color: grey;
+  height: 60px;
+}
+
+.separator {
+  height: 25px;
+}
+
+td {
+  border-bottom: 10px solid white;
+}
+
+.user-row td {
+  height: 50px;
+  background-color: #fafafa;
+  color: grey;
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.search-wrapper {
+  width: 50%;
+}
+
+.search-bar { 
+  height: 40px;
+  width: 70%;
+  border-radius: 5px;
+  border: 1px solid grey;
+  padding-left: 20px;
+}
+
+.add-button {
+  text-align: center;
+  color: white;
+  font-weight: 800;
+  height: 40px;
+  border-radius: 20px;
+  margin-left: 20px;
+  width: 20%;
+  background-color: #001033;
 }
 
 @media only screen and (max-width: 768px) {
