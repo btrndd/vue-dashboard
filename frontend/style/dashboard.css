@@ -380,4 +380,8 @@ td {
     top: 30px;
     color: gray;
   }
+
+  .active {
+    margin: auto;
+  }
 }
