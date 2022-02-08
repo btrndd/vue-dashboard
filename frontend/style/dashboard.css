@@ -41,13 +41,13 @@ ul {
   list-style: none;
 }
 
-button, button:focus{
+button, button:focus {
   outline: none;
   background: transparent;
   border: 1px solid transparent;
 }
 
-button:active{
+button:active {
   outline: none;
   background: transparent;
   border: 1px solid grey;
@@ -207,7 +207,7 @@ td {
   border-radius: 20px;
   margin-left: 20px;
   width: 20%;
-  background-color: #001033;
+  background-color: #00174a;
 }
 
 .list-avatar {
@@ -238,10 +238,21 @@ td {
   padding-left: 40px;
 }
 
+.th-wrapper button {
+  opacity: 0.5;
+}
+
+.th-wrapper button:focus {
+  opacity: 1;
+}
+
 .acoes-wrapper {
   display: flex;
   justify-content: space-evenly;
-  color: #001033;
+}
+
+.acoes-wrapper button {
+  color: #00174a;
 }
 
 @media only screen and (max-width: 768px) {
