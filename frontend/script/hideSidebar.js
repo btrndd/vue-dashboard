@@ -2,6 +2,7 @@ localStorage.clear();
 
 function unhideSidebar() {
   const logo = document.querySelector('.logo-hidden');
+  logo.src = './img/logo-branca.png';
   const menus = document.querySelectorAll('.menu-btn-hidden');
   const sidebar = document.querySelector('.menu-lateral-hidden');
   const main = document.querySelector('.main-hidden');
@@ -13,7 +14,7 @@ function unhideSidebar() {
     menu.classList.add('menu-btn');
   });
   logo.classList.remove('logo-hidden');
-  logo.classList.add('logo')
+  logo.classList.add('logo');
   sidebar.classList.remove('menu-lateral-hidden');
   sidebar.classList.add('menu-lateral');
   main.classList.remove('main-hidden');
@@ -27,10 +28,11 @@ function hideSidebar() {
   const windowWidth = window.innerWidth;
   if(windowWidth <=768) {
     return;
-  }
+  }  
   const menuLS = localStorage.getItem('menu0');
   if (!menuLS) {
     const logo = document.querySelector('.logo');
+    logo.src = './img/icon-branco.png';
     const menus = document.querySelectorAll('.menu-btn');
     const sidebar = document.querySelector('.menu-lateral');
     const main = document.querySelector('.main');
@@ -43,13 +45,13 @@ function hideSidebar() {
       menu.classList.add('menu-btn-hidden');
     });
     logo.classList.remove('logo');
-    logo.classList.add('logo-hidden')
+    logo.classList.add('logo-hidden');
     sidebar.classList.remove('menu-lateral');
     sidebar.classList.add('menu-lateral-hidden');
     main.classList.remove('main');
     main.classList.add('main-hidden')
     header.classList.remove('header');
-    header.classList.add('header-hidden')
+    header.classList.add('header-hidden');
   } else {
     unhideSidebar();
   }
