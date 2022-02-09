@@ -10,6 +10,7 @@ html {
 
 body {
   height: 100%;
+  background-color: #f5f4f4;
 }
 
 .menu-lateral {
@@ -22,7 +23,7 @@ body {
   position: absolute;
   left: 0;
   top: 0;
-  border-bottom: 160px solid #00174a;
+  border-bottom: 130px solid #00174a;
 }
 
 .menu-lateral-hidden {
@@ -36,7 +37,7 @@ body {
   position: absolute;
   left: 0;
   top: 0;
-  border-bottom: 40px solid #00174a;
+  border-bottom: 50px solid #00174a;
 }
 
 .logo {
@@ -155,7 +156,9 @@ button:active {
   margin-left: 250px;
   height: 100%;
   background-color: white;
-  border: 30px solid #fafafa;
+  border-left: 30px solid #f5f4f4;
+  border-right: 30px solid #f5f4f4;
+  border-top: 30px solid #f5f4f4;
   padding: 20px;
 }
 
@@ -164,7 +167,9 @@ button:active {
   margin-left: 60px;
   height: 100%;
   background-color: white;
-  border: 30px solid #fafafa;
+  border-left: 30px solid #f5f4f4;
+  border-right: 30px solid #f5f4f4;
+  border-top: 30px solid #f5f4f4;
   padding: 20px;
 }
 
@@ -195,7 +200,7 @@ table {
 .user-row td {
   border-bottom: 10px solid white;
   height: 50px;
-  background-color: #fafafa;
+  background-color: #f5f4f4;
   color: grey;
   text-align: center;
 }
