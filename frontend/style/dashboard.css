@@ -99,6 +99,11 @@ button:active {
   opacity: 1;
 }
 
+.menu-btn-hidden:focus {
+  background-color: #001033;
+  opacity: 1;
+}
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -185,11 +190,8 @@ table {
   height: 25px;
 }
 
-td {
-  border-bottom: 10px solid white;
-}
-
 .user-row td {
+  border-bottom: 10px solid white;
   height: 50px;
   background-color: #fafafa;
   color: grey;
@@ -237,7 +239,6 @@ td {
   display: flex;
   align-items: center;
   padding-left: 15%;
-  padding-right: -15%;
 }
 
 .name-text {
@@ -294,7 +295,6 @@ td {
 
   .menu-lateral {
     width: 60px;
-    padding-top: 120px;
     align-items: flex-start;
   }
 
@@ -308,11 +308,24 @@ td {
   }
 
   .logo {
-    display: none;
+    width: 40px;
+    position: relative;
+    top: 40px;
+    left: 10px;
   }
 
   .show-sidebar {
     display: none;
+  }
+
+  .menu-lateral ul {
+    position: relative;
+    top: 120px;
+  }
+
+  .name-wrapper {
+    padding-left: 15%;
+    align-items: center;
   }
 }
 
@@ -321,9 +334,21 @@ td {
     margin-left: 60px;
   }
 
+  .name-wrapper {
+    justify-content: center;
+    align-items: unset;
+    padding-left: 0;
+    position: relative;
+    right: 20px; 
+  }
+
+  .list-avatar {
+    position: relative;
+    bottom: 20px;
+  }
+
   .menu-lateral {
     width: 60px;
-    padding-top: 120px;
     align-items: flex-start;
   }
 
@@ -332,21 +357,38 @@ td {
     justify-content: flex-end;
   }
 
-  .logo {
-    display: none;
-  }
-
   .show-sidebar {
     display: none;
   }
 
-  table tr td {
+  table tr td:before {
+    content: attr(data-title);
+    position: relative;
+    left: 0;
     display: block;
-    padding-top: 25px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  table tr td {
+    display: block;    
+  }
+  
+  .user-row td {
+    height: 40px;
+    background-color: #fafafa;
+    color: grey;
+    border-bottom: 5px solid white;
+    padding-top: 8px;
+    padding-bottom: 12px;
+  }
+
+  table tr {
+    border-bottom: 2px solid #00174a;
   }
 
   table {
-    margin-top: 0;
+    margin-top: 20px;
   }
 
   .table-header {
@@ -374,6 +416,11 @@ td {
     width: 150px;
   }
 
+  .acoes-wrapper {
+    align-items: center;
+    height: 100%;
+  }
+
   .search-wrapper label {
     position: relative;
     right: 80px;
@@ -383,5 +430,5 @@ td {
 
   .active {
     margin: auto;
-  }
+  }  
 }

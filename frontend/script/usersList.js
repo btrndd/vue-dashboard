@@ -34,6 +34,21 @@ const insertAvatar = async (user, index) => {
   firstTds[index].firstChild.appendChild(wrapper);
 }
 
+const translateKeys = (key) => {
+  switch (key) {
+    case 'name':
+      return 'Nome';
+    case 'phonenumber':
+      return 'Telefone';
+    case 'email':
+      return 'Email';
+    case 'birth':
+      return 'Data Nasc.';
+    case 'status':
+      return 'Status';
+  }
+}
+
 const table = async () => {
   const tableElement = document.createElement('table');
   main.appendChild(tableElement);
@@ -67,6 +82,8 @@ const table = async () => {
     filteredKey.forEach((key) => {
       if (user[key] === true) {
         const td = document.createElement('td');
+        const translatedKey = translateKeys(key);
+        td.setAttribute('data-title', translatedKey);
         const text = document.createElement('p');
         text.textContent = 'Ativo';
         text.classList.add('active');
@@ -74,6 +91,8 @@ const table = async () => {
         tr.appendChild(td);
       } else if (user[key] === false) {
         const td = document.createElement('td');
+        const translatedKey = translateKeys(key);
+        td.setAttribute('data-title', translatedKey);
         const text = document.createElement('p');
         text.textContent = 'Inativo';
         text.classList.add('inactive');
@@ -81,6 +100,8 @@ const table = async () => {
         tr.appendChild(td);
       } else {
         const td = document.createElement('td');
+        const translatedKey = translateKeys(key);
+        td.setAttribute('data-title', translatedKey);
         td.textContent = user[key];
         tr.appendChild(td);
       }    

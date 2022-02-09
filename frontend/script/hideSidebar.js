@@ -1,3 +1,5 @@
+localStorage.clear();
+
 function unhideSidebar() {
   const logo = document.querySelector('.logo-hidden');
   const menus = document.querySelectorAll('.menu-btn-hidden');
