@@ -25,12 +25,13 @@
   <aside class="menu-lateral">
     <img src="./img/logo-branca.png" alt="Logo da Lyncas" class="logo" />
     <ul>
-      <li class="menu-wrapper" id="dash-btn">
+      <li class="menu-wrapper" id="dash-btn" data-page="dashboard">
         <button
           type="button"
           id="dash-btn"
+          data-page="dashboard"
           class="menu-btn">
-          <i class="fas fa-th-large" id="dash-btn"></i>
+          <i class="fas fa-th-large" id="dash-btn" data-page="dashboard"></i>
           Dashboard
         </button>
       </li>
@@ -38,8 +39,9 @@
         <button
         type="button"
         id="usuarios-btn"
+        data-page="users"
         class="menu-btn">
-        <i class="fas fa-users" id="usuarios-btn"></i>
+        <i class="fas fa-users" id="usuarios-btn" data-page="users"></i>
         Usuários
       </button>
       </li>
@@ -48,6 +50,6 @@
   <main class="main">
     <h1 class="title">Bem vindo a Lyncas</h1>    
   </main>
-  <script src="./script/dashboard.js" type="module"></script>
+  <script src="./script/singlePageApp.js" type="module"></script>
 </body>
 </html>

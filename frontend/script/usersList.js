@@ -1,22 +1,4 @@
 const main = document.querySelector('.main');
-const arrowButtons = (th) => {
-  const arrowsWrapper = document.createElement('div');
-  const btnArrowUp = document.createElement('button');
-  btnArrowUp.type = 'button';
-  const btnArrowDown = document.createElement('button');
-  btnArrowDown.type = 'button';
-  const arrowUp = document.createElement('i');
-  arrowUp.classList.add('fas');
-  arrowUp.classList.add('fa-arrow-up')
-  btnArrowUp.appendChild(arrowUp);
-  arrowsWrapper.appendChild(btnArrowUp);
-  const arrowDown = document.createElement('i');
-  arrowDown.classList.add('fas');
-  arrowDown.classList.add('fa-arrow-down');
-  btnArrowDown.appendChild(arrowDown);
-  arrowsWrapper.appendChild(btnArrowDown);
-  th.appendChild(arrowsWrapper);
-}
 
 const insertAvatar = async (user, index) => {
   const firstTds = document.querySelectorAll('.user-row');
@@ -49,34 +31,21 @@ const translateKeys = (key) => {
   }
 }
 
-const table = async () => {
-  const tableElement = document.createElement('table');
-  main.appendChild(tableElement);
-  const trTitles = document.createElement('tr');
-  trTitles.classList.add('table-header');
-  tableElement.appendChild(trTitles);
-  const titles = ['Nome', 'Telefone', 'Email', 'Data Nasc.', 'Status', 'Ações'];
-  titles.forEach((title) => {
-    const th = document.createElement('th');
-    th.classList.add('header-items');
-    const thWrapper = document.createElement('div');
-    thWrapper.classList.add('th-wrapper');
-    const titleText = document.createElement('p');
-    titleText.textContent = title;
-    thWrapper.appendChild(titleText);
-    arrowButtons(thWrapper);
-    th.appendChild(thWrapper);
-    trTitles.appendChild(th);
-  });
+const tableRows = async (page) => {
+  const newHtml = document.createElement('div');
+  newHtml.innerHTML = page;
+  const newMain = newHtml.querySelector('.main');
+  main.innerHTML = newMain.innerHTML;
+  const table = document.querySelector('table');
   const response = await fetch('data.json');
   const data = await response.json();
   const tr = document.createElement('tr');
   tr.classList.add('separator');
-  tableElement.appendChild(tr);
+  table.appendChild(tr);
   data.forEach((user, index) => {
     const tr = document.createElement('tr');
     tr.classList.add('user-row');
-    tableElement.appendChild(tr);
+    table.appendChild(tr);
     const keys = Object.keys(user);
     const filteredKey = keys.slice(2,7);
     filteredKey.forEach((key) => {
@@ -129,7 +98,14 @@ const table = async () => {
   })
 }
 
-const usersList = (ev) => {
+const getData = async(data) => {
+  const request = new Request(data + '.html');
+  const response = await fetch(request);
+  const page = await response.text();
+  return page;
+}
+
+const usersList = async (ev) => {
   const { id } = ev.target;
   const btns = document.getElementsByTagName('button');
   let btn;
@@ -139,31 +115,9 @@ const usersList = (ev) => {
     };
   };
   main.innerHTML = '';
-  const container = document.createElement('div');
-  container.classList.add('container');
-  main.appendChild(container);
-  const title = document.createElement('h2');
-  title.textContent = 'Usuários';
-  const searchWrapper = document.createElement('div');
-  searchWrapper.classList.add('search-wrapper');
-  const searchBar = document.createElement('input');
-  searchBar.classList.add('search-bar');
-  searchBar.placeholder = 'Buscar usuários';
-  const searchLabel = document.createElement('label');
-  const lupa = document.createElement('i');
-  lupa.classList.add('fas');
-  lupa.classList.add('fa-search');
-  searchLabel.appendChild(lupa);
-  const addButton = document.createElement('button');
-  addButton.classList.add('add-button');
-  addButton.type = 'button';
-  addButton.textContent = 'Adicionar';
-  container.appendChild(title);
-  container.appendChild(searchWrapper);
-  searchWrapper.appendChild(searchLabel);
-  searchWrapper.appendChild(searchBar);
-  searchWrapper.appendChild(addButton);
-  table();
+  const linkData = ev.target.getAttribute('data-page');
+  const response = await getData(linkData);
+  tableRows(response);
 }
 
 export { usersList };

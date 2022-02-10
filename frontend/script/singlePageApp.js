@@ -6,18 +6,24 @@ const showSidebar = document.querySelector('.show-sidebar');
 
 const isBtnFocused = () => {
   const btn = document.querySelector('.fa-chevron-right');
-  btn.classList.remove('fas');
-  btn.classList.remove('fa-chevron-right');
-  btn.classList.remove('arrow'); 
+  if (btn) {
+    btn.classList.remove('fas');
+    btn.classList.remove('fa-chevron-right');
+    btn.classList.remove('arrow');
+  }
 };
 
 const handleUsersClick = (ev) => {
   toggleArrow(ev)
+  const url = ev.target.getAttribute('data-page');
+  history.pushState({}, '', url + '.html');
   usersList(ev);
 }
 
 const handleDashClick = (ev) => {
   toggleArrow(ev)
+  const url = ev.target.getAttribute('data-page');
+  history.pushState({}, '', url + '.html');
   const main = document.querySelector('.main') || document.querySelector('.main-hidden');
   main.innerHTML = '';
   const title = document.createElement('h1');
@@ -59,10 +65,29 @@ showSidebar.addEventListener('click', hideSidebar);
 window.onresize = () => {
   if (window.innerWidth <= 1280) {
     const logo = document.querySelector('.logo');
-    logo.src = './img/icon-branco.png';
+    if (logo) {
+      logo.src = './img/icon-branco.png';
+    }
   }
   if (window.innerWidth > 1280) {
     const logo = document.querySelector('.logo');
-    logo.src = './img/logo-branca.png';
+    if (logo) {
+      logo.src = './img/logo-branca.png';
+    }
+  }
+}
+
+window.onload = () => {
+  if (window.innerWidth <= 1280) {
+    const logo = document.querySelector('.logo');
+    if (logo) {
+      logo.src = './img/icon-branco.png';
+    }
+  }
+  if (window.innerWidth > 1280) {
+    const logo = document.querySelector('.logo');
+    if (logo) {
+      logo.src = './img/logo-branca.png';
+    }
   }
 }
