@@ -347,12 +347,21 @@ table {
     align-items: unset;
     padding-left: 0;
     position: relative;
-    right: 20px; 
+    margin: auto;
   }
 
   .list-avatar {
     position: relative;
-    bottom: 20px;
+    bottom: 16px;
+    right: 20px;
+    margin-right: 0;    
+    height: 35px;
+  }
+
+  .name-text {
+    position: relative;
+    right: 10px;
+    top: 2px;
   }
 
   .menu-lateral {
@@ -389,6 +398,7 @@ table {
     border-bottom: 5px solid white;
     padding-top: 8px;
     padding-bottom: 12px;
+    font-size: 13px;
   }
 
   table tr {

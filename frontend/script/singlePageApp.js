@@ -38,20 +38,20 @@ const spaFunction = () => {
   if (menuBtn) {
     menuBtn.forEach((btn) => btn.addEventListener('blur', isBtnFocused));
     menuBtn.forEach((btn) => {
-      if (btn.id === 'usuarios-btn') {
+      if (btn.id === 'users') {
         btn.addEventListener('click', handleUsersClick);
       } 
-      if (btn.id === 'dash-btn') {
+      if (btn.id === 'dashboard') {
         btn.addEventListener('click', handleDashClick);
       }
     })
   } else {
     menuBtnHidden.forEach((btn) => btn.addEventListener('blur', isBtnFocused));
     menuBtnHidden.forEach((btn) => {
-      if (btn.id === 'usuarios-btn') {
+      if (btn.id === 'users') {
         btn.addEventListener('click', handleUsersClick);
       } 
-      if (btn.id === 'dash-btn') {
+      if (btn.id === 'dashboard') {
         btn.addEventListener('click', handleDashClick);
       }
     })

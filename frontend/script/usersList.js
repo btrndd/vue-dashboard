@@ -115,8 +115,7 @@ const usersList = async (ev) => {
     };
   };
   main.innerHTML = '';
-  const linkData = ev.target.getAttribute('data-page');
-  const response = await getData(linkData);
+  const response = await getData(id);
   tableRows(response);
 }
 
