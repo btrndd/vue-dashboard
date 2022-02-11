@@ -1,6 +1,6 @@
 const toggleArrow = (ev) => {  
   const { id } = ev.target;
-  const btns = document.getElementsByTagName('button');
+  const btns = document.querySelectorAll('button.menu-btn');
   let btn;
   for (let index = 0; index < btns.length; index += 1) {
     if (btns[index].id === id) {

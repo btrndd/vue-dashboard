@@ -96,6 +96,14 @@ const tableRows = async (page) => {
     acoes.appendChild(acoesWrapper);
     tr.appendChild(acoes);      
   })
+  const registerBtn = document.getElementById('teste');
+if (registerBtn) {
+  registerBtn.addEventListener('click', (ev) => {
+    ev.preventDefault();
+    console.log('aqui');
+    window.alert("Você clicou!");
+  });
+}
 }
 
 const getData = async(data) => {
@@ -107,13 +115,15 @@ const getData = async(data) => {
 
 const usersList = async (ev) => {
   const { id } = ev.target;
-  const btns = document.getElementsByTagName('button');
-  let btn;
-  for (let index = 0; index < btns.length; index += 1) {
-    if (btns[index].id === id) {
-      btn = btns[index];
-    };
-  };
+  // const btns = document.querySelectorAll('button.menu-btn');
+  // console.log(btns);
+  // let btn;
+  // for (let index = 0; index < btns.length; index += 1) {
+  //   if (btns[index].id === id) {
+  //     btn = btns[index];
+  //     console.log(btn);
+  //   };
+  // };
   main.innerHTML = '';
   const response = await getData(id);
   tableRows(response);

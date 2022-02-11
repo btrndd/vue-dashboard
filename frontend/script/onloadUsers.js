@@ -1,4 +1,3 @@
-import { toggleArrow } from './toggleArrow.js';
 import { usersList } from './usersList.js';
 
 const onloadUsers = () => {
@@ -7,12 +6,13 @@ const onloadUsers = () => {
       id: 'users',
     }
   };
-  toggleArrow(ev)
   const url = ev.target.id;
   history.pushState({}, '', url + '.html');
   usersList(ev);
 }
 
-window.onload = () => {
-  onloadUsers();
-}
+onloadUsers();
+
+// window.onload = () => {
+//   onloadUsers();
+// }
