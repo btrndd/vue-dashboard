@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <link rel="stylesheet" type="text/css" href="./style/users.css" media="screen" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/7e467a41f8.js" crossorigin="anonymous"></script>
+  <title>Usuários</title>
+</head>
+<body>
+  <header class="header">
+    <button type="button" class="show-sidebar"><i class="fas fa-align-right fa-lg"></i></button>
+    <div class="avatar-wrapper">
+      <img src="./img/avatar.png" alt="Imagem de perfil" class="avatar" />
+      <div class="logoff-wrapper">
+        <p>Nome de Usuário</p>
+        <button type="button">Sair</button>
+      </div>
+    </div>
+  </header>
+  <aside class="menu-lateral">
+    <img src="./img/logo-branca.png" alt="Logo da Lyncas" class="logo" />
+    <ul>
+      <li class="menu-wrapper" id="dashboard">
+        <button
+          type="button"
+          id="dashboard"
+          data-page="dashboard"
+          class="menu-btn">
+          <i class="fas fa-th-large" id="dashboard" data-page="dashboard"></i>
+          Dashboard
+        </button>
+      </li>
+      <li class="menu-wrapper" id="users">
+        <button
+        type="button"
+        id="users"
+        data-page="users"
+        class="menu-btn">
+        <i class="fas fa-users" id="users" data-page="users"></i>
+        Usuários
+      </button>
+      </li>
+    </ul>
+  </aside>
+  <main class="main">
+    <div class="container">
+      <h2>Usuários</h2>
+      <div class="search-wrapper">
+        <label>
+          <i class="fas fa-search" aria-hidden="true"></i>
+        </label>
+        <input class="search-bar" placeholder="Buscar usuários">
+        <button class="add-button" type="button">Adicionar</button>
+      </div>
+    </div>
+    <table>
+      <thead class="table-header">
+        <th class="header-items">
+          <div class="th-wrapper">
+            <p>Nome</p>
+          <div>
+            <button type="button">
+              <i class="fas fa-arrow-up" aria-hidden="true"></i>
+            </button>
+            <button type="button">
+              <i class="fas fa-arrow-down" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </th>
+      <th class="header-items">
+        <div class="th-wrapper">
+          <p>Telefone</p>
+          <div>
+            <button type="button">
+              <i class="fas fa-arrow-up" aria-hidden="true"></i>
+            </button>
+            <button type="button">
+              <i class="fas fa-arrow-down" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </th>
+      <th class="header-items">
+        <div class="th-wrapper">
+          <p>Email</p>
+          <div>
+            <button type="button">
+              <i class="fas fa-arrow-up" aria-hidden="true"></i>
+            </button><button type="button">
+              <i class="fas fa-arrow-down" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </th>
+      <th class="header-items">
+        <div class="th-wrapper">
+          <p>Data Nasc.</p>
+          <div>
+            <button type="button">
+              <i class="fas fa-arrow-up" aria-hidden="true"></i>
+            </button>
+            <button type="button">
+              <i class="fas fa-arrow-down" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </th>
+      <th class="header-items">
+        <div class="th-wrapper">
+          <p>Status</p>
+          <div>
+            <button type="button">
+              <i class="fas fa-arrow-up" aria-hidden="true"></i>
+            </button>
+            <button type="button">
+              <i class="fas fa-arrow-down" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </th>
+      <th class="header-items">
+        <div class="th-wrapper">
+          <p>Ações</p>
+          <div>
+            <button type="button">
+              <i class="fas fa-arrow-up" aria-hidden="true"></i>
+            </button>
+            <button type="button">
+              <i class="fas fa-arrow-down" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </th>
+    </thead>
+  </table>
+  </main>
+  <script src="./script/singlePageApp.js" type="module"></script>
+  <script src="./script/onloadUsers.js" type="module"></script>
+</body>
+</html>
