@@ -70,13 +70,13 @@ spaFunction();
 
 showSidebar.addEventListener('click', hideSidebar);
 const registerBtn = document.getElementById('teste');
-if (registerBtn) {
-  registerBtn.addEventListener('click', (ev) => {
-    ev.preventDefault();
-    console.log('aqui');
-    window.alert("Você clicou!");
-  });
-}
+// if (registerBtn) {
+//   registerBtn.addEventListener('click', (ev) => {
+//     ev.preventDefault();
+//     console.log('aqui');
+//     window.alert("Você clicou!");
+//   });
+// }
 
 window.onresize = () => {
   if (window.innerWidth <= 1280) {

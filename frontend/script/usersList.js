@@ -1,4 +1,7 @@
+import { registerForm } from './registerForm.js';
+
 const main = document.querySelector('.main');
+
 
 const insertAvatar = async (user, index) => {
   const firstTds = document.querySelectorAll('.user-row');
@@ -96,14 +99,14 @@ const tableRows = async (page) => {
     acoes.appendChild(acoesWrapper);
     tr.appendChild(acoes);      
   })
-  const registerBtn = document.getElementById('teste');
+  const registerBtn = document.getElementById('register');
 if (registerBtn) {
-  registerBtn.addEventListener('click', (ev) => {
-    ev.preventDefault();
-    console.log('aqui');
-    window.alert("Você clicou!");
-  });
-}
+    registerBtn.addEventListener('click', (ev) => {
+      const url = ev.target.getAttribute('data-page');
+      history.pushState({}, '', url + '.html');
+      registerForm(ev);
+    });
+  }
 }
 
 const getData = async(data) => {
@@ -115,15 +118,6 @@ const getData = async(data) => {
 
 const usersList = async (ev) => {
   const { id } = ev.target;
-  // const btns = document.querySelectorAll('button.menu-btn');
-  // console.log(btns);
-  // let btn;
-  // for (let index = 0; index < btns.length; index += 1) {
-  //   if (btns[index].id === id) {
-  //     btn = btns[index];
-  //     console.log(btn);
-  //   };
-  // };
   main.innerHTML = '';
   const response = await getData(id);
   tableRows(response);
