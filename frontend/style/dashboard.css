@@ -1,3 +1,6 @@
+@import url(./register.css);
+@import url(./users.css);
+
 * {
   margin: 0;
   padding: 0;
@@ -178,123 +181,6 @@ button:active {
   margin-top: 80px;
 }
 
-table {
-  width: 100%;
-  margin-top: 40px;
-  border-spacing: 0;
-  border-collapse: collapse;
-}
-
-.table-header {
-  border: solid 1px lightgray;
-  color: grey;
-  height: 60px;
-  overflow: auto;
-  overflow-x: hidden;
-}
-
-.separator {
-  height: 25px;
-}
-
-.user-row td {
-  border-bottom: 10px solid white;
-  height: 50px;
-  background-color: #f5f4f4;
-  color: grey;
-  text-align: center;
-}
-
-.container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.search-wrapper {
-  width: 60%;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.search-bar { 
-  height: 40px;
-  width: 65%;
-  border-radius: 5px;
-  border: 1px solid grey;
-  padding-left: 40px;
-}
-
-.add-button {
-  text-align: center;
-  color: white;
-  font-weight: 800;
-  height: 40px;
-  border-radius: 20px;
-  margin-left: 10px;
-  width: 20%;
-  background-color: #00174a;
-}
-
-.list-avatar {
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 20px;
-}
-
-.name-wrapper {
-  display: flex;
-  align-items: center;
-  padding-left: 15%;
-}
-
-.name-text {
-  text-align: center;
-}
-
-.th-wrapper {
-  display: flex;
-  justify-content: space-between;
-  padding-left: 20px;
-  padding-right: 10px;
-}
-
-.th-wrapper button {
-  opacity: 0.5;
-}
-
-.th-wrapper button:focus {
-  opacity: 1;
-}
-
-.th-wrapper div {
-  width: 31px;
-}
-
-.acoes-wrapper {
-  display: flex;
-  justify-content: space-evenly;
-}
-
-.acoes-wrapper button {
-  color: #00174a;
-}
-
-.search-wrapper label {
-  position: relative;
-  right: -30px;
-  top: 10px;
-  color: gray;
-}
-
-.active {
-  background-color: #e6fff3;
-  height: 23px;
-  padding-top: 3px;
-  width: 100px;
-  color: #2bd988;
-}
-
 @media only screen and (max-width: 1280px) {
   .main {
     margin-left: 60px;
@@ -329,34 +215,11 @@ table {
     position: relative;
     top: 120px;
   }
-
-  .name-wrapper {
-    padding-left: 15%;
-    align-items: center;
-  }
 }
 
 @media only screen and (max-width: 920px) {
   .main {
     margin-left: 60px;
-  }
-
-  .name-wrapper {
-    justify-content: center;
-    align-items: unset;
-    padding-left: 0;
-    position: relative;
-    right: 20px; 
-  }
-
-  .list-avatar {
-    position: relative;
-    bottom: 20px;
-  }
-
-  .menu-lateral {
-    width: 60px;
-    align-items: flex-start;
   }
 
   .header {
@@ -367,75 +230,4 @@ table {
   .show-sidebar {
     display: none;
   }
-
-  table tr td:before {
-    content: attr(data-title);
-    position: relative;
-    left: 0;
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-
-  table tr td {
-    display: block;    
-  }
-  
-  .user-row td {
-    height: 40px;
-    background-color: #fafafa;
-    color: grey;
-    border-bottom: 5px solid white;
-    padding-top: 8px;
-    padding-bottom: 12px;
-  }
-
-  table tr {
-    border-bottom: 2px solid #00174a;
-  }
-
-  table {
-    margin-top: 20px;
-  }
-
-  .table-header {
-    display: none;
-  }
-
-  .container {
-    flex-direction: column;
-    height: 130px;
-  }
-
-  .search-wrapper{
-    width: 100%;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-  }
-
-  .search-bar {
-    width: 160px;
-  }
-
-  .add-button {
-    margin-top: 10px;
-    width: 150px;
-  }
-
-  .acoes-wrapper {
-    align-items: center;
-    height: 100%;
-  }
-
-  .search-wrapper label {
-    position: relative;
-    right: 80px;
-    top: 30px;
-    color: gray;
-  }
-
-  .active {
-    margin: auto;
-  }  
 }
