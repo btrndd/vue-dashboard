@@ -65,7 +65,7 @@
       <div class="inputWrapper">
         <div class="input">
           <label for="phone">Telefone</label>
-          <input name="phone" id="phone" placeholder="(99) 99999-9999"/>
+          <input name="phone" id="phone" maxlength="15" placeholder="(99) 99999-9999"/>
         </div>
         <div class="input">
           <label for="birthDate">Data de Nascimento</label>
@@ -88,17 +88,18 @@
           <input type="password" name="password" id="password" />
         </div>
         <div class="input password">
-          <label for="password">Repetir Senha</label>
-          <input type="password" name="password" id="password" />
+          <label for="checkPassword">Repetir Senha</label>
+          <input type="password" name="checkPassword" id="checkPassword" />
         </div>
       </div>
       <div class="checkbox">
         <input type="checkbox" name="status" id="status" />
         <label for="status">Ativo</label>
       </div>
-      <button type="submit" id="cadastrar" data-page="register">Cadastrar</button>
+      <button type="button" id="cadastrar" data-page="register">Cadastrar</button>
     </form>
   </main>
   <script src="./script/singlePageApp.js" type="module"></script>
+  <script src="./script/formValidation.js" type="module"></script>
 </body>
 </html>

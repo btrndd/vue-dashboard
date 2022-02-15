@@ -12,7 +12,3 @@ const onloadUsers = () => {
 }
 
 onloadUsers();
-
-// window.onload = () => {
-//   onloadUsers();
-// }

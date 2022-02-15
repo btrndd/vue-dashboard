@@ -1,4 +1,5 @@
 import { registerForm } from './registerForm.js';
+// import { formValidation } from './formValidation.js';
 
 const main = document.querySelector('.main');
 
@@ -35,6 +36,7 @@ const translateKeys = (key) => {
 }
 
 const tableRows = async (page) => {
+  main.innerHTML = '';
   const newHtml = document.createElement('div');
   newHtml.innerHTML = page;
   const newMain = newHtml.querySelector('.main');
@@ -104,7 +106,12 @@ if (registerBtn) {
     registerBtn.addEventListener('click', (ev) => {
       const url = ev.target.getAttribute('data-page');
       history.pushState({}, '', url + '.html');
+      document.title = 'Cadastrar';
       registerForm(ev);
+      // const submitBtn = document.getElementById('cadastrar');
+      //   if (submitBtn) {
+      //     submitBtn.addEventListener('click', formValidation);
+      //   }
     });
   }
 }
@@ -117,8 +124,7 @@ const getData = async(data) => {
 }
 
 const usersList = async (ev) => {
-  const { id } = ev.target;
-  main.innerHTML = '';
+  const { id } = ev.target;  
   const response = await getData(id);
   tableRows(response);
 }

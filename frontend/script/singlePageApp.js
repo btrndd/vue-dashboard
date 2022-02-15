@@ -1,7 +1,6 @@
 import { hideSidebar } from './hideSidebar.js';
 import { toggleArrow } from './toggleArrow.js';
 import { usersList } from './usersList.js';
-import { registerForm } from './registerForm.js';
 
 const showSidebar = document.querySelector('.show-sidebar');
 
@@ -14,17 +13,11 @@ const isBtnFocused = () => {
   }
 };
 
-const handleRegisterClick = (ev) => {
-  console.log('aqui');
-  const url = ev.target.getAttribute('data-page');
-  history.pushState({}, '', url + '.html');
-  registerForm(ev);
-}
-
 const handleUsersClick = (ev) => {
   toggleArrow(ev)
   const url = ev.target.getAttribute('data-page');
   history.pushState({}, '', url + '.html');
+  document.title = 'Usuários';
   usersList(ev);
 }
 
@@ -32,6 +25,7 @@ const handleDashClick = (ev) => {
   toggleArrow(ev)
   const url = ev.target.getAttribute('data-page');
   history.pushState({}, '', url + '.html');
+  document.title = 'Dashboard';
   const main = document.querySelector('.main') || document.querySelector('.main-hidden');
   main.innerHTML = '';
   const title = document.createElement('h1');
@@ -69,14 +63,6 @@ const spaFunction = () => {
 spaFunction();
 
 showSidebar.addEventListener('click', hideSidebar);
-const registerBtn = document.getElementById('teste');
-// if (registerBtn) {
-//   registerBtn.addEventListener('click', (ev) => {
-//     ev.preventDefault();
-//     console.log('aqui');
-//     window.alert("Você clicou!");
-//   });
-// }
 
 window.onresize = () => {
   if (window.innerWidth <= 1280) {

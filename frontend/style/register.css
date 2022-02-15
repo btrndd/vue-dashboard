@@ -67,6 +67,10 @@ form {
   margin-top: 10px;
 }
 
+.warning {
+  color: red;
+}
+
 @media only screen and (max-width: 920px) {
   .container-register h2 {
     margin: 20px 0 0 0;
