@@ -46,6 +46,7 @@ const verifyPassword = (password) => {
     if (password.value.length >= 6 && haveNumber) {
       return true;
     }
+    
     const warning = document.createElement('small');
     warning.textContent = 'Sua senha precisa ter no mínimo 6 digitos e um número.'
     warning.classList.add('warning');
