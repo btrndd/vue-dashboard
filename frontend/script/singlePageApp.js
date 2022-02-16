@@ -17,6 +17,7 @@ const handleUsersClick = (ev) => {
   toggleArrow(ev)
   const url = ev.target.getAttribute('data-page');
   history.pushState({}, '', url + '.html');
+  document.title = 'Usuários';
   usersList(ev);
 }
 
@@ -24,6 +25,7 @@ const handleDashClick = (ev) => {
   toggleArrow(ev)
   const url = ev.target.getAttribute('data-page');
   history.pushState({}, '', url + '.html');
+  document.title = 'Dashboard';
   const main = document.querySelector('.main') || document.querySelector('.main-hidden');
   main.innerHTML = '';
   const title = document.createElement('h1');

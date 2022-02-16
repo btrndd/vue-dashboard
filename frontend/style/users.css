@@ -1,182 +1,5 @@
-* {
-  margin: 0;
-  padding: 0;
-  font-family: 'Merriweather Sans', sans-serif;
-}
-
-html {
-  height: 100%;
-}
-
-body {
-  height: 100%;
-  background-color: #f5f4f4;
-}
-
-.menu-lateral {
-  width: 250px;
-  height: 100%;
-  background-color: #00174a;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  position: absolute;
-  left: 0;
-  top: 0;
-  border-bottom: 130px solid #00174a;
-}
-
-.menu-lateral-hidden {
-  width: 60px;
-  height: 100%;
-  background-color: #00174a;
-  display: flex;
-  padding-top: 80px;
-  margin-bottom: -120px;
-  flex-direction: column;
-  position: absolute;
-  left: 0;
-  top: 0;
-  border-bottom: 50px solid #00174a;
-}
-
-.logo {
-  width: 180px;
-}
-
-.logo-hidden {
-  width: 40px;
-  position: relative;
-  top: -40px;
-  left: 10px;
-}
-
-ul {
-  list-style: none;
-}
-
-button, button:focus {
-  outline: none;
-  background: transparent;
-  border: 1px solid transparent;
-}
-
-button:active {
-  outline: none;
-  background: transparent;
-  border: 1px solid grey;
-}
-
-.menu-btn {
-  display: flex;
-  align-items: center;
-  margin: 0;
-  width: 250px;
-  background-color: #001033;
-  color: white;
-  font-size: 18px;
-  height: 40px;
-  opacity: 0.5;
-}
-
-.menu-btn-hidden {
-  width: 60px;
-  background-color: #001033;
-  color: white;
-  font-size: 18px;
-  height: 40px;
-  opacity: 0.5;
-}
-
-.menu-btn i {
-  margin: 0 30px 0 20px;
-}
-
-.arrow {
-  position: absolute;
-  left: 200px;
-}
-
-.menu-btn:focus {
-  background-color: #001033;
-  opacity: 1;
-}
-
-.menu-btn-hidden:focus {
-  background-color: #001033;
-  opacity: 1;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-left: 250px;
-  height: 60px;
-  background-color: white;
-}
-
-.header-hidden {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-left: 60px;
-  height: 60px;
-  background-color: white;
-}
-
-.avatar {
-  height: 50px;
-  border-radius: 50%;
-}
-
-.avatar-wrapper {
-  display: flex;
-  margin-right: 40px;
-}
-
-.logoff-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 5px 20px 0 10px;
-}
-
-.logoff-wrapper button {
-  color: gray;
-}
-
-.show-sidebar {
-  margin-left: 20px;
-  color: royalblue;
-}
-
-.main {
-  position: relative;
-  margin-left: 250px;
-  height: 100%;
-  background-color: white;
-  border-left: 30px solid #f5f4f4;
-  border-right: 30px solid #f5f4f4;
-  border-top: 30px solid #f5f4f4;
-  padding: 20px;
-}
-
-.main-hidden {
-  position: relative;
-  margin-left: 60px;
-  height: 100%;
-  background-color: white;
-  border-left: 30px solid #f5f4f4;
-  border-right: 30px solid #f5f4f4;
-  border-top: 30px solid #f5f4f4;
-  padding: 20px;
-}
-
-.title {
-  text-align: center;
-  margin-top: 80px;
-}
+@import url(./register.css);
+@import url(./dashboard.css);
 
 table {
   width: 100%;
@@ -296,85 +119,16 @@ table {
   color: #2bd988;
 }
 
-@media only screen and (max-width: 1280px) {
-  .main {
-    margin-left: 60px;
-  }
-
-  .menu-lateral {
-    width: 60px;
-    align-items: flex-start;
-  }
-
-  .header {
-    margin-left: 60px;
-    justify-content: flex-end;
-  }
-
-  .header-hidden {
-    justify-content: flex-end;
-  }
-
-  .logo {
-    width: 40px;
-    position: relative;
-    top: 40px;
-    left: 10px;
-  }
-
-  .show-sidebar {
-    display: none;
-  }
-
-  .menu-lateral ul {
-    position: relative;
-    top: 120px;
-  }
-
-  .name-wrapper {
-    padding-left: 15%;
-    align-items: center;
-  }
-}
-
 @media only screen and (max-width: 920px) {
-  .main {
-    margin-left: 60px;
-  }
 
   .name-wrapper {
     justify-content: center;
     align-items: unset;
     padding-left: 0;
-    position: relative;
-    margin: auto;
+    right: 0;
   }
 
   .list-avatar {
-    position: relative;
-    bottom: 16px;
-    right: 20px;
-    margin-right: 0;    
-    height: 35px;
-  }
-
-  .name-text {
-    position: relative;
-    right: 10px;
-    top: 2px;
-  }
-
-  .menu-lateral {
-    width: 60px;
-    align-items: flex-start;
-  }
-
-  .header {
-    margin-left: 60px;
-    justify-content: flex-end;
-  }
-
-  .show-sidebar {
     display: none;
   }
 
@@ -449,4 +203,30 @@ table {
   .active {
     margin: auto;
   }  
+}
+
+@media only screen and (max-width: 360px) {
+  .search-bar {
+    width: 120px;
+  }
+
+  .search-wrapper label {
+    right: 60px;
+  }
+
+  .name-wrapper {
+    right: 0;
+  }
+
+  .list-avatar {
+    display: none;
+  }
+
+  .name-text {
+    position: unset;
+  }
+
+  .avatar-wrapper{
+    margin-right: 0;
+  }
 }

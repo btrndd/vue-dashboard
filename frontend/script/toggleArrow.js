@@ -1,4 +1,4 @@
-const toggleArrow = (ev) => {  
+const toggleArrow = (ev) => {
   const { id } = ev.target;
   const btns = document.getElementsByTagName('button');
   let btn;

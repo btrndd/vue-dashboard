@@ -1,4 +1,8 @@
+import { registerForm } from './registerForm.js';
+// import { formValidation } from './formValidation.js';
+
 const main = document.querySelector('.main');
+
 
 const insertAvatar = async (user, index) => {
   const firstTds = document.querySelectorAll('.user-row');
@@ -32,6 +36,7 @@ const translateKeys = (key) => {
 }
 
 const tableRows = async (page) => {
+  main.innerHTML = '';
   const newHtml = document.createElement('div');
   newHtml.innerHTML = page;
   const newMain = newHtml.querySelector('.main');
@@ -96,6 +101,19 @@ const tableRows = async (page) => {
     acoes.appendChild(acoesWrapper);
     tr.appendChild(acoes);      
   })
+  const registerBtn = document.getElementById('register');
+if (registerBtn) {
+    registerBtn.addEventListener('click', (ev) => {
+      const url = ev.target.getAttribute('data-page');
+      history.pushState({}, '', url + '.html');
+      document.title = 'Cadastrar';
+      registerForm(ev);
+      // const submitBtn = document.getElementById('cadastrar');
+      //   if (submitBtn) {
+      //     submitBtn.addEventListener('click', formValidation);
+      //   }
+    });
+  }
 }
 
 const getData = async(data) => {
@@ -106,15 +124,7 @@ const getData = async(data) => {
 }
 
 const usersList = async (ev) => {
-  const { id } = ev.target;
-  const btns = document.getElementsByTagName('button');
-  let btn;
-  for (let index = 0; index < btns.length; index += 1) {
-    if (btns[index].id === id) {
-      btn = btns[index];
-    };
-  };
-  main.innerHTML = '';
+  const { id } = ev.target;  
   const response = await getData(id);
   tableRows(response);
 }
