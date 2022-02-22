@@ -181,14 +181,14 @@ button:active {
 }
 
 @media only screen and (max-width: 1280px) {
-  .main {
-    margin-left: 60px;
-  }
-
   .menu-lateral {
     width: 60px;
     align-items: flex-start;
   }
+  
+  .main {
+    margin-left: 60px;
+  }  
 
   .header {
     margin-left: 60px;
