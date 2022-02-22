@@ -16,9 +16,9 @@ namespace backend.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Phone = table.Column<int>(type: "int", maxLength: 60, nullable: false),
-                    birthDate = table.Column<DateTime>(type: "date", nullable: false)
+                    Email = table.Column<string>(type: "nvarchar(60)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    BirthDate = table.Column<DateTime>(type: "date", nullable: false)
                 },
                 constraints: table =>
                 {

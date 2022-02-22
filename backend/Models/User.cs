@@ -20,11 +20,12 @@ namespace backend.Models {
     public string Email { get; set; }
 
     [Required(ErrorMessage = "Este campo é obrigatório")]
-    public int Phone { get; set; }
+    [MaxLength(20, ErrorMessage = "Este campo deve conter entre 3 e 60 caracteres")]
+    public string Phone { get; set; }
 
     [Required(ErrorMessage = "Este campo é obrigatório")]
-    [DataType(DataType.Date)]
+    [DataType(dataType: DataType.Date)]
     [DisplayFormat(DataFormatString = "mm/dd/yyyy")]
-    public DateTime birthDate { get; set; }
+    public DateTime BirthDate { get; set; }
   }
 }

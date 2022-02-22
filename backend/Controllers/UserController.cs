@@ -7,6 +7,7 @@ namespace backend.Controllers {
 
   [Route("/users")]
   public class UserController : ControllerBase {
+    
     [HttpGet]
     [Route("")]
     public async Task<ActionResult<List<User>>> Get([FromServices] DataContext context)
