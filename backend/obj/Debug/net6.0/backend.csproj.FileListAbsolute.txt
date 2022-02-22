@@ -4,7 +4,6 @@
 /home/bruno/lyncas/projeto-bruno/backend/bin/Debug/net6.0/backend.deps.json
 /home/bruno/lyncas/projeto-bruno/backend/bin/Debug/net6.0/backend.runtimeconfig.json
 /home/bruno/lyncas/projeto-bruno/backend/bin/Debug/net6.0/backend.dll
-/home/bruno/lyncas/projeto-bruno/backend/bin/Debug/net6.0/ref/backend.dll
 /home/bruno/lyncas/projeto-bruno/backend/bin/Debug/net6.0/backend.pdb
 /home/bruno/lyncas/projeto-bruno/backend/bin/Debug/net6.0/Humanizer.dll
 /home/bruno/lyncas/projeto-bruno/backend/bin/Debug/net6.0/Microsoft.Data.SqlClient.dll
@@ -265,3 +264,4 @@
 /home/bruno/lyncas/projeto-bruno/backend/bin/Debug/net6.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
 /home/bruno/lyncas/projeto-bruno/backend/bin/Debug/net6.0/runtimes/win-arm/lib/net6.0/dotnet-aspnet-codegenerator-design.exe
 /home/bruno/lyncas/projeto-bruno/backend/bin/Debug/net6.0/runtimes/win-arm64/lib/net6.0/dotnet-aspnet-codegenerator-design.exe
+/home/bruno/lyncas/projeto-bruno/backend/obj/Debug/net6.0/refint/backend.dll
