@@ -24,8 +24,8 @@ namespace backend.Models {
     public string Phone { get; set; }
 
     [Required(ErrorMessage = "Este campo é obrigatório")]
-    [DataType(dataType: DataType.Date)]
-    [DisplayFormat(DataFormatString = "mm/dd/yyyy")]
+    [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
+    [DataType(DataType.Date)]
     public DateTime BirthDate { get; set; }
   }
 }

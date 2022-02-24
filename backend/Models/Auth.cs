@@ -14,6 +14,6 @@ namespace backend.Models {
     public string Password { get; set; }
 
     [Required(ErrorMessage = "Este campo é obrigatório")]
-    public int Status { get; set; }
+    public bool Status { get; set; }
   }
 }

@@ -11,27 +11,24 @@ namespace backend.Controllers {
     
     [HttpGet]
     [Route("")]
-    public async Task<ActionResult<List<EditorUserViewModel>>> GetAll([FromServices] DataContext context)
+    public async Task<ActionResult<List<GetUsersViewModel>>> GetAll([FromServices] DataContext context)
     {
         var users = await context.Users
             .Join(
               context.Auths,
               user => user.Id,
               auth => auth.UserId,
-              (user, auth) => new EditorUserViewModel
+              (user, auth) => new GetUsersViewModel
                 {
                   Name = user.Name,
                   LastName = user.LastName,
                   Email = user.Email,
-                  BirthDate = user.BirthDate
+                  BirthDate = String.Format("{0:dd/MM/yyyy}", user.BirthDate),
+                  Status = auth.Status
                 }
               )
             .AsNoTracking()
             .ToListAsync();
-        foreach (EditorUserViewModel model in users) {
-          model.Password = "";
-          model.Phone = "";
-        }
         return users;
     }  
 
@@ -39,7 +36,7 @@ namespace backend.Controllers {
   [Route("")]
   public async Task<ActionResult> Create(
       [FromServices] DataContext context,
-      [FromBody] EditorUserViewModel model)
+      [FromBody] CreateUserViewModel model)
     {
       // Verifica se os dados são válidos
       if (!ModelState.IsValid)
@@ -53,20 +50,20 @@ namespace backend.Controllers {
             LastName = model.LastName,
             Email = model.Email,
             Phone = model.Phone,
-            BirthDate = model.BirthDate
+            BirthDate = DateTime.ParseExact(model.BirthDate, "dd/MM/yyyy", null)
           };
           context.Users.Add(user);
           await context.SaveChangesAsync();
 
           var auth = new Auth
           { 
-            UserId = user.Id,
+            UserId = user.Id, 
             Password = model.Password,
             Status = model.Status
           };
           context.Auths.Add(auth);
           await context.SaveChangesAsync();
-          return Created("/users", new ResultViewModel<User>(user).Data);
+          return Created("/users", user);
       }
       catch (Exception)
       {
@@ -74,6 +71,30 @@ namespace backend.Controllers {
 
       }
     }
+
+    [HttpGet]
+    [Route("{id:int}")]
+    public async Task<ActionResult<GetUsersViewModel>> GetById([FromServices] DataContext context, int id)
+    {
+        var user = await context.Users
+            .Where(user => user.Id == id)
+            .Join(
+              context.Auths,
+              user => user.Id,
+              auth => auth.UserId,
+              (user, auth) => new GetUsersViewModel
+                {
+                  Name = user.Name,
+                  LastName = user.LastName,
+                  Email = user.Email,
+                  BirthDate = String.Format("{0:dd/MM/yyyy}", user.BirthDate),
+                  Status = auth.Status
+                }
+              )
+            .AsNoTracking()            
+            .FirstOrDefaultAsync();
+        return user;
+    } 
   }
 }
 

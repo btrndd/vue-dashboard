@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace backend.ViewModels
 {
-    public class EditorUserViewModel
+    public class CreateUserViewModel
     {
         [Required(ErrorMessage = "Este campo é obrigatório")]
         [MaxLength(60, ErrorMessage = "Este campo deve conter entre 3 e 60 caracteres")]
@@ -22,15 +22,15 @@ namespace backend.ViewModels
         public string Phone { get; set; }
 
         [Required(ErrorMessage = "Este campo é obrigatório")]
-        [DataType(dataType: DataType.Date)]
-        [DisplayFormat(DataFormatString = "mm/dd/yyyy")]
-        public DateTime BirthDate { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
+        [DataType(DataType.Date)]
+        public string BirthDate { get; set; }        
 
         [Required(ErrorMessage = "Este campo é obrigatório")]
         [MinLength(6, ErrorMessage = "Este campo deve conter no mínimo 6 caracteres")]
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Este campo é obrigatório")]
-        public int Status { get; set; }
+        public bool Status { get; set; }
     }
 }
