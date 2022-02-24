@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using backend.Data;
 using backend.Models;
+using backend.ViewModels;
 
 namespace backend.Controllers {
 
@@ -10,20 +11,35 @@ namespace backend.Controllers {
     
     [HttpGet]
     [Route("")]
-    public async Task<ActionResult<List<User>>> Get([FromServices] DataContext context)
+    public async Task<ActionResult<List<EditorUserViewModel>>> GetAll([FromServices] DataContext context)
     {
-        var users = await context
-            .Users
+        var users = await context.Users
+            .Join(
+              context.Auths,
+              user => user.Id,
+              auth => auth.UserId,
+              (user, auth) => new EditorUserViewModel
+                {
+                  Name = user.Name,
+                  LastName = user.LastName,
+                  Email = user.Email,
+                  BirthDate = user.BirthDate
+                }
+              )
             .AsNoTracking()
             .ToListAsync();
+        foreach (EditorUserViewModel model in users) {
+          model.Password = "";
+          model.Phone = "";
+        }
         return users;
     }  
 
   [HttpPost]
   [Route("")]
-  public async Task<ActionResult<User>> Post(
+  public async Task<ActionResult> Create(
       [FromServices] DataContext context,
-      [FromBody]User model)
+      [FromBody] EditorUserViewModel model)
     {
       // Verifica se os dados são válidos
       if (!ModelState.IsValid)
@@ -31,9 +47,26 @@ namespace backend.Controllers {
 
       try
       {
-          context.Users.Add(model);
+          var user = new User 
+          {
+            Name = model.Name,
+            LastName = model.LastName,
+            Email = model.Email,
+            Phone = model.Phone,
+            BirthDate = model.BirthDate
+          };
+          context.Users.Add(user);
           await context.SaveChangesAsync();
-          return model;
+
+          var auth = new Auth
+          { 
+            UserId = user.Id,
+            Password = model.Password,
+            Status = model.Status
+          };
+          context.Auths.Add(auth);
+          await context.SaveChangesAsync();
+          return Created("/users", new ResultViewModel<User>(user).Data);
       }
       catch (Exception)
       {
