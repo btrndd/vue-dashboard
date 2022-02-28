@@ -14,11 +14,14 @@ namespace backend.ViewModels
         [MinLength(3, ErrorMessage = "Este campo deve conter entre 3 e 60 caracteres")]
         public string LastName { get; set; }
 
-        [Required(ErrorMessage = "Este campo é obrigatório")]
+        [Required(ErrorMessage = "Este campo é obrigatório.")]
+        [EmailAddress(ErrorMessage = "Por favor, insira um email válido.")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Este campo é obrigatório")]
-        [MaxLength(20, ErrorMessage = "Este campo deve conter entre 3 e 60 caracteres")]
+        [MaxLength(11, ErrorMessage = "Seu telefone deve conter entre 10 e 11 caracteres")]
+        [MinLength(10, ErrorMessage = "Seu telefone deve conter entre 10 e 11 caracteres")]
+        [Phone(ErrorMessage = "Por favor, insira um número válido.")]
         public string Phone { get; set; }
 
         [Required(ErrorMessage = "Este campo é obrigatório")]
@@ -27,10 +30,9 @@ namespace backend.ViewModels
         public string BirthDate { get; set; }        
 
         [Required(ErrorMessage = "Este campo é obrigatório")]
-        [MinLength(6, ErrorMessage = "Este campo deve conter no mínimo 6 caracteres")]
+        [MinLength(6, ErrorMessage = "Sua senha precisa ter no mínimo 6 digitos.")]
+        [RegularExpression(@"(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,60})$", ErrorMessage = "Sua senha precisa ter no mínimo um número.")]
         public string Password { get; set; }
-
-        [Required(ErrorMessage = "Este campo é obrigatório")]
         public bool Status { get; set; }
     }
 }

@@ -19,17 +19,19 @@ namespace backend.Controllers {
               user => user.Id,
               auth => auth.UserId,
               (user, auth) => new GetUsersViewModel
-                {
+                { 
+                  Id = user.Id,
                   Name = user.Name,
                   LastName = user.LastName,
                   Email = user.Email,
+                  Phone = user.Phone,
                   BirthDate = String.Format("{0:dd/MM/yyyy}", user.BirthDate),
                   Status = auth.Status
                 }
               )
             .AsNoTracking()
             .ToListAsync();
-        return users;
+        return Ok(users);
     }  
 
   [HttpPost]
@@ -68,9 +70,9 @@ namespace backend.Controllers {
       catch (Exception)
       {
           return BadRequest(new { message = "Não foi possível criar o usuário" });
-
       }
     }
+
 
     [HttpGet]
     [Route("{id:int}")]
@@ -84,17 +86,83 @@ namespace backend.Controllers {
               auth => auth.UserId,
               (user, auth) => new GetUsersViewModel
                 {
+                  Id = user.Id,
                   Name = user.Name,
                   LastName = user.LastName,
                   Email = user.Email,
+                  Phone = user.Phone,
                   BirthDate = String.Format("{0:dd/MM/yyyy}", user.BirthDate),
                   Status = auth.Status
                 }
               )
             .AsNoTracking()            
             .FirstOrDefaultAsync();
-        return user;
-    } 
+        return Ok(user);
+    }
+
+    [HttpPut]
+    [Route("{id:int}")]
+    public async Task<ActionResult> Update(
+      [FromServices] DataContext context,
+      int id,
+      [FromBody] CreateUserViewModel model)
+    {
+      var currUserModel = context.Users.FirstOrDefault(x => x.Id == id);
+      var currAuthModel = context.Auths.FirstOrDefault(x => x.UserId == id);
+      
+      if (!ModelState.IsValid)
+          return BadRequest(ModelState);
+
+      try
+      {          
+          currUserModel.Name = model.Name;
+          currUserModel.LastName = model.LastName;
+          currUserModel.Email = model.Email;
+          currUserModel.Phone = model.Phone;
+          currUserModel.BirthDate = DateTime.ParseExact(model.BirthDate, "dd/MM/yyyy", null);         
+
+          currAuthModel.Password = model.Password;
+          currAuthModel.Status = model.Status;
+
+          context.Users.Update(currUserModel);
+          context.Auths.Update(currAuthModel);
+
+          await context.SaveChangesAsync();
+          return Ok(currUserModel);
+      }
+      catch (ArgumentNullException)
+      {
+          return NotFound(new { message = "Usuário não encontrado" });
+      }
+      catch (Exception)
+      {
+          return BadRequest(new { message = "Não foi possível atualizar o usuário" });
+      }
+    }
+
+    [HttpDelete]
+    [Route("{id:int}")]
+    public async Task<ActionResult> Remove(
+      [FromServices] DataContext context,
+      int id)
+    {
+      var currUserModel = context.Users.FirstOrDefault(x => x.Id == id);
+
+      try
+      {          
+          context.Users.Remove(currUserModel);
+          await context.SaveChangesAsync();
+          return Ok(new { message = "O usuário foi removido com sucesso" });
+      }
+      catch (ArgumentNullException)
+      {
+          return NotFound(new { message = "Usuário não encontrado" });
+      }
+      catch (Exception)
+      {
+          return BadRequest(new { message = "Não foi possível remover o usuário" });
+      }
+    }
   }
 }
 
