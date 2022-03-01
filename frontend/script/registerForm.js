@@ -1,6 +1,7 @@
 import { formValidation } from './formValidation.js';
 import { formatNumber } from './phoneMask.js';
 import { executeMask } from './phoneMask.js';
+import { redirectToUsers } from './redirectToUsers.js';
 
 const main = document.querySelector('.main');
 
@@ -19,12 +20,40 @@ const getData = async(data) => {
   return page;
 }
 
-const registerForm = async (ev) => {
+const getById = async (id) => {
+  const request = await fetch(`/users/${id}`);
+  const response = await request.json();
+  return response;
+}
+
+const setValues = (userData) => {
+  const keys = Object.keys(userData);
+  keys.forEach((key) => {
+    document.getElementById(`${key}`).value = userData[key];    
+  });
+}
+
+const registerForm = async (ev, edit) => {
   const { id } = ev.target;
   const response = await getData(id);
   await formInjection(response);
   const submitBtn = document.getElementById('cadastrar');
-  if (submitBtn) {
+  if (submitBtn && edit == 'edit') {
+    const title = document.querySelector('.container-register h2');
+    title.textContent = 'Usuários / Editar'
+    submitBtn.textContent = 'Editar';
+    const cancel = document.createElement('button');
+    cancel.type = 'button';
+    cancel.textContent = 'Cancelar';
+    cancel.classList.add('cancel-btn');
+    cancel.addEventListener('click', redirectToUsers);
+    const form = document.querySelector('.form');
+    form.appendChild(cancel);
+    const userData = await getById(id);
+    setValues(userData);
+    submitBtn.addEventListener('click', formValidation(edit));
+  }
+  if (submitBtn && edit !== 'edit') {
     submitBtn.addEventListener('click', formValidation);
   }
   const phone = document.getElementById('phone');

@@ -1,5 +1,8 @@
+import { newUser } from './newUser.js';
+import { redirectToUsers } from './redirectToUsers.js';
 import { formatNumber } from './phoneMask.js';
 import { executeMask } from './phoneMask.js';
+import { changeUser } from './editUser.js';
 
 const submitBtn = document.getElementById('cadastrar');
 const phone = document.getElementById('phone');
@@ -83,7 +86,7 @@ const isRequired = () => {
   };
 }
 
-function formValidation() {
+async function formValidation(edit) {
   const phone = document.getElementById('phone');
   const email = document.getElementById('email');
   const password = document.getElementById('password');
@@ -102,8 +105,15 @@ function formValidation() {
   doubleCheckPassword(password, checkPassword);
   verifyPhone(phone);
   const finalCheck = document.querySelectorAll('.warning');
-  if (finalCheck.length === 0) {
-    return window.alert('Criado com sucesso!');
+  if (finalCheck.length === 0 && !edit) {
+    const form = document.querySelector('.form');
+    await newUser(form);
+    return redirectToUsers();
+  }
+  if (finalCheck.length === 0 && edit) {
+    const form = document.querySelector('.form');
+    await changeUser(form);
+    return redirectToUsers();
   }
 }
 
