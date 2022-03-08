@@ -19,15 +19,15 @@ namespace backend.ViewModels
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Este campo é obrigatório")]
-        [MaxLength(11, ErrorMessage = "Seu telefone deve conter entre 10 e 11 caracteres")]
-        [MinLength(10, ErrorMessage = "Seu telefone deve conter entre 10 e 11 caracteres")]
-        [Phone(ErrorMessage = "Por favor, insira um número válido.")]
+        [MaxLength(15, ErrorMessage = "Seu telefone deve conter entre 14 e 15 caracteres")]
+        [MinLength(14, ErrorMessage = "Seu telefone deve conter entre 14 e 15 caracteres")]
+        // [Phone(ErrorMessage = "Por favor, insira um número válido.")]
         public string Phone { get; set; }
 
         [Required(ErrorMessage = "Este campo é obrigatório")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         [DataType(DataType.Date)]
-        public string BirthDate { get; set; }        
+        public DateTime BirthDate { get; set; }        
 
         [Required(ErrorMessage = "Este campo é obrigatório")]
         [MinLength(6, ErrorMessage = "Sua senha precisa ter no mínimo 6 digitos.")]

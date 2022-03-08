@@ -23,9 +23,9 @@ namespace backend.Controllers {
                   Id = user.Id,
                   Name = user.Name,
                   LastName = user.LastName,
-                  Email = user.Email,
                   Phone = user.Phone,
-                  BirthDate = String.Format("{0:dd/MM/yyyy}", user.BirthDate),
+                  Email = user.Email,
+                  BirthDate = user.BirthDate,
                   Status = auth.Status
                 }
               )
@@ -52,7 +52,7 @@ namespace backend.Controllers {
             LastName = model.LastName,
             Email = model.Email,
             Phone = model.Phone,
-            BirthDate = DateTime.ParseExact(model.BirthDate, "dd/MM/yyyy", null)
+            BirthDate = model.BirthDate,
           };
           context.Users.Add(user);
           await context.SaveChangesAsync();
@@ -91,7 +91,7 @@ namespace backend.Controllers {
                   LastName = user.LastName,
                   Email = user.Email,
                   Phone = user.Phone,
-                  BirthDate = String.Format("{0:dd/MM/yyyy}", user.BirthDate),
+                  BirthDate = user.BirthDate,
                   Status = auth.Status
                 }
               )
@@ -105,7 +105,7 @@ namespace backend.Controllers {
     public async Task<ActionResult> Update(
       [FromServices] DataContext context,
       int id,
-      [FromBody] CreateUserViewModel model)
+      [FromBody] EditUserViewModel model)
     {
       var currUserModel = context.Users.FirstOrDefault(x => x.Id == id);
       var currAuthModel = context.Auths.FirstOrDefault(x => x.UserId == id);
@@ -119,9 +119,8 @@ namespace backend.Controllers {
           currUserModel.LastName = model.LastName;
           currUserModel.Email = model.Email;
           currUserModel.Phone = model.Phone;
-          currUserModel.BirthDate = DateTime.ParseExact(model.BirthDate, "dd/MM/yyyy", null);         
-
-          currAuthModel.Password = model.Password;
+          currUserModel.BirthDate = model.BirthDate;
+          
           currAuthModel.Status = model.Status;
 
           context.Users.Update(currUserModel);

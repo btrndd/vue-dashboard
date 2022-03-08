@@ -21,9 +21,9 @@ namespace backend.Models {
     public string Email { get; set; }
 
     [Required(ErrorMessage = "Este campo é obrigatório")]
-    [MaxLength(11, ErrorMessage = "Seu telefone deve conter entre 10 e 11 caracteres")]
-    [MinLength(10, ErrorMessage = "Seu telefone deve conter entre 10 e 11 caracteres")]
-    [Phone(ErrorMessage = "Por favor, insira um número válido.")]
+    [MaxLength(15, ErrorMessage = "Seu telefone deve conter entre 14 e 15 caracteres")]
+    [MinLength(14, ErrorMessage = "Seu telefone deve conter entre 14 e 15 caracteres")]
+    // [Phone(ErrorMessage = "Por favor, insira um número válido.")]
     public string Phone { get; set; }
 
     [Required(ErrorMessage = "Este campo é obrigatório")]
