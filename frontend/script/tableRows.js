@@ -1,14 +1,17 @@
 import { editUser } from "./editUser.js";
+import { removeUser } from "./removeUser.js";
 
 const translateKeys = (key) => {
   switch (key) {
     case 'name':
       return 'Nome';
-    case 'phonenumber':
+    case 'lastName':
+      return 'Nome';
+    case 'phone':
       return 'Telefone';
     case 'email':
       return 'Email';
-    case 'birth':
+    case 'birthDate':
       return 'Data Nasc.';
     case 'status':
       return 'Status';
@@ -22,10 +25,10 @@ const insertAvatar = (user, index) => {
   wrapper.classList.add('name-wrapper');
   const img = document.createElement('img');
   img.classList.add('list-avatar');
-  img.src = user.avatar;
+  img.src = "./img/avatar.png";
   const name = document.createElement('p');
   name.classList.add('name-text');
-  name.textContent = user.name;
+  name.textContent = `${user.name} ` + user.lastName;
   wrapper.appendChild(img);
   wrapper.appendChild(name);
   firstTds[index].firstChild.appendChild(wrapper);
@@ -76,19 +79,26 @@ const tableRows = (data) => {
     const edit = document.createElement('i');
     edit.classList.add('fas');
     edit.classList.add('fa-edit');
-    edit.id = 'edit';
+    edit.id = user.id;
+    edit.setAttribute('data-name', 'edit');
     const editBtn = document.createElement('button');
     editBtn.type = 'button';
-    editBtn.id = 'edit';
+    editBtn.id = user.id;
+    editBtn.setAttribute('data-name', 'edit');
     editBtn.appendChild(edit);
     editBtn.addEventListener('click', editUser);
     acoesWrapper.appendChild(editBtn);
     const removeBtn = document.createElement('button');
     removeBtn.type = 'button';
+    removeBtn.id = user.id;
+    removeBtn.setAttribute('data-name', 'remove');
     const remove = document.createElement('i');
     remove.classList.add('fas');
     remove.classList.add('fa-trash');
+    remove.id = user.id;
+    remove.setAttribute('data-name', 'remove');
     removeBtn.appendChild(remove);
+    removeBtn.addEventListener('click', removeUser);
     acoesWrapper.appendChild(removeBtn);
     acoes.appendChild(acoesWrapper);
     tr.appendChild(acoes);      

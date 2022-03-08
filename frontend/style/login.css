@@ -15,11 +15,6 @@ button:active{
     border: 1px solid grey;
 }
 
-/* .wrapper {
-    display: flex;
-    align-items: center;
-} */
-
 .form-card {
     display: flex;
     flex-direction: column;

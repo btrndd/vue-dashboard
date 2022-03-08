@@ -1,6 +1,6 @@
 import { registerForm } from "./registerForm.js";
 
-const redirectToRegister = (edit) => {
+const redirectToRegister = (id, edit) => {
   const ev = {
     target: {
       id: 'register',
@@ -9,7 +9,7 @@ const redirectToRegister = (edit) => {
   const url = ev.target.id;
   history.pushState({}, '', url + '.html');
   document.title = 'Cadastrar';
-  registerForm(ev, edit);
+  registerForm(ev, id, edit);
 }
 
 export { redirectToRegister };

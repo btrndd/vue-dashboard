@@ -9,7 +9,7 @@ const createTable = async (page) => {
   newHtml.innerHTML = page;
   const newMain = newHtml.querySelector('.main');
   main.innerHTML = newMain.innerHTML;  
-  const response = await fetch('data.json');
+  const response = await fetch('https://localhost:7271/users');
   const data = await response.json();
   // tableRows - Cria e popula a linhas da tabela com o usuários
   tableRows(data);    
@@ -19,7 +19,8 @@ if (registerBtn) {
       const url = ev.target.getAttribute('data-page');
       history.pushState({}, '', url + '.html');
       document.title = 'Cadastrar';
-      registerForm(ev);
+      const edit = 'register';
+      registerForm(ev, edit);
     });
   }
 }

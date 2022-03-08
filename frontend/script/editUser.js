@@ -1,25 +1,19 @@
 import { redirectToRegister } from "./redirectToRegister.js";
-// import { redirectToUsers } from "./redirectToUsers";
-
-// const getById = async (id) => {
-//   const request = await fetch(`/users/${id}`);
-//   const response = await request.json();
-//   return response;
-// }
-
-// const setValues = (userData) => {
-//   const keys = Object.keys(userData);
-//   keys.forEach((key) => {
-//     document.getElementById(`${key}`).value = userData[key];
-//   });
-// }
 
 const changeUser = async (form, id) => {
+
   const formData = new FormData(form);
-  
-  const request = await fetch(`/users/${id}`, {
+  let object = {};
+  formData.forEach((value, key) => object[key] = value);
+  if (object.status) {
+    object.status = true;
+  };
+  delete object.checkPassword;
+  delete object.password;
+  const json = JSON.stringify(object);
+  const request = await fetch(`https://localhost:7271/users/${id}`, {
     method: "PUT",
-    body: formData,
+    body: json,
     headers: {
       "Content-type": "application/json; charset=UTF-8"
     }
@@ -29,13 +23,9 @@ const changeUser = async (form, id) => {
 }
 
 const editUser = (ev) => {
-  const edit = ev.target.id;
-  redirectToRegister(edit);
-  // const userData = await getById(id);
-  // setValues(userData);
-  // const form = document.querySelector('.form');
-  // await changeUser(form, id);
-  // redirectToUsers();
+  const id = ev.target.id;
+  const edit = ev.target.getAttribute('data-name');
+  redirectToRegister(id, edit);
 }
 
 export { editUser, changeUser };

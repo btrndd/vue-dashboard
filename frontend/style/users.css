@@ -113,10 +113,18 @@ table {
 
 .active {
   background-color: #e6fff3;
-  height: 23px;
+  height: 20px;
   padding-top: 3px;
   width: 100px;
   color: #2bd988;
+}
+
+.inactive {
+  background-color: #ffe6e6;
+  height: 20px;
+  padding-top: 3px;
+  width: 100px;
+  color: #d92b2b;
 }
 
 @media only screen and (max-width: 920px) {
@@ -202,7 +210,10 @@ table {
 
   .active {
     margin: auto;
-  }  
+  }
+  .inactive {
+    margin: auto;
+  } 
 }
 
 @media only screen and (max-width: 360px) {
