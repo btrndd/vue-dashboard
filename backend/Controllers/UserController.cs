@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using backend.Data;
 using backend.Models;
 using backend.ViewModels;
+using backend.Extensions;
 
 namespace backend.Controllers {
 
@@ -23,9 +24,9 @@ namespace backend.Controllers {
                   Id = user.Id,
                   Name = user.Name,
                   LastName = user.LastName,
-                  Email = user.Email,
                   Phone = user.Phone,
-                  BirthDate = String.Format("{0:dd/MM/yyyy}", user.BirthDate),
+                  Email = user.Email,
+                  BirthDate = user.BirthDate,
                   Status = auth.Status
                 }
               )
@@ -42,7 +43,7 @@ namespace backend.Controllers {
     {
       // Verifica se os dados são válidos
       if (!ModelState.IsValid)
-          return BadRequest(ModelState);
+          return BadRequest(new ErrorViewModel(ModelState.GetErrors()));
 
       try
       {
@@ -52,7 +53,7 @@ namespace backend.Controllers {
             LastName = model.LastName,
             Email = model.Email,
             Phone = model.Phone,
-            BirthDate = DateTime.ParseExact(model.BirthDate, "dd/MM/yyyy", null)
+            BirthDate = model.BirthDate,
           };
           context.Users.Add(user);
           await context.SaveChangesAsync();
@@ -63,13 +64,15 @@ namespace backend.Controllers {
             Password = model.Password,
             Status = model.Status
           };
+
           context.Auths.Add(auth);
           await context.SaveChangesAsync();
+
           return Created("/users", user);
       }
       catch (Exception)
       {
-          return BadRequest(new { message = "Não foi possível criar o usuário" });
+          return BadRequest(new ErrorViewModel(ModelState.GetErrors()));
       }
     }
 
@@ -91,7 +94,7 @@ namespace backend.Controllers {
                   LastName = user.LastName,
                   Email = user.Email,
                   Phone = user.Phone,
-                  BirthDate = String.Format("{0:dd/MM/yyyy}", user.BirthDate),
+                  BirthDate = user.BirthDate,
                   Status = auth.Status
                 }
               )
@@ -105,13 +108,13 @@ namespace backend.Controllers {
     public async Task<ActionResult> Update(
       [FromServices] DataContext context,
       int id,
-      [FromBody] CreateUserViewModel model)
+      [FromBody] EditUserViewModel model)
     {
       var currUserModel = context.Users.FirstOrDefault(x => x.Id == id);
       var currAuthModel = context.Auths.FirstOrDefault(x => x.UserId == id);
       
       if (!ModelState.IsValid)
-          return BadRequest(ModelState);
+          return BadRequest(new ErrorViewModel(ModelState.GetErrors()));
 
       try
       {          
@@ -119,9 +122,8 @@ namespace backend.Controllers {
           currUserModel.LastName = model.LastName;
           currUserModel.Email = model.Email;
           currUserModel.Phone = model.Phone;
-          currUserModel.BirthDate = DateTime.ParseExact(model.BirthDate, "dd/MM/yyyy", null);         
-
-          currAuthModel.Password = model.Password;
+          currUserModel.BirthDate = model.BirthDate;
+          
           currAuthModel.Status = model.Status;
 
           context.Users.Update(currUserModel);
@@ -136,7 +138,7 @@ namespace backend.Controllers {
       }
       catch (Exception)
       {
-          return BadRequest(new { message = "Não foi possível atualizar o usuário" });
+          return BadRequest(new { message = "Não foi possível editar o usuário" });
       }
     }
 
