@@ -14,6 +14,8 @@ builder.Services.AddScoped<DataContext, DataContext>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c => c.SwaggerDoc("v1", new OpenApiInfo { Title = "Shop Api", Version = "v1" }));
 

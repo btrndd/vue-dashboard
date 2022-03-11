@@ -4,17 +4,18 @@ using backend.Models;
 using backend.DTOs;
 using backend.Extensions;
 using backend.Repositories;
+using AutoMapper;
 
 namespace backend.Controllers {
 
   [Route("/users")]
   public class UserController : ControllerBase {
-
     private readonly IUserRepository _repository;
-
-    public UserController(IUserRepository repository)
+    public readonly IMapper _mapper;
+    public UserController(IUserRepository repository, IMapper mapper)
     {
         _repository = repository;
+        _mapper = mapper;
     }
     
     [HttpGet]
@@ -37,16 +38,9 @@ namespace backend.Controllers {
 
       try
       {
-          var user = new User 
-          {
-            Name = model.Name,
-            LastName = model.LastName,
-            Email = model.Email,
-            Phone = model.Phone,
-            BirthDate = model.BirthDate,
-          };
+          var _mappedUser = _mapper.Map<User>(model);
           
-          var createdUser = await _repository.CreateUser(user);
+          var createdUser = await _repository.CreateUser(_mappedUser);
 
           var auth = new Auth
           { 
@@ -57,7 +51,7 @@ namespace backend.Controllers {
 
           await _repository.CreateAuth(auth);
 
-          return Created("/users", user);
+          return Created("/users", _mappedUser);
       }
       catch (Exception)
       {
