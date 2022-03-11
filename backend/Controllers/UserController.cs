@@ -34,7 +34,7 @@ namespace backend.Controllers {
     {
       // Verifica se os dados são válidos
       if (!ModelState.IsValid)
-          return BadRequest(new ErrorViewModel(ModelState.GetErrors()));
+          return BadRequest(new ResultDTO<User>(null, ModelState.GetErrors()));
 
       try
       {
@@ -55,7 +55,7 @@ namespace backend.Controllers {
       }
       catch (Exception)
       {
-          return BadRequest(new ErrorViewModel(ModelState.GetErrors()));
+          return BadRequest(new ResultDTO<User>(null, ModelState.GetErrors()));
       }
     }
 
@@ -76,7 +76,7 @@ namespace backend.Controllers {
       [FromBody] RequestEditUser model)
     {      
       if (!ModelState.IsValid)
-          return BadRequest(new ErrorViewModel(ModelState.GetErrors()));
+          return BadRequest(new ResultDTO<User>(null, ModelState.GetErrors()));
 
       try
       {          
