@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace backend.ViewModels
+namespace backend.DTOs
 {
-    public class EditUserViewModel
+    public class RequestEditUser
     {
         [Required(ErrorMessage = "Este campo é obrigatório")]
         [MaxLength(60, ErrorMessage = "Este campo deve conter entre 3 e 60 caracteres")]

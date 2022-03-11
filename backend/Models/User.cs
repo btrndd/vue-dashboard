@@ -1,10 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace backend.Models {
-  public class User {
-
-    [Key]
-    public int Id { get; set; }
+  public class User : Entity {
 
     [Required(ErrorMessage = "Este campo é obrigatório")]
     [MaxLength(60, ErrorMessage = "Este campo deve conter entre 3 e 60 caracteres")]

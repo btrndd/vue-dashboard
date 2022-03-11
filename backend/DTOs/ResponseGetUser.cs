@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace backend.ViewModels
+namespace backend.DTOs
 {
-    public class GetUsersViewModel
+    public class ResponseGetUser
     {
         [Key]
         public int Id { get; set ; }

@@ -1,37 +1,27 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using backend.Data;
 using backend.Models;
-using backend.ViewModels;
+using backend.DTOs;
 using backend.Extensions;
+using backend.Repositories;
 
 namespace backend.Controllers {
 
   [Route("/users")]
   public class UserController : ControllerBase {
+
+    private readonly IUserRepository _repository;
+
+    public UserController(IUserRepository repository)
+    {
+        _repository = repository;
+    }
     
     [HttpGet]
     [Route("")]
-    public async Task<ActionResult<List<GetUsersViewModel>>> GetAll([FromServices] DataContext context)
+    public async Task<ActionResult<List<ResponseGetUser>>> GetAll([FromServices] DataContext context)
     {
-        var users = await context.Users
-            .Join(
-              context.Auths,
-              user => user.Id,
-              auth => auth.UserId,
-              (user, auth) => new GetUsersViewModel
-                { 
-                  Id = user.Id,
-                  Name = user.Name,
-                  LastName = user.LastName,
-                  Phone = user.Phone,
-                  Email = user.Email,
-                  BirthDate = user.BirthDate,
-                  Status = auth.Status
-                }
-              )
-            .AsNoTracking()
-            .ToListAsync();
+        var users = await _repository.GetAll();
         return Ok(users);
     }  
 
@@ -39,7 +29,7 @@ namespace backend.Controllers {
   [Route("")]
   public async Task<ActionResult> Create(
       [FromServices] DataContext context,
-      [FromBody] CreateUserViewModel model)
+      [FromBody] RequestCreateUser model)
     {
       // Verifica se os dados são válidos
       if (!ModelState.IsValid)
@@ -55,18 +45,17 @@ namespace backend.Controllers {
             Phone = model.Phone,
             BirthDate = model.BirthDate,
           };
-          context.Users.Add(user);
-          await context.SaveChangesAsync();
+          
+          var createdUser = await _repository.CreateUser(user);
 
           var auth = new Auth
           { 
-            UserId = user.Id, 
+            UserId = createdUser.Id, 
             Password = model.Password,
             Status = model.Status
           };
 
-          context.Auths.Add(auth);
-          await context.SaveChangesAsync();
+          await _repository.CreateAuth(auth);
 
           return Created("/users", user);
       }
@@ -79,27 +68,9 @@ namespace backend.Controllers {
 
     [HttpGet]
     [Route("{id:int}")]
-    public async Task<ActionResult<GetUsersViewModel>> GetById([FromServices] DataContext context, int id)
+    public async Task<ActionResult<ResponseGetUser>> GetById([FromServices] DataContext context, int id)
     {
-        var user = await context.Users
-            .Where(user => user.Id == id)
-            .Join(
-              context.Auths,
-              user => user.Id,
-              auth => auth.UserId,
-              (user, auth) => new GetUsersViewModel
-                {
-                  Id = user.Id,
-                  Name = user.Name,
-                  LastName = user.LastName,
-                  Email = user.Email,
-                  Phone = user.Phone,
-                  BirthDate = user.BirthDate,
-                  Status = auth.Status
-                }
-              )
-            .AsNoTracking()            
-            .FirstOrDefaultAsync();
+        var user = await _repository.GetById(id);
         return Ok(user);
     }
 
@@ -108,29 +79,15 @@ namespace backend.Controllers {
     public async Task<ActionResult> Update(
       [FromServices] DataContext context,
       int id,
-      [FromBody] EditUserViewModel model)
-    {
-      var currUserModel = context.Users.FirstOrDefault(x => x.Id == id);
-      var currAuthModel = context.Auths.FirstOrDefault(x => x.UserId == id);
-      
+      [FromBody] RequestEditUser model)
+    {      
       if (!ModelState.IsValid)
           return BadRequest(new ErrorViewModel(ModelState.GetErrors()));
 
       try
       {          
-          currUserModel.Name = model.Name;
-          currUserModel.LastName = model.LastName;
-          currUserModel.Email = model.Email;
-          currUserModel.Phone = model.Phone;
-          currUserModel.BirthDate = model.BirthDate;
-          
-          currAuthModel.Status = model.Status;
-
-          context.Users.Update(currUserModel);
-          context.Auths.Update(currAuthModel);
-
-          await context.SaveChangesAsync();
-          return Ok(currUserModel);
+          var result = await _repository.Update(model, id);
+          return Ok(result);
       }
       catch (ArgumentNullException)
       {
@@ -148,12 +105,9 @@ namespace backend.Controllers {
       [FromServices] DataContext context,
       int id)
     {
-      var currUserModel = context.Users.FirstOrDefault(x => x.Id == id);
-
       try
-      {          
-          context.Users.Remove(currUserModel);
-          await context.SaveChangesAsync();
+      {
+          await _repository.Remove(id);
           return Ok(new { message = "O usuário foi removido com sucesso" });
       }
       catch (ArgumentNullException)
