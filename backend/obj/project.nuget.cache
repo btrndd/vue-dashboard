@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "GhBARNjQVorKbofV9Ex6pf0jzgHomL6h/ORPYqDA9hfNMN9BiQJrCS4dMc5vFv5iQg6+JgP3og/l2lF9u/w1+g==",
+  "dgSpecHash": "tJ95bqczOsXma2PYQXoXIYlWXPC0dniWMkWSf25COipEJpO2aEV8QUdV2HG4rcJQ/ut3QxJuUjyj99Ikl3TErg==",
   "success": true,
   "projectFilePath": "/home/bruno/lyncas/projeto-bruno/backend/backend.csproj",
   "expectedPackageFiles": [
@@ -179,9 +179,7 @@
     "/home/bruno/.nuget/packages/system.threading.timer/4.3.0/system.threading.timer.4.3.0.nupkg.sha512",
     "/home/bruno/.nuget/packages/system.windows.extensions/4.7.0/system.windows.extensions.4.7.0.nupkg.sha512",
     "/home/bruno/.nuget/packages/system.xml.readerwriter/4.3.0/system.xml.readerwriter.4.3.0.nupkg.sha512",
-    "/home/bruno/.nuget/packages/system.xml.xdocument/4.3.0/system.xml.xdocument.4.3.0.nupkg.sha512",
-    "/home/bruno/.nuget/packages/microsoft.netcore.app.ref/6.0.2/microsoft.netcore.app.ref.6.0.2.nupkg.sha512",
-    "/home/bruno/.nuget/packages/microsoft.netcore.app.host.linux-x64/6.0.2/microsoft.netcore.app.host.linux-x64.6.0.2.nupkg.sha512"
+    "/home/bruno/.nuget/packages/system.xml.xdocument/4.3.0/system.xml.xdocument.4.3.0.nupkg.sha512"
   ],
   "logs": []
 }
