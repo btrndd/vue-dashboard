@@ -3,6 +3,7 @@ import { redirectToUsers } from './redirectToUsers.js';
 import { formatNumber } from './phoneMask.js';
 import { executeMask } from './phoneMask.js';
 import { changeUser } from './editUser.js';
+import { loadingSpinner } from './loadingSpinner.js';
 
 const submitBtn = document.querySelector('.register-btn');
 const phone = document.getElementById('phone');
@@ -75,7 +76,6 @@ const isRequiredNew = () => {
   const inputs = document.getElementsByTagName('input');
   for (let index = 0; index < inputs.length; index += 1) {
     if (inputs[index].value !== '') {
-      console.log('success');
     } else {
       const warning = document.createElement('small');
       warning.textContent = 'Por favor, preencha este campo.'
@@ -90,16 +90,13 @@ const isRequiredEdit = () => {
   const inputs = document.getElementsByTagName('input');
   let filteredInputs = [];
   for (let index = 0; index < inputs.length; index += 1) {
-    if (inputs[index].id === 'password' || inputs[index].id === 'checkPassword') {
-      console.log(inputs[index].id);      
+    if (inputs[index].id === 'password' || inputs[index].id === 'checkPassword') {    
     } else {
       filteredInputs.push(inputs[index]);
     }
   };
-  console.log(filteredInputs);
   for (let index = 0; index < filteredInputs.length; index += 1) {
     if (filteredInputs[index].value !== '') {
-      console.log('success');
     } else {
       const warning = document.createElement('small');
       warning.textContent = 'Por favor, preencha este campo.'
@@ -136,6 +133,8 @@ async function formValidation(ev) {
     const finalCheck = document.querySelectorAll('.warning');
     if (finalCheck.length === 0) {
       const form = document.querySelector('.form');
+      const main = document.querySelector('.main') || document.querySelector('.main-hidden');
+      loadingSpinner(main);
       await newUser(form);
       return redirectToUsers();
     }
@@ -147,6 +146,8 @@ async function formValidation(ev) {
     const finalCheck = document.querySelectorAll('.warning');
     if (finalCheck.length === 0) {
       const form = document.querySelector('.form');
+      const main = document.querySelector('.main') || document.querySelector('.main-hidden');
+      loadingSpinner(main);
       await changeUser(form, id);
       return redirectToUsers();
     }

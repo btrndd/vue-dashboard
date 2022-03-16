@@ -265,3 +265,5 @@
 /home/bruno/lyncas/projeto-bruno/backend/bin/Debug/net6.0/runtimes/win-arm/lib/net6.0/dotnet-aspnet-codegenerator-design.exe
 /home/bruno/lyncas/projeto-bruno/backend/bin/Debug/net6.0/runtimes/win-arm64/lib/net6.0/dotnet-aspnet-codegenerator-design.exe
 /home/bruno/lyncas/projeto-bruno/backend/obj/Debug/net6.0/refint/backend.dll
+/home/bruno/lyncas/projeto-bruno/backend/bin/Debug/net6.0/AutoMapper.dll
+/home/bruno/lyncas/projeto-bruno/backend/bin/Debug/net6.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll

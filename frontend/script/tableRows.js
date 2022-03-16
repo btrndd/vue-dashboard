@@ -18,6 +18,13 @@ const translateKeys = (key) => {
   }
 }
 
+const addZero = (number) => {
+  if (number <= 9) 
+      return "0" + number;
+  else
+      return number; 
+}
+
 const insertAvatar = (user, index) => {
   const firstTds = document.querySelectorAll('.user-row');
   firstTds[index].firstChild.textContent = '';
@@ -35,10 +42,17 @@ const insertAvatar = (user, index) => {
 }
 
 const tableRows = (data) => {
+  const main = document.querySelector('.main') || document.querySelector('.main-hidden');
   const table = document.querySelector('table');
   const tr = document.createElement('tr');
   tr.classList.add('separator');
   table.appendChild(tr);
+  if (data.length <= 0) {
+    const notFound = document.createElement('p');
+    notFound.textContent = 'Oops, parece que ainda não existem usuários cadastrados. :(';
+    notFound.classList.add('no-users');
+    main.appendChild(notFound);
+  }
   data.forEach((user, index) => {
     const tr = document.createElement('tr');
     tr.classList.add('user-row');
@@ -63,6 +77,15 @@ const tableRows = (data) => {
         text.textContent = 'Inativo';
         text.classList.add('inactive');
         td.appendChild(text);
+        tr.appendChild(td);
+      } else if (key === 'birthDate') {
+        const td = document.createElement('td');
+        const translatedKey = translateKeys(key);
+        td.setAttribute('data-title', translatedKey);
+        let currDate = new Date(user[key]);
+        let formatedDate = (addZero(currDate.getDate().toString()) 
+        + "/" + (addZero(currDate.getMonth()+1).toString()) + "/" + currDate.getFullYear());
+        td.textContent = formatedDate;
         tr.appendChild(td);
       } else {
         const td = document.createElement('td');
@@ -105,4 +128,4 @@ const tableRows = (data) => {
   });
 }
 
-export { tableRows };
+export { tableRows, addZero };

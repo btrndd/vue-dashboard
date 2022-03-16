@@ -1,103 +1,84 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using backend.Data;
 using backend.Models;
-using backend.ViewModels;
+using backend.DTOs;
+using backend.Extensions;
+using backend.Repositories;
+using AutoMapper;
 
 namespace backend.Controllers {
 
   [Route("/users")]
   public class UserController : ControllerBase {
+    private readonly IUserRepository _repository;
+    public readonly IMapper _mapper;
+    public UserController(IUserRepository repository, IMapper mapper)
+    {
+        _repository = repository;
+        _mapper = mapper;
+    }
     
     [HttpGet]
     [Route("")]
-    public async Task<ActionResult<List<GetUsersViewModel>>> GetAll([FromServices] DataContext context)
+    public async Task<ActionResult<List<ResponseGetUser>>> GetAll([FromServices] DataContext context)
     {
-        var users = await context.Users
-            .Join(
-              context.Auths,
-              user => user.Id,
-              auth => auth.UserId,
-              (user, auth) => new GetUsersViewModel
-                { 
-                  Id = user.Id,
-                  Name = user.Name,
-                  LastName = user.LastName,
-                  Phone = user.Phone,
-                  Email = user.Email,
-                  BirthDate = user.BirthDate,
-                  Status = auth.Status
-                }
-              )
-            .AsNoTracking()
-            .ToListAsync();
+      try
+      {
+        var users = await _repository.GetAll();
         return Ok(users);
+      }
+      catch (Exception) 
+      {
+        return BadRequest(new { message = "Oops, parece que ainda não existem usuários cadastrados. :(" });
+      }
     }  
 
   [HttpPost]
   [Route("")]
   public async Task<ActionResult> Create(
       [FromServices] DataContext context,
-      [FromBody] CreateUserViewModel model)
+      [FromBody] RequestCreateUser model)
     {
-      // Verifica se os dados são válidos
       if (!ModelState.IsValid)
-          return BadRequest(ModelState);
+          return BadRequest(new ResultDTO<User>(null, ModelState.GetErrors()));
 
       try
       {
-          var user = new User 
-          {
-            Name = model.Name,
-            LastName = model.LastName,
-            Email = model.Email,
-            Phone = model.Phone,
-            BirthDate = model.BirthDate,
-          };
-          context.Users.Add(user);
-          await context.SaveChangesAsync();
+          var _mappedUser = _mapper.Map<User>(model);
+          
+          var createdUser = await _repository.CreateUser(_mappedUser);
 
           var auth = new Auth
           { 
-            UserId = user.Id, 
+            UserId = createdUser.Id, 
             Password = model.Password,
             Status = model.Status
           };
-          context.Auths.Add(auth);
-          await context.SaveChangesAsync();
-          return Created("/users", user);
+
+          await _repository.CreateAuth(auth);
+
+          return Created("/users", new ResultDTO<User>(_mappedUser, new List<string> { "Usuário criado com sucesso!" }));
       }
       catch (Exception)
       {
-          return BadRequest(new { message = "Não foi possível criar o usuário" });
+          return BadRequest(new { message = "Não foi possível criar o usuário." });
       }
     }
 
 
     [HttpGet]
     [Route("{id:int}")]
-    public async Task<ActionResult<GetUsersViewModel>> GetById([FromServices] DataContext context, int id)
+    public async Task<ActionResult<ResponseGetUser>> GetById([FromServices] DataContext context, int id)
     {
-        var user = await context.Users
-            .Where(user => user.Id == id)
-            .Join(
-              context.Auths,
-              user => user.Id,
-              auth => auth.UserId,
-              (user, auth) => new GetUsersViewModel
-                {
-                  Id = user.Id,
-                  Name = user.Name,
-                  LastName = user.LastName,
-                  Email = user.Email,
-                  Phone = user.Phone,
-                  BirthDate = user.BirthDate,
-                  Status = auth.Status
-                }
-              )
-            .AsNoTracking()            
-            .FirstOrDefaultAsync();
+      try 
+      {
+        var user = await _repository.GetById(id);
         return Ok(user);
+      }
+      catch (Exception)
+      {
+        return BadRequest(new { message = "Não foi possível encontrar o usuário." });
+      }
     }
 
     [HttpPut]
@@ -105,37 +86,23 @@ namespace backend.Controllers {
     public async Task<ActionResult> Update(
       [FromServices] DataContext context,
       int id,
-      [FromBody] EditUserViewModel model)
-    {
-      var currUserModel = context.Users.FirstOrDefault(x => x.Id == id);
-      var currAuthModel = context.Auths.FirstOrDefault(x => x.UserId == id);
-      
+      [FromBody] RequestEditUser model)
+    {      
       if (!ModelState.IsValid)
-          return BadRequest(ModelState);
+          return BadRequest(new ResultDTO<User>(null, ModelState.GetErrors()));
 
       try
       {          
-          currUserModel.Name = model.Name;
-          currUserModel.LastName = model.LastName;
-          currUserModel.Email = model.Email;
-          currUserModel.Phone = model.Phone;
-          currUserModel.BirthDate = model.BirthDate;
-          
-          currAuthModel.Status = model.Status;
-
-          context.Users.Update(currUserModel);
-          context.Auths.Update(currAuthModel);
-
-          await context.SaveChangesAsync();
-          return Ok(currUserModel);
+          var result = await _repository.Update(model, id);
+          return Ok(new ResultDTO<User>(result, new List<string> { "Usuário editado com sucesso!" }));
       }
       catch (ArgumentNullException)
       {
-          return NotFound(new { message = "Usuário não encontrado" });
+          return NotFound(new { message = "Usuário não encontrado." });
       }
       catch (Exception)
       {
-          return BadRequest(new { message = "Não foi possível atualizar o usuário" });
+          return BadRequest(new { message = "Não foi possível editar o usuário." });
       }
     }
 
@@ -145,21 +112,18 @@ namespace backend.Controllers {
       [FromServices] DataContext context,
       int id)
     {
-      var currUserModel = context.Users.FirstOrDefault(x => x.Id == id);
-
       try
-      {          
-          context.Users.Remove(currUserModel);
-          await context.SaveChangesAsync();
-          return Ok(new { message = "O usuário foi removido com sucesso" });
+      {
+          await _repository.Remove(id);
+          return Ok(new { message = "O usuário foi removido com sucesso!" });
       }
       catch (ArgumentNullException)
       {
-          return NotFound(new { message = "Usuário não encontrado" });
+          return NotFound(new { message = "Usuário não encontrado." });
       }
       catch (Exception)
       {
-          return BadRequest(new { message = "Não foi possível remover o usuário" });
+          return BadRequest(new { message = "Não foi possível remover o usuário." });
       }
     }
   }

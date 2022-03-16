@@ -2,6 +2,7 @@ import { formValidation } from './formValidation.js';
 import { formatNumber } from './phoneMask.js';
 import { executeMask } from './phoneMask.js';
 import { redirectToUsers } from './redirectToUsers.js';
+import { addZero } from './tableRows.js';
 
 const main = document.querySelector('.main');
 
@@ -32,6 +33,11 @@ const setValues = (userData) => {
   filteredKey.forEach((key) => {
     if (key === 'status') {
       document.getElementById(`${key}`).checked = userData[key]; 
+    } else if (key === 'birthDate') {
+      let currDate = new Date(userData[key]);
+      let formatedDate = (currDate.getFullYear() + "-" +
+       addZero(currDate.getMonth()+1).toString()  + "-" + addZero(currDate.getDate().toString()) );
+      document.getElementById(`${key}`).value = formatedDate;    
     } else {      
       document.getElementById(`${key}`).value = userData[key];    
     }
@@ -62,7 +68,6 @@ const registerForm = async (ev, id, edit) => {
     submitBtn.addEventListener('click', formValidation);
   }
   if (submitBtn && edit !== 'edit') {
-    console.log('not edit');
     submitBtn.name = 'cadastrar';
     submitBtn.addEventListener('click', formValidation);
   }

@@ -1,7 +1,8 @@
+import { loadingSpinner } from './loadingSpinner.js';
 import { registerForm } from './registerForm.js';
 import { tableRows } from './tableRows.js';
 
-const main = document.querySelector('.main');
+const main = document.querySelector('.main') || document.querySelector('.main-hidden');
 
 const createTable = async (page) => {
   main.innerHTML = '';
@@ -33,8 +34,19 @@ const getData = async (data) => {
 }
 
 const usersList = async (ev) => {
+  const spinner = document.querySelector('.spinner');
+  loadingSpinner(main);
+  const responseCard = document.querySelector('.request');
+  if (responseCard) {
+    setTimeout(() => {
+      responseCard.style.visibility = 'hidden';
+    }, 2000);
+  };
   const { id } = ev.target;
   const response = await getData(id);
+  if (spinner) {
+    spinner.style.visibility = 'hidden';
+  }
   createTable(response);
 }
 

@@ -1,3 +1,5 @@
+import { responseCard } from "./responseCard.js";
+
 export const newUser = async (form) => {
 
   const formData = new FormData(form);
@@ -16,5 +18,6 @@ export const newUser = async (form) => {
     }
   });
   const response = await request.json();
+  responseCard(response);
   console.log(response);
 };

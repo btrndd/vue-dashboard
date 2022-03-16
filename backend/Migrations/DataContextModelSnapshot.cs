@@ -32,17 +32,23 @@ namespace backend.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(32)
+                        .HasColumnType("NVARCHAR(32)")
+                        .HasColumnName("Password");
 
                     b.Property<bool>("Status")
-                        .HasColumnType("bit");
+                        .HasColumnType("BIT")
+                        .HasColumnName("Status");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Auths");
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Auth", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.User", b =>
@@ -54,30 +60,46 @@ namespace backend.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime>("BirthDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("DATE")
+                        .HasColumnName("BirthDate");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(60)
+                        .HasColumnType("VARCHAR(60)")
+                        .HasColumnName("Email");
 
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                        .HasColumnType("NVARCHAR(60)")
+                        .HasColumnName("LastName");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                        .HasColumnType("NVARCHAR(60)")
+                        .HasColumnName("Name");
 
                     b.Property<string>("Phone")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(15)
+                        .HasColumnType("NVARCHAR(15)")
+                        .HasColumnName("Phone");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("User", (string)null);
+                });
+
+            modelBuilder.Entity("backend.Models.Auth", b =>
+                {
+                    b.HasOne("backend.Models.User", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Models.Auth", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_Auth_User");
                 });
 #pragma warning restore 612, 618
         }
