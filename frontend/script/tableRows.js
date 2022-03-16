@@ -44,20 +44,15 @@ const insertAvatar = (user, index) => {
 
 const tableRows = (data) => {
   const main = document.querySelector('.main') || document.querySelector('.main-hidden');
-  const table = document.querySelector('table');
-  const tr = document.createElement('tr');
-  tr.classList.add('separator');
-  table.appendChild(tr);
-  if (data.length <= 0) {
-    const notFound = document.createElement('p');
-    notFound.textContent = 'Oops, parece que ainda não existem usuários cadastrados. :(';
-    notFound.classList.add('no-users');
-    main.appendChild(notFound);
+  const tbody = document.querySelector('.tbody');
+  const rows = document.querySelectorAll('.user-row');  
+  if (rows) {
+    rows.forEach((row) => tbody.removeChild(row));
   }
   data.forEach((user, index) => {
     const tr = document.createElement('tr');
     tr.classList.add('user-row');
-    table.appendChild(tr);
+    tbody.appendChild(tr);
     const keys = Object.keys(user);
     const filteredKey = keys.slice(2,7);
     filteredKey.forEach((key) => {
