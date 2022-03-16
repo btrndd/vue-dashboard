@@ -23,8 +23,8 @@ namespace backend.Models {
     public string Phone { get; set; }
 
     [Required(ErrorMessage = "O campo 'data de nascimento' é obrigatório")]
-    [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
-    [DataType(DataType.Date)]
+    // [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
+    // [DataType(DataType.Date)]
     public DateTime BirthDate { get; set; }     
   }
 }
