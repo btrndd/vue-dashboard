@@ -18,6 +18,6 @@ namespace backend.DTOs
         }
         
         public T Data { get; private set; }
-        public List<string> Message { get; private set; } = new();
+        public List<string> Message { get; set; } = new();
     }
 }

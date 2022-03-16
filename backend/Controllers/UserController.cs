@@ -22,8 +22,15 @@ namespace backend.Controllers {
     [Route("")]
     public async Task<ActionResult<List<ResponseGetUser>>> GetAll([FromServices] DataContext context)
     {
+      try
+      {
         var users = await _repository.GetAll();
         return Ok(users);
+      }
+      catch (Exception) 
+      {
+        return BadRequest(new { message = "Oops, parece que ainda não existem usuários cadastrados. :(" });
+      }
     }  
 
   [HttpPost]
@@ -32,7 +39,6 @@ namespace backend.Controllers {
       [FromServices] DataContext context,
       [FromBody] RequestCreateUser model)
     {
-      // Verifica se os dados são válidos
       if (!ModelState.IsValid)
           return BadRequest(new ResultDTO<User>(null, ModelState.GetErrors()));
 
@@ -51,11 +57,11 @@ namespace backend.Controllers {
 
           await _repository.CreateAuth(auth);
 
-          return Created("/users", _mappedUser);
+          return Created("/users", new ResultDTO<User>(_mappedUser, new List<string> { "Usuário criado com sucesso!" }));
       }
       catch (Exception)
       {
-          return BadRequest(new ResultDTO<User>(null, ModelState.GetErrors()));
+          return BadRequest(new { message = "Não foi possível criar o usuário." });
       }
     }
 
@@ -64,8 +70,15 @@ namespace backend.Controllers {
     [Route("{id:int}")]
     public async Task<ActionResult<ResponseGetUser>> GetById([FromServices] DataContext context, int id)
     {
+      try 
+      {
         var user = await _repository.GetById(id);
         return Ok(user);
+      }
+      catch (Exception)
+      {
+        return BadRequest(new { message = "Não foi possível encontrar o usuário." });
+      }
     }
 
     [HttpPut]
@@ -81,15 +94,15 @@ namespace backend.Controllers {
       try
       {          
           var result = await _repository.Update(model, id);
-          return Ok(result);
+          return Ok(new ResultDTO<User>(result, new List<string> { "Usuário editado com sucesso!" }));
       }
       catch (ArgumentNullException)
       {
-          return NotFound(new { message = "Usuário não encontrado" });
+          return NotFound(new { message = "Usuário não encontrado." });
       }
       catch (Exception)
       {
-          return BadRequest(new { message = "Não foi possível editar o usuário" });
+          return BadRequest(new { message = "Não foi possível editar o usuário." });
       }
     }
 
@@ -102,15 +115,15 @@ namespace backend.Controllers {
       try
       {
           await _repository.Remove(id);
-          return Ok(new { message = "O usuário foi removido com sucesso" });
+          return Ok(new { message = "O usuário foi removido com sucesso!" });
       }
       catch (ArgumentNullException)
       {
-          return NotFound(new { message = "Usuário não encontrado" });
+          return NotFound(new { message = "Usuário não encontrado." });
       }
       catch (Exception)
       {
-          return BadRequest(new { message = "Não foi possível remover o usuário" });
+          return BadRequest(new { message = "Não foi possível remover o usuário." });
       }
     }
   }
