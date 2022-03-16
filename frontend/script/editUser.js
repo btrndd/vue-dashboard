@@ -5,7 +5,13 @@ const changeUser = async (form, id) => {
 
   const formData = new FormData(form);
   let object = {};
-  formData.forEach((value, key) => object[key] = value);
+  formData.forEach((value, key) => {
+    if (key === 'phone') {
+      object[key] = value.replace(/\D/g, '');
+    } else {
+      object[key] = value;
+    }
+  });
   if (object.status) {
     object.status = true;
   };

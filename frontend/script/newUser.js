@@ -7,8 +7,9 @@ export const newUser = async (form) => {
   formData.forEach((value, key) => {
     if (key === 'phone') {
       object[key] = value.replace(/\D/g, '');
+    } else {
+      object[key] = value
     }
-    object[key] = value
   });
   if (object.status) {
     object.status = true;
