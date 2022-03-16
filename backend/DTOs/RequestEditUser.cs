@@ -19,14 +19,12 @@ namespace backend.DTOs
         public string Email { get; set; }
 
         [Required(ErrorMessage = "O campo 'telefone' é obrigatório")]
-        [MaxLength(15, ErrorMessage = "Seu telefone deve conter entre 14 e 15 caracteres")]
-        [MinLength(14, ErrorMessage = "Seu telefone deve conter entre 14 e 15 caracteres")]
+        [MaxLength(11, ErrorMessage = "Seu telefone deve conter entre 10 e 11 caracteres")]
+        [MinLength(10, ErrorMessage = "Seu telefone deve conter entre 10 e 11 caracteres")]
         public string Phone { get; set; }
 
         [Required(ErrorMessage = "O campo 'data de nascimento' é obrigatório")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
-        [DataType(DataType.Date)]
-        public DateTime BirthDate { get; set; } 
+        public DateTime? BirthDate { get; set; } 
         public bool Status { get; set; }
     }
 }
