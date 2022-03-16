@@ -25,5 +25,4 @@ export const newUser = async (form) => {
   });
   const response = await request.json();
   responseCard(response);
-  console.log(response);
 };

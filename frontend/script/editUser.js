@@ -26,7 +26,6 @@ const changeUser = async (form, id) => {
     }
   });
   const response = await request.json();
-  console.log(response);
   responseCard(response);
 }
 

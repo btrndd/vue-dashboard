@@ -169,6 +169,10 @@ form {
     padding-left: 8%;
   }
 
+  #email {
+    padding-left: 8%;
+  }
+
   .container-register h2 {
     font-size: 19px;
     width: 100%;

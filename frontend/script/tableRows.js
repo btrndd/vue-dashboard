@@ -1,6 +1,6 @@
 import { editUser } from "./editUser.js";
-import { removeUser } from "./removeUser.js";
 import { formatNumber } from "./phoneMask.js";
+import { confirmRemove } from "./confirmRemove.js";
 
 const translateKeys = (key) => {
   switch (key) {
@@ -124,7 +124,7 @@ const tableRows = (data) => {
     remove.id = user.id;
     remove.setAttribute('data-name', 'remove');
     removeBtn.appendChild(remove);
-    removeBtn.addEventListener('click', removeUser);
+    removeBtn.addEventListener('click', confirmRemove);
     acoesWrapper.appendChild(removeBtn);
     acoes.appendChild(acoesWrapper);
     tr.appendChild(acoes);      

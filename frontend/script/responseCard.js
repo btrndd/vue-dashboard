@@ -7,7 +7,10 @@ export const responseCard = (response) => {
   main.appendChild(container);
   container.appendChild(text);
   container.classList.add('request');
-  if (!response.data || response.data === null) {
+  const keys = Object.keys(response);
+  if (keys[0] !== 'message') {
+    container.classList.add('bad');
+  } else if (keys[0] === null) {
     container.classList.add('bad');
   } else {
     container.classList.add('good');
