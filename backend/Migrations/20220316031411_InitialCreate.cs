@@ -18,7 +18,7 @@ namespace backend.Migrations
                     Name = table.Column<string>(type: "NVARCHAR(60)", maxLength: 60, nullable: false),
                     LastName = table.Column<string>(type: "NVARCHAR(60)", maxLength: 60, nullable: false),
                     Email = table.Column<string>(type: "VARCHAR(60)", maxLength: 60, nullable: false),
-                    Phone = table.Column<string>(type: "NVARCHAR(15)", maxLength: 15, nullable: false),
+                    Phone = table.Column<string>(type: "VARCHAR(11)", maxLength: 11, nullable: false),
                     BirthDate = table.Column<DateTime>(type: "DATE", nullable: false)
                 },
                 constraints: table =>

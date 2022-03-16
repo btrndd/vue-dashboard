@@ -36,8 +36,11 @@ const setValues = (userData) => {
     } else if (key === 'birthDate') {
       let currDate = new Date(userData[key]);
       let formatedDate = (currDate.getFullYear() + "-" +
-       addZero(currDate.getMonth()+1).toString()  + "-" + addZero(currDate.getDate().toString()) );
+       addZero(currDate.getMonth()+1).toString()  + "-" + addZero(currDate.getDate().toString()));
       document.getElementById(`${key}`).value = formatedDate;    
+    } else if (key === 'phone') {
+      const formatPhone = formatNumber(userData[key]);
+      document.getElementById(`${key}`).value = formatPhone;    
     } else {      
       document.getElementById(`${key}`).value = userData[key];    
     }

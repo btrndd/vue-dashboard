@@ -59,7 +59,8 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("BirthDate")
+                    b.Property<DateTime?>("BirthDate")
+                        .IsRequired()
                         .HasColumnType("DATE")
                         .HasColumnName("BirthDate");
 
@@ -83,8 +84,8 @@ namespace backend.Migrations
 
                     b.Property<string>("Phone")
                         .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("NVARCHAR(15)")
+                        .HasMaxLength(11)
+                        .HasColumnType("VARCHAR(11)")
                         .HasColumnName("Phone");
 
                     b.HasKey("Id");

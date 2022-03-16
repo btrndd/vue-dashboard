@@ -1,5 +1,6 @@
 import { editUser } from "./editUser.js";
 import { removeUser } from "./removeUser.js";
+import { formatNumber } from "./phoneMask.js";
 
 const translateKeys = (key) => {
   switch (key) {
@@ -86,6 +87,13 @@ const tableRows = (data) => {
         let formatedDate = (addZero(currDate.getDate().toString()) 
         + "/" + (addZero(currDate.getMonth()+1).toString()) + "/" + currDate.getFullYear());
         td.textContent = formatedDate;
+        tr.appendChild(td);
+      } else if (key === 'phone') {
+        const td = document.createElement('td');
+        const translatedKey = translateKeys(key);
+        td.setAttribute('data-title', translatedKey);
+        const formatPhone = formatNumber(user[key]);
+        td.textContent = formatPhone;
         tr.appendChild(td);
       } else {
         const td = document.createElement('td');

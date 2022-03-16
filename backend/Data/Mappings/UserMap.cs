@@ -42,13 +42,13 @@ namespace backend.Data.Mappings
             builder.Property(x => x.Phone)
                 .IsRequired()
                 .HasColumnName("Phone")
-                .HasColumnType("NVARCHAR")
-                .HasMaxLength(15);
+                .HasColumnType("VARCHAR")
+                .HasMaxLength(11);
 
             builder.Property(x => x.BirthDate)
+                .IsRequired()
                 .HasColumnName("BirthDate")
-                .HasColumnType("DATE")
-                .IsRequired();
+                .HasColumnType("DATE");
         }
     }
 }
