@@ -12,5 +12,6 @@ namespace backend.Repositories
         Task<List<ResponseGetUser>> GetAll();
         Task<ResponseGetUser> GetById(int id);
         Task<User> Remove(int id);
+        ResponseLogin Login(string email);
     }
 }
