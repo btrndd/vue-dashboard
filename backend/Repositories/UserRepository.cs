@@ -103,5 +103,19 @@ namespace backend.Repositories
           await _context.SaveChangesAsync();
           return currUserModel;
         }
+
+        public ResponseLogin Login(string email)
+        {
+          var currUserModel = _context.Users.FirstOrDefault(x => x.Email == email);
+          var currAuthModel = _context.Auths.FirstOrDefault(x => x.UserId == currUserModel.Id);
+          var authenticated = new ResponseLogin
+          {
+            Id = currAuthModel.Id,
+            Email = currUserModel.Email,
+            Password = currAuthModel.Password,
+          };
+
+          return authenticated;
+        }
   }
 }
