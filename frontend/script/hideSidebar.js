@@ -1,6 +1,14 @@
 const auth = localStorage.getItem('auth');
+
+if (auth === null && location.pathname !== '/frontend/login.html') {
+  location.assign('login.html');
+}
+
 localStorage.clear();
-localStorage.setItem('auth', auth);
+
+if (auth !== null) {
+  localStorage.setItem('auth', auth);
+}
 
 function unhideSidebar() {
   const logo = document.querySelector('.logo-hidden');

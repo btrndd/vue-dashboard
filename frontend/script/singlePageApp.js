@@ -1,3 +1,4 @@
+import { checkAuth } from './checkAuth.js';
 import { hideSidebar } from './hideSidebar.js';
 import { toggleArrow } from './toggleArrow.js';
 import { usersList } from './usersList.js';
@@ -30,6 +31,7 @@ const handleDashClick = (ev) => {
   title.classList.add('title');
   title.textContent = 'Bem vindo a Lyncas';
   main.appendChild(title);
+  checkAuth();
 }
 
 export const spaFunction = () => {
@@ -67,6 +69,15 @@ export const spaFunction = () => {
       parent.removeChild(responseCard);
     }, 2000);
   };
+
+  const logout = document.querySelector('.logout');
+  if (logout) {
+    logout.addEventListener('click', () => {
+      localStorage.removeItem('auth');
+      location.assign('login.html');
+    });
+  }
+  checkAuth();
 }
 
 spaFunction();

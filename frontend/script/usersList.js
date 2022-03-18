@@ -1,3 +1,4 @@
+import { checkAuth } from './checkAuth.js';
 import { loadingSpinner } from './loadingSpinner.js';
 import { registerForm } from './registerForm.js';
 import { searchUsers } from './searchUsers.js';
@@ -61,6 +62,7 @@ const getData = async (data) => {
 }
 
 const usersList = async (ev) => {
+  checkAuth();
   const main = document.querySelector('.main') || document.querySelector('.main-hidden');
   const spinner = document.querySelector('.spinner');
   loadingSpinner(main);

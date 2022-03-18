@@ -1,3 +1,4 @@
+import { checkAuth } from './checkAuth.js';
 import { formValidation } from './formValidation.js';
 import { formatNumber } from './phoneMask.js';
 import { executeMask } from './phoneMask.js';
@@ -49,6 +50,7 @@ const setValues = (userData) => {
 
 // Gerar form com SPA
 const registerForm = async (ev, id, edit) => {
+  checkAuth();
   const register = ev.target.id;
   const response = await getData(register);
   await formInjection(response);
