@@ -3,9 +3,8 @@ import { registerForm } from './registerForm.js';
 import { searchUsers } from './searchUsers.js';
 import { tableRows } from './tableRows.js';
 
-const main = document.querySelector('.main') || document.querySelector('.main-hidden');
-
 const createTable = async (page) => {
+  const main = document.querySelector('.main') || document.querySelector('.main-hidden');
   main.innerHTML = '';
   const newHtml = document.createElement('div');
   newHtml.innerHTML = page;
@@ -62,12 +61,14 @@ const getData = async (data) => {
 }
 
 const usersList = async (ev) => {
+  const main = document.querySelector('.main') || document.querySelector('.main-hidden');
   const spinner = document.querySelector('.spinner');
   loadingSpinner(main);
   const responseCard = document.querySelector('.request');
-  if (responseCard) {
+  if (responseCard) {    
     setTimeout(() => {
-      responseCard.style.visibility = 'hidden';
+      const parent = responseCard.parentElement;
+      parent.removeChild(responseCard);
     }, 2000);
   };
   const { id } = ev.target;
@@ -78,4 +79,4 @@ const usersList = async (ev) => {
   createTable(response);
 }
 
-export { usersList };
+export { usersList, getData };

@@ -8,11 +8,11 @@ export const responseCard = (response) => {
   container.appendChild(text);
   container.classList.add('request');
   const keys = Object.keys(response);
-  if (keys[0] !== 'message') {
-    container.classList.add('bad');
-  } else if (keys[0] === null) {
-    container.classList.add('bad');
-  } else {
+  if (keys[0] === 'data' && response.data !== null) {
     container.classList.add('good');
+  } else if (response.message === 'O usuário foi removido com sucesso!') {
+    container.classList.add('good');
+  } else {
+    container.classList.add('bad');
   }
 }

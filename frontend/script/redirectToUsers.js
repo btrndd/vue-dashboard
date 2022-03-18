@@ -6,6 +6,7 @@ export const redirectToUsers = () => {
       id: 'users',
     }
   };
+  document.title = 'Usuários';
   const url = ev.target.id;
   history.pushState({}, '', url + '.html');
   usersList(ev);

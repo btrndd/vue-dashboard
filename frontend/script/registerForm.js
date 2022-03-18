@@ -4,9 +4,9 @@ import { executeMask } from './phoneMask.js';
 import { redirectToUsers } from './redirectToUsers.js';
 import { addZero } from './tableRows.js';
 
-const main = document.querySelector('.main');
 
 const formInjection = async (page) => {
+  const main = document.querySelector('.main');
   main.innerHTML = '';
   const newHtml = document.createElement('div');
   newHtml.innerHTML = page;
@@ -53,7 +53,7 @@ const registerForm = async (ev, id, edit) => {
   const response = await getData(register);
   await formInjection(response);
   const submitBtn = document.querySelector('.register-btn');
-  if (submitBtn && edit == 'edit') {
+  if (submitBtn && edit === 'edit') {
     const title = document.querySelector('.container-register h2');
     title.textContent = 'Usuários / Editar'
     submitBtn.textContent = 'Editar';

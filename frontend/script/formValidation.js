@@ -158,4 +158,4 @@ if (submitBtn) {
   submitBtn.addEventListener('click', formValidation);
 }
 
-export { formValidation };
+export { formValidation, isRequiredNew, verifyEmail, verifyPassword };
