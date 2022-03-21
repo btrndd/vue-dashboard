@@ -23,13 +23,11 @@ public class BasicAuthMiddleware
             var email = credentials[0];
             var password = credentials[1];
 
-            // authenticate credentials with user service and attach user to http context
             context.Items["Data"] = userRepository.Login(email);
         }
         catch
         {
             // do nothing if invalid auth header
-            // user is not attached to context so request won't have access to secure routes
         }
 
         await _next(context);
