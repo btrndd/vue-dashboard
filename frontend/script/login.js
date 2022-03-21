@@ -42,7 +42,6 @@ const login = async () => {
   
   isRequiredNew();
   verifyEmail(email.value);
-  verifyPassword(password.value);
   
   const finalCheck = document.querySelectorAll('.warning');
   
