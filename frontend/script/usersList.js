@@ -3,6 +3,7 @@ import { loadingSpinner } from './loadingSpinner.js';
 import { registerForm } from './registerForm.js';
 import { searchUsers } from './searchUsers.js';
 import { tableRows } from './tableRows.js';
+import { basicAuth } from './basicAuth.js';
 
 const createTable = async (page) => {
   const main = document.querySelector('.main') || document.querySelector('.main-hidden');
@@ -10,8 +11,12 @@ const createTable = async (page) => {
   const newHtml = document.createElement('div');
   newHtml.innerHTML = page;
   const newMain = newHtml.querySelector('.main');
-  main.innerHTML = newMain.innerHTML;  
-  const response = await fetch('https://localhost:7271/users');
+  main.innerHTML = newMain.innerHTML;
+  const header = basicAuth();
+  const response = await fetch('https://localhost:7271/users', {
+    method: 'GET',
+    headers: header
+  });
   const data = await response.json();
   // tableRows - Cria e popula a linhas da tabela com o usuários
   if (data.length <= 0) {

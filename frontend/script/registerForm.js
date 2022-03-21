@@ -1,3 +1,4 @@
+import { basicAuth } from './basicAuth.js';
 import { checkAuth } from './checkAuth.js';
 import { formValidation } from './formValidation.js';
 import { formatNumber } from './phoneMask.js';
@@ -23,7 +24,11 @@ const getData = async(data) => {
 }
 
 const getById = async (id) => {
-  const request = await fetch(`https://localhost:7271/users/${id}`);
+  const header = basicAuth();
+  const request = await fetch(`https://localhost:7271/users/${id}`, {
+    method: 'GET',
+    headers: header
+  });
   const response = await request.json();
   return response;
 }

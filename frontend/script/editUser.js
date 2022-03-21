@@ -1,5 +1,6 @@
 import { redirectToRegister } from "./redirectToRegister.js";
 import { responseCard } from "./responseCard.js";
+import { basicAuth } from "./basicAuth.js";
 
 const changeUser = async (form, id) => {
 
@@ -18,11 +19,13 @@ const changeUser = async (form, id) => {
   delete object.checkPassword;
   delete object.password;
   const json = JSON.stringify(object);
+  const { Authorization } = basicAuth();
   const request = await fetch(`https://localhost:7271/users/${id}`, {
     method: "PUT",
     body: json,
     headers: {
-      "Content-type": "application/json; charset=UTF-8"
+      "Content-type": "application/json; charset=UTF-8",
+      Authorization
     }
   });
   const response = await request.json();

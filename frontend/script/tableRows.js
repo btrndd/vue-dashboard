@@ -43,7 +43,6 @@ const insertAvatar = (user, index) => {
 }
 
 const tableRows = (data) => {
-  const main = document.querySelector('.main') || document.querySelector('.main-hidden');
   const tbody = document.querySelector('.tbody');
   const rows = document.querySelectorAll('.user-row');  
   if (rows) {
