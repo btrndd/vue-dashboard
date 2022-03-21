@@ -5,9 +5,11 @@ using backend.DTOs;
 using backend.Extensions;
 using backend.Repositories;
 using AutoMapper;
+using backend.Authorization;
 
 namespace backend.Controllers {
-
+  
+  [Authorize]
   [Route("/users")]
   public class UserController : ControllerBase {
     private readonly IUserRepository _repository;

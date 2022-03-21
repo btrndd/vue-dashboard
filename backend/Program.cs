@@ -3,6 +3,7 @@ using backend.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using backend.Repositories;
+using backend.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,6 +49,8 @@ app.UseCors(x => x
     .AllowAnyMethod()
     .AllowAnyHeader()
 );
+
+app.UseMiddleware<BasicAuthMiddleware>();
 
 app.UseAuthorization();
 
