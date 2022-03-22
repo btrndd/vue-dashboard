@@ -36,11 +36,13 @@ namespace backend.Controllers {
       {
         var authenticated = _repository.Login(model.Email);
         
-        if (authenticated == null | authenticated.Password != model.Password)  
+        if (authenticated == null | authenticated.Password != model.Password) 
+        {
           return Unauthorized(new ResultDTO<ResponseLogin>(null, new List<string> { "Email ou senha inválido!" }));
-        
-        return Ok(new ResultDTO<ResponseLogin>(authenticated, new List<string> { "Login realizado com sucesso!" }));
-             
+        } else 
+        {
+          return Ok(new ResultDTO<ResponseLogin>(authenticated, new List<string> { "Login realizado com sucesso!" }));
+        }      
       }
       catch (Exception)
       {

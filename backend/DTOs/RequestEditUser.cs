@@ -25,6 +25,10 @@ namespace backend.DTOs
 
         [Required(ErrorMessage = "O campo 'data de nascimento' é obrigatório")]
         public DateTime? BirthDate { get; set; } 
+
+        [MinLength(6, ErrorMessage = "Sua senha precisa ter no mínimo 6 digitos.")]
+        [RegularExpression(@"(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,60})$", ErrorMessage = "Sua senha precisa ter no mínimo um número.")]
+        public string Password { get; set; }
         public bool Status { get; set; }
     }
 }

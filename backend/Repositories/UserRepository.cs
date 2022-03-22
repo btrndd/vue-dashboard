@@ -74,6 +74,29 @@ namespace backend.Repositories
             .FirstOrDefaultAsync();
         }
 
+        public async Task<ResponseGetUser> GetByEmail(string email)
+        {
+            return await _context.Users
+            .Where(user => user.Email == email)
+            .Join(
+              _context.Auths,
+              user => user.Id,
+              auth => auth.UserId,
+              (user, auth) => new ResponseGetUser
+                { 
+                  Id = user.Id,
+                  Name = user.Name,
+                  LastName = user.LastName,
+                  Phone = user.Phone,
+                  Email = user.Email,
+                  BirthDate = user.BirthDate,
+                  Status = auth.Status
+                }
+              )
+            .AsNoTracking()            
+            .FirstOrDefaultAsync();
+        }
+
         public async Task<User> Update(RequestEditUser model, int id)
         {
 
@@ -87,6 +110,9 @@ namespace backend.Repositories
           currUserModel.BirthDate = model.BirthDate;
           
           currAuthModel.Status = model.Status;
+          if (model.Password != null) {
+            currAuthModel.Password = model.Password;
+          }
 
           _context.Users.Update(currUserModel);
           _context.Auths.Update(currAuthModel);
