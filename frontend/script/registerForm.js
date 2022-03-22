@@ -5,10 +5,11 @@ import { formatNumber } from './phoneMask.js';
 import { executeMask } from './phoneMask.js';
 import { redirectToUsers } from './redirectToUsers.js';
 import { addZero } from './tableRows.js';
+import { updateUserName } from './updateUserName.js';
 
 
 const formInjection = async (page) => {
-  const main = document.querySelector('.main');
+  const main = document.querySelector('.main') || document.querySelector('.main-hidden');
   main.innerHTML = '';
   const newHtml = document.createElement('div');
   newHtml.innerHTML = page;
@@ -56,6 +57,8 @@ const setValues = (userData) => {
 // Gerar form com SPA
 const registerForm = async (ev, id, edit) => {
   checkAuth();
+  const auth = JSON.parse(localStorage.getItem('auth'));
+  await updateUserName(auth.id);
   const register = ev.target.id;
   const response = await getData(register);
   await formInjection(response);
@@ -88,4 +91,4 @@ const registerForm = async (ev, id, edit) => {
   });
 }
 
-export { registerForm };
+export { registerForm, getById };

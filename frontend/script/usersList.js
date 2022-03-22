@@ -4,6 +4,7 @@ import { registerForm } from './registerForm.js';
 import { searchUsers } from './searchUsers.js';
 import { tableRows } from './tableRows.js';
 import { basicAuth } from './basicAuth.js';
+import { updateUserName } from './updateUserName.js';
 
 const createTable = async (page) => {
   const main = document.querySelector('.main') || document.querySelector('.main-hidden');
@@ -68,11 +69,17 @@ const getData = async (data) => {
 
 const usersList = async (ev) => {
   checkAuth();
+  const auth = JSON.parse(localStorage.getItem('auth'));
+  await updateUserName(auth.id);
   const main = document.querySelector('.main') || document.querySelector('.main-hidden');
   const spinner = document.querySelector('.spinner');
   loadingSpinner(main);
   const responseCard = document.querySelector('.request');
-  if (responseCard) {    
+  
+  if (responseCard) {
+    if (main.className === 'main-hidden') {      
+      responseCard.style.left = 0;
+    } 
     setTimeout(() => {
       const parent = responseCard.parentElement;
       parent.removeChild(responseCard);

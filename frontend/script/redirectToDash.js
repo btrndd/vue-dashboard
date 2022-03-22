@@ -1,4 +1,6 @@
+
 import { spaFunction } from "./singlePageApp.js";
+import { updateUserName } from "./updateUserName.js";
 
 const getData = async (id) => {
   const request = new Request(id + '.html');
@@ -29,6 +31,8 @@ const redirectToDash = async (response) => {
   const script = document.querySelector("[type='module']")
   script.src = './script/singlePageApp.js';
   
+  await updateUserName(response.data.id);
+
   spaFunction();
   localStorage.setItem('auth', JSON.stringify(response.data));
 }

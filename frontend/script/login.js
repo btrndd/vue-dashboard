@@ -23,7 +23,19 @@ const callLogin = async  (email, password) => {
   window.localStorage.setItem('auth', JSON.stringify(response.data));
 
   responseCard(response);
-  redirectToDash(response);
+  const card = document.querySelector('.request');
+  card.style.left = 0;
+  if (response.data === null) {
+    if (card) {    
+      setTimeout(() => {
+        const parent = card.parentElement;
+        parent.removeChild(card);
+      }, 2000);
+    }
+    return;
+  } else {
+    redirectToDash(response);
+  }
 };
 
 
@@ -54,7 +66,8 @@ const login = async () => {
     
     await callLogin(email.value, password.value);
     
-    spinner.style.visibility = 'hidden';
+    const parent = spinner.parentElement;
+    parent.removeChild(spinner);
   };
 };
 
