@@ -47,19 +47,25 @@ namespace backend.Controllers {
       try
       {
           var _mappedUser = _mapper.Map<User>(model);
-          
-          var createdUser = await _repository.CreateUser(_mappedUser);
 
-          var auth = new Auth
-          { 
-            UserId = createdUser.Id, 
-            Password = model.Password,
-            Status = model.Status
-          };
+          var checkIfEmailExists = await _repository.GetByEmail(model.Email);
 
-          await _repository.CreateAuth(auth);
+          if (checkIfEmailExists == null)
+          {
+            var createdUser = await _repository.CreateUser(_mappedUser);
 
-          return Created("/users", new ResultDTO<User>(_mappedUser, new List<string> { "Usuário criado com sucesso!" }));
+            var auth = new Auth
+            { 
+              UserId = createdUser.Id, 
+              Password = model.Password,
+              Status = model.Status
+            };
+
+            await _repository.CreateAuth(auth);
+
+            return Created("/users", new ResultDTO<User>(_mappedUser, new List<string> { "Usuário criado com sucesso!" }));
+          }
+        return BadRequest(new { message = "O email inserido já está em uso." });
       }
       catch (Exception)
       {

@@ -21,8 +21,7 @@ public class BasicAuthMiddleware
             var credentialBytes = Convert.FromBase64String(authHeader.Parameter);
             var credentials = Encoding.UTF8.GetString(credentialBytes).Split(':', 2);
             var email = credentials[0];
-            var password = credentials[1];
-
+            
             context.Items["Data"] = userRepository.Login(email);
         }
         catch
