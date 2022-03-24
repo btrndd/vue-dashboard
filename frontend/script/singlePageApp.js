@@ -1,8 +1,7 @@
+import { checkAuth } from './checkAuth.js';
 import { hideSidebar } from './hideSidebar.js';
 import { toggleArrow } from './toggleArrow.js';
 import { usersList } from './usersList.js';
-
-const showSidebar = document.querySelector('.show-sidebar');
 
 const isBtnFocused = () => {
   const btn = document.querySelector('.fa-chevron-right');
@@ -32,9 +31,10 @@ const handleDashClick = (ev) => {
   title.classList.add('title');
   title.textContent = 'Bem vindo a Lyncas';
   main.appendChild(title);
+  checkAuth();
 }
 
-const spaFunction = () => {
+export const spaFunction = () => {
   const menuBtn = document.querySelectorAll('.menu-btn');
   const menuBtnHidden = document.querySelectorAll('.menu-btn-hidden');
   if (menuBtn) {
@@ -58,11 +58,29 @@ const spaFunction = () => {
       }
     })
   }
+  const showSidebar = document.querySelector('.show-sidebar');
+  if (showSidebar) {
+    showSidebar.addEventListener('click', hideSidebar);
+  }
+  const responseCard = document.querySelector('.request');
+  if (responseCard) {    
+    setTimeout(() => {
+      const parent = responseCard.parentElement;
+      parent.removeChild(responseCard);
+    }, 2000);
+  };
+
+  const logout = document.querySelector('.logout');
+  if (logout) {
+    logout.addEventListener('click', () => {
+      localStorage.removeItem('auth');
+      location.assign('login.html');
+    });
+  }
+  checkAuth();
 }
 
 spaFunction();
-
-showSidebar.addEventListener('click', hideSidebar);
 
 window.onresize = () => {
   if (window.innerWidth <= 1280) {

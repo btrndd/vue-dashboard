@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/7e467a41f8.js" crossorigin="anonymous"></script>
     <title>Login</title>
 </head>
 <body>
@@ -16,11 +17,16 @@
         <img src="./img/logo-azul.png" alt="Logo da Lyncas" class="logo-login" />
         <form class="form-card">
             <h3 class="form-title">LOGIN</h3>
-            <input name="email" class="form-input" placeholder="Email" />
-            <input name="senha" class="form-input" type="password" placeholder="Senha" />
+            <label class="label">
+                <input name="email" class="form-input" placeholder="Email" />
+            </label>
+            <label class="label">
+                <input name="senha" class="form-input" type="password" placeholder="Senha" />
+            </label>
             <button id="login-btn" type="button">Log In</button>
         </form> 
     </main>
     </div>
+    <script src="./script/login.js" type="module"></script>
 </body>
 </html>

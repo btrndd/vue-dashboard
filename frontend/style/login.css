@@ -1,7 +1,17 @@
+@import url(./dashboard.css);
+@import url(./users.css);
+
 * {
     font-family: 'Merriweather Sans', sans-serif;
     margin: 0;
+    padding: initial;
+    /* background-color: white; */
 }
+
+body {
+    height: 100%;
+    background-color: white;
+  }
 
 button, button:focus{
     outline: none;
@@ -15,11 +25,6 @@ button:active{
     border: 1px solid grey;
 }
 
-/* .wrapper {
-    display: flex;
-    align-items: center;
-} */
-
 .form-card {
     display: flex;
     flex-direction: column;
@@ -29,6 +34,7 @@ button:active{
     border-radius: 5px;
     width: 400px;
     height: auto;
+    padding: unset;
     padding-bottom: 15px;
 }
 
@@ -76,6 +82,16 @@ button:active{
     bottom: 0;
     left: 0; 
     right: 0;
+}
+
+.warning {
+    color: red;
+    margin-top: 4px;
+  }
+
+.label {
+    display: flex;
+    flex-direction: column;
 }
 
 @media only screen and (max-width: 460px) {
