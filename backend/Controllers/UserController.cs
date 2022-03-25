@@ -3,21 +3,18 @@ using backend.Data;
 using backend.Models;
 using backend.DTOs;
 using backend.Extensions;
-using backend.Repositories;
-using AutoMapper;
 using backend.Authorization;
+using backend.Services;
 
 namespace backend.Controllers {
   
   [Authorize]
   [Route("/users")]
   public class UserController : ControllerBase {
-    private readonly IUserRepository _repository;
-    public readonly IMapper _mapper;
-    public UserController(IUserRepository repository, IMapper mapper)
+    private readonly UserService _service;
+    public UserController(UserService service)
     {
-        _repository = repository;
-        _mapper = mapper;
+        _service = service;
     }
     
     [HttpGet]
@@ -26,7 +23,7 @@ namespace backend.Controllers {
     {
       try
       {
-        var users = await _repository.GetAll();
+        var users = await _service.GetAll(context);
         return Ok(users);
       }
       catch (Exception) 
@@ -46,25 +43,11 @@ namespace backend.Controllers {
 
       try
       {
-          var _mappedUser = _mapper.Map<User>(model);
-
-          var checkIfEmailExists = await _repository.GetByEmail(model.Email);
-
-          if (checkIfEmailExists == null)
-          {
-            var createdUser = await _repository.CreateUser(_mappedUser);
-
-            var auth = new Auth
-            { 
-              UserId = createdUser.Id, 
-              Password = model.Password,
-              Status = model.Status
-            };
-
-            await _repository.CreateAuth(auth);
-
-            return Created("/users", new ResultDTO<User>(_mappedUser, new List<string> { "Usuário criado com sucesso!" }));
-          }
+        var createdUser = await _service.Create(context, model);
+        return Created("/users", new ResultDTO<User>(createdUser, new List<string> { "Usuário criado com sucesso!" }));
+      }
+      catch (ArgumentNullException) 
+      {
         return BadRequest(new { message = "O email inserido já está em uso." });
       }
       catch (Exception)
@@ -80,7 +63,7 @@ namespace backend.Controllers {
     {
       try 
       {
-        var user = await _repository.GetById(id);
+        var user = await _service.GetById(context, id);
         return Ok(user);
       }
       catch (Exception)
@@ -101,7 +84,7 @@ namespace backend.Controllers {
 
       try
       {          
-          var result = await _repository.Update(model, id);
+          var result = await _service.Update(context, id, model);
           return Ok(new ResultDTO<User>(result, new List<string> { "Usuário editado com sucesso!" }));
       }
       catch (ArgumentNullException)
@@ -122,8 +105,8 @@ namespace backend.Controllers {
     {
       try
       {
-          await _repository.Remove(id);
-          return Ok(new { message = "O usuário foi removido com sucesso!" });
+          var result = await _service.Remove(context, id);
+          return Ok(result);
       }
       catch (ArgumentNullException)
       {
