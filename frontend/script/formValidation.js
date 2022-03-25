@@ -1,7 +1,11 @@
+import { newUser } from './newUser.js';
+import { redirectToUsers } from './redirectToUsers.js';
 import { formatNumber } from './phoneMask.js';
 import { executeMask } from './phoneMask.js';
+import { changeUser } from './editUser.js';
+import { loadingSpinner } from './loadingSpinner.js';
 
-const submitBtn = document.getElementById('cadastrar');
+const submitBtn = document.querySelector('.register-btn');
 const phone = document.getElementById('phone');
 
 if (phone) {
@@ -68,22 +72,42 @@ const doubleCheckPassword = (password, checkPassword) => {
   }  
 }
 
-const isRequired = () => {
+const isRequiredNew = () => {
   const inputs = document.getElementsByTagName('input');
   for (let index = 0; index < inputs.length; index += 1) {
     if (inputs[index].value !== '') {
-      console.log('success');
     } else {
       const warning = document.createElement('small');
       warning.textContent = 'Por favor, preencha este campo.'
       warning.classList.add('warning');
       const parent = inputs[index].parentElement;
       parent.appendChild(warning);
-    }    
+    } 
   };
 }
 
-function formValidation() {
+const isRequiredEdit = () => {
+  const inputs = document.getElementsByTagName('input');
+  let filteredInputs = [];
+  for (let index = 0; index < inputs.length; index += 1) {
+    if (inputs[index].id === 'password' || inputs[index].id === 'checkPassword') {    
+    } else {
+      filteredInputs.push(inputs[index]);
+    }
+  };
+  for (let index = 0; index < filteredInputs.length; index += 1) {
+    if (filteredInputs[index].value !== '') {
+    } else {
+      const warning = document.createElement('small');
+      warning.textContent = 'Por favor, preencha este campo.'
+      warning.classList.add('warning');
+      const parent = filteredInputs[index].parentElement;
+      parent.appendChild(warning);
+    } 
+  };
+}
+
+async function formValidation(ev) {
   const phone = document.getElementById('phone');
   const email = document.getElementById('email');
   const password = document.getElementById('password');
@@ -96,14 +120,37 @@ function formValidation() {
       parent.removeChild(smalls[index]);
     }
   }
-  isRequired();
-  verifyEmail(email);
-  verifyPassword(password);
-  doubleCheckPassword(password, checkPassword);
-  verifyPhone(phone);
-  const finalCheck = document.querySelectorAll('.warning');
-  if (finalCheck.length === 0) {
-    return window.alert('Criado com sucesso!');
+
+  const key = ev.target.name;
+  const id = ev.target.id;
+
+  if (key === 'cadastrar') {
+    isRequiredNew();
+    verifyEmail(email);
+    verifyPassword(password);
+    doubleCheckPassword(password, checkPassword);
+    verifyPhone(phone);
+    const finalCheck = document.querySelectorAll('.warning');
+    if (finalCheck.length === 0) {
+      const form = document.querySelector('.form');
+      const main = document.querySelector('.main') || document.querySelector('.main-hidden');
+      loadingSpinner(main);
+      await newUser(form);
+      return redirectToUsers();
+    }
+  }
+  if (key === 'edit') {
+    isRequiredEdit();
+    verifyEmail(email);
+    verifyPhone(phone);
+    const finalCheck = document.querySelectorAll('.warning');
+    if (finalCheck.length === 0) {
+      const form = document.querySelector('.form');
+      const main = document.querySelector('.main') || document.querySelector('.main-hidden');
+      loadingSpinner(main);
+      await changeUser(form, id);
+      return redirectToUsers();
+    }
   }
 }
 
@@ -111,4 +158,4 @@ if (submitBtn) {
   submitBtn.addEventListener('click', formValidation);
 }
 
-export { formValidation };
+export { formValidation, isRequiredNew, verifyEmail, verifyPassword };

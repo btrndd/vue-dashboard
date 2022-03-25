@@ -113,10 +113,91 @@ table {
 
 .active {
   background-color: #e6fff3;
-  height: 23px;
+  height: 20px;
   padding-top: 3px;
   width: 100px;
   color: #2bd988;
+}
+
+.inactive {
+  background-color: #ffe6e6;
+  height: 20px;
+  padding-top: 3px;
+  width: 100px;
+  color: #d92b2b;
+}
+
+.request {
+  position: fixed;
+  z-index: 999;
+  height: max-content;
+  width: max-content;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 250px;
+  bottom: 0;
+  right: 0;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  box-shadow: 1px 2px 1px 1px gray;
+  border-radius: 5px;
+  visibility: visible;
+}
+
+.good {
+  background-color: #2bd988;
+}
+
+.bad {
+  background-color: #d47575;
+}
+
+.no-users {
+  color: grey;
+  text-align: center;
+  width: fit-content;
+  margin: auto;
+}
+
+.modal {
+  position: fixed;
+  z-index: 999;
+  height: max-content;
+  width: max-content;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 250px;
+  bottom: 0;
+  right: 0;
+  color: gray;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  box-shadow: 1px 2px 1px 1px gray;
+  border-radius: 5px;
+  visibility: visible;
+  background-color: white;
+}
+
+.modal-wrapper {
+  display: flex;
+  margin-top: 10px;
+  justify-content: space-evenly;
+}
+
+@media only screen and (max-width: 1280px) {
+  .request {
+    left: 80px;
+  }
+
+  .modal {
+    left: 80px;
+  }
 }
 
 @media only screen and (max-width: 920px) {
@@ -202,7 +283,10 @@ table {
 
   .active {
     margin: auto;
-  }  
+  }
+  .inactive {
+    margin: auto;
+  }
 }
 
 @media only screen and (max-width: 360px) {

@@ -17,8 +17,8 @@
     <div class="avatar-wrapper">
       <img src="./img/avatar.png" alt="Imagem de perfil" class="avatar" />
       <div class="logoff-wrapper">
-        <p>Nome de Usuário</p>
-        <button type="button">Sair</button>
+        <p class="user">Nome de Usuário</p>
+        <button class="logout" type="button">Sair</button>
       </div>
     </div>
   </header>
@@ -51,7 +51,7 @@
     <div class="container-register">
       <h2>Usuários / Cadastrar</h2>      
     </div>  
-    <form>
+    <form class="form">
       <div class="inputWrapper">
         <div class="input">
           <label for="name">Nome</label>
@@ -96,10 +96,9 @@
         <input type="checkbox" name="status" id="status" />
         <label for="status">Ativo</label>
       </div>
-      <button type="button" id="cadastrar" data-page="register">Cadastrar</button>
+      <button type="button" id="cadastrar" class="register-btn" data-page="register">Cadastrar</button>
     </form>
   </main>
   <script src="./script/singlePageApp.js" type="module"></script>
-  <script src="./script/formValidation.js" type="module"></script>
 </body>
 </html>

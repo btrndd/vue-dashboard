@@ -1,4 +1,14 @@
+const auth = localStorage.getItem('auth');
+
+if (auth === null && location.pathname !== '/frontend/login.html') {
+  location.assign('login.html');
+}
+
 localStorage.clear();
+
+if (auth !== null) {
+  localStorage.setItem('auth', auth);
+}
 
 function unhideSidebar() {
   const logo = document.querySelector('.logo-hidden');
@@ -21,7 +31,9 @@ function unhideSidebar() {
   main.classList.add('main')
   header.classList.remove('header-hidden');
   header.classList.add('header')
+  const auth = localStorage.getItem('auth');
   localStorage.clear();
+  localStorage.setItem('auth', auth);
 };
 
 function hideSidebar() {
