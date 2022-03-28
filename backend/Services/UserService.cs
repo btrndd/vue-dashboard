@@ -3,8 +3,6 @@ using backend.Models;
 using backend.DTOs;
 using backend.Interfaces;
 using AutoMapper;
-using backend.Extensions;
-
 
 namespace backend.Services 
 {
