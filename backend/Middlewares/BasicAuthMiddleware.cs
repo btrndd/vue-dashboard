@@ -1,8 +1,8 @@
-namespace backend.Authorization;
+namespace backend.Middlewares;
 
 using System.Net.Http.Headers;
 using System.Text;
-using backend.Repositories;
+using backend.Interfaces;
 
 public class BasicAuthMiddleware
 {

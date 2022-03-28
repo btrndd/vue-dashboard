@@ -2,6 +2,7 @@ using backend.Data;
 using backend.Models;
 using backend.DTOs;
 using Microsoft.EntityFrameworkCore;
+using backend.Interfaces;
 
 namespace backend.Repositories
 {
@@ -13,8 +14,6 @@ namespace backend.Repositories
     {
         _context = context;
     }
-
-
         public async Task<User> CreateUser(User user)
         {
             _context.Users.Add(user);
@@ -121,13 +120,11 @@ namespace backend.Repositories
           return currUserModel;
         }
 
-        public async Task<User> Remove(int id)
+        public async Task<User> Remove(User user)
         {
-          var currUserModel = _context.Users.FirstOrDefault(x => x.Id == id);
-
-          _context.Users.Remove(currUserModel);
+          var result = _context.Users.Remove(user);
           await _context.SaveChangesAsync();
-          return currUserModel;
+          return result.Entity;
         }
 
         public ResponseLogin Login(string email)

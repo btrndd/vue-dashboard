@@ -3,7 +3,10 @@ using backend.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using backend.Repositories;
-using backend.Authorization;
+using backend.Middlewares;
+using backend.Interfaces;
+using backend.Services;
+using backend.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +17,8 @@ builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlServer(builder.Confi
 builder.Services.AddScoped<DataContext, DataContext>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -51,6 +56,8 @@ app.UseCors(x => x
 );
 
 app.UseMiddleware<BasicAuthMiddleware>();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseAuthorization();
 

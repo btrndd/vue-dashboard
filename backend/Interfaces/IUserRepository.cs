@@ -2,7 +2,7 @@
 using backend.Models;
 using backend.DTOs;
 
-namespace backend.Repositories
+namespace backend.Interfaces
 {
     public interface IUserRepository
     {
@@ -12,7 +12,7 @@ namespace backend.Repositories
         Task<List<ResponseGetUser>> GetAll();
         Task<ResponseGetUser> GetById(int id);
         Task<ResponseGetUser> GetByEmail(string email);
-        Task<User> Remove(int id);
+        Task<User> Remove(User user);
         ResponseLogin Login(string email);
     }
 }

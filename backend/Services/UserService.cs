@@ -1,12 +1,14 @@
 using backend.Data;
 using backend.Models;
 using backend.DTOs;
-using backend.Repositories;
+using backend.Interfaces;
 using AutoMapper;
+using backend.Extensions;
+
 
 namespace backend.Services 
 {
-  public class UserService 
+  public class UserService : IUserService
   {
     private readonly IUserRepository _repository;
     public readonly IMapper _mapper;
@@ -16,15 +18,16 @@ namespace backend.Services
         _mapper = mapper;
     }
     
-    public async Task<List<ResponseGetUser>> GetAll(DataContext context)
+    public async Task<List<ResponseGetUser>> GetAll()
     {
         var users = await _repository.GetAll();
+        if (users == null) {
+          throw new ApplicationException("Oops, parece que ainda não existem usuários cadastrados. :(");
+        }
         return users;
     }  
 
-  public async Task<User> Create(
-      DataContext context,
-      RequestCreateUser model)
+  public async Task<User> Create(RequestCreateUser model)
     {
       var _mappedUser = _mapper.Map<User>(model);
 
@@ -33,44 +36,79 @@ namespace backend.Services
       var _mappedResponseGetUser = _mapper.Map<User>(checkIfEmailExists);
 
       if (checkIfEmailExists == null)
-      {
-        var createdUser = await _repository.CreateUser(_mappedUser);
+        throw new ApplicationException("O email inserido já está em uso.");
+      
+      var createdUser = await _repository.CreateUser(_mappedUser);
 
-        var auth = new Auth
-        { 
-          UserId = createdUser.Id, 
-          Password = model.Password,
-          Status = model.Status
-        };
+      var auth = new Auth
+      { 
+        UserId = createdUser.Id, 
+        Password = model.Password,
+        Status = model.Status
+      };
 
-        await _repository.CreateAuth(auth);
+      var createdAuth = await _repository.CreateAuth(auth);
 
-        return _mappedUser;
-      }
-      return _mappedResponseGetUser;
+      if (createdUser == null | createdAuth == null)
+        throw new ApplicationException("Não foi possível criar o usuário.");
+
+      return _mappedUser;
     }
 
-    public async Task<ResponseGetUser> GetById(DataContext context, int id)
+    public async Task<ResponseGetUser> GetById(int id)
     {
       var user = await _repository.GetById(id);
+      if (user == null)
+        throw new KeyNotFoundException("Não foi possível encontrar o usuário.");
+      
       return user;
     }
 
     public async Task<User> Update(
-      DataContext context,
       int id,
       RequestEditUser model)
     {         
+      var user = await _repository.GetById(id);
+      if (user == null)
+        throw new KeyNotFoundException("Não foi possível encontrar o usuário.");
+
       var result = await _repository.Update(model, id);
+      if (result == null)
+        throw new ApplicationException("Não foi possível editar o usuário.");
+
       return result;    
     }
 
-    public async Task<Object> Remove(
-      DataContext context,
-      int id)
+    public async Task<User> Remove(int id)
     {
-      await _repository.Remove(id);
-      return new { message = "O usuário foi removido com sucesso!" };
+      var user = await _repository.GetById(id);
+      if (user == null)
+        throw new KeyNotFoundException("Não foi possível encontrar esse usuário.");
+
+      var _mappedResponseGetUser = _mapper.Map<User>(user);
+
+      var result = await _repository.Remove(_mappedResponseGetUser);
+      if (result == null)
+        throw new ApplicationException("Não foi possível remover o usuário.");
+
+      return result;
+    }
+
+    public async Task<ResponseLogin> Login(RequestLogin model)
+    {
+      var user = await _repository.GetByEmail(model.Email);
+      if (user == null)
+        throw new UnauthorizedAccessException("Email ou senha inválido!");
+
+      var authenticated = _repository.Login(model.Email);
+        
+      if (authenticated.Password != model.Password)
+        throw new UnauthorizedAccessException("Email ou senha inválido!");
+
+      if (authenticated == null)
+        throw new ApplicationException("Oops! Aconteceu algo de errado.");
+      
+      return authenticated;
     }
   }
 }
