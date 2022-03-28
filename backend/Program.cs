@@ -6,7 +6,6 @@ using backend.Repositories;
 using backend.Middlewares;
 using backend.Interfaces;
 using backend.Services;
-using backend.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
