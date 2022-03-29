@@ -1,11 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using backend.Data;
-using backend.Models;
 using backend.DTOs;
 using backend.Extensions;
-using backend.Repositories;
-using AutoMapper;
 using backend.Authorization;
+using backend.Interfaces;
 
 namespace backend.Controllers {
 
@@ -13,41 +10,23 @@ namespace backend.Controllers {
   [Route("/login")]
   public class LoginController : ControllerBase 
   {
-    private readonly IUserRepository _repository;
-    public readonly IMapper _mapper;
+    private readonly IUserService _service;
     
-    public LoginController(IUserRepository repository, IMapper mapper)
+    public LoginController(IUserService service)
     {
-        _repository = repository;
-        _mapper = mapper;        
+        _service = service;     
     }
 
     [AllowAnonymous]
     [HttpPost]
     [Route("")]
-    public ActionResult Login(
-      [FromServices] DataContext context,
-      [FromBody] RequestLogin model)
+    public async Task<ActionResult> Login([FromBody] RequestLogin model)
     {
       if (!ModelState.IsValid)
-          return BadRequest(new ResultDTO<ResponseLogin>(null, ModelState.GetErrors()));
+        throw new ApplicationException(ModelState.GetErrors()[0]);
 
-      try
-      {
-        var authenticated = _repository.Login(model.Email);
-        
-        if (authenticated == null | authenticated.Password != model.Password) 
-        {
-          return Unauthorized(new ResultDTO<ResponseLogin>(null, new List<string> { "Email ou senha inválido!" }));
-        } else 
-        {
-          return Ok(new ResultDTO<ResponseLogin>(authenticated, new List<string> { "Login realizado com sucesso!" }));
-        }      
-      }
-      catch (Exception)
-      {
-        return BadRequest(new { message = "Não foi possível realizar o login." });
-      }
+      var authenticated = await _service.Login(model);
+      return Ok(new ResultDTO<ResponseLogin>(authenticated, "Login realizado com sucesso!"));
     }
   }
 }

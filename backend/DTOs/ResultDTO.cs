@@ -2,22 +2,22 @@ namespace backend.DTOs
 {
     public class ResultDTO<T>
     {
-        public ResultDTO(T data, List<string> errors)
+        public ResultDTO(T data, string message)
         {
             Data = data;
-            Message = errors;
+            Message = message;
         }
 
         public ResultDTO(T data)
         {
             Data = data;
         }
-        public ResultDTO(string error)
+        public ResultDTO(string message)
         {
-            Message.Add(error);
+            Message = message;
         }
         
         public T Data { get; private set; }
-        public List<string> Message { get; set; } = new();
+        public string Message { get; set; }
     }
 }

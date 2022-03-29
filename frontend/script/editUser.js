@@ -1,7 +1,7 @@
 import { redirectToRegister } from "./redirectToRegister.js";
 import { responseCard } from "./responseCard.js";
 import { basicAuth } from "./basicAuth.js";
-import { getById } from "./registerForm.js";
+import { loginRequest } from "./loginRequest.js";
 
 const changeUser = async (form, id) => {
 
@@ -18,7 +18,7 @@ const changeUser = async (form, id) => {
     object.status = true;
   };
   delete object.checkPassword;
-  console.log(object.password);
+  
   if (!object.password) {
     delete object.password;
   }  
@@ -34,10 +34,13 @@ const changeUser = async (form, id) => {
   });
   const response = await request.json();
   responseCard(response);
-  const user = await getById(id);
-  if (user.email !== object.email || (object.password && user.password !== object.password)) {
-    location.assign('login.html');
-    localStorage.clear();
+  if(object.password) {
+    const user = await loginRequest(object.email, object.password);
+    const userAuth = JSON.parse(localStorage.getItem('auth'));
+    if (userAuth.email === object.email && (user.data.password !== userAuth.password)) {
+      location.assign('login.html');
+      localStorage.clear();
+    }
   }
 }
 

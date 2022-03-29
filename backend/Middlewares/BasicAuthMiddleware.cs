@@ -1,8 +1,8 @@
-namespace backend.Authorization;
+namespace backend.Middlewares;
 
 using System.Net.Http.Headers;
 using System.Text;
-using backend.Repositories;
+using backend.Interfaces;
 
 public class BasicAuthMiddleware
 {
@@ -13,7 +13,7 @@ public class BasicAuthMiddleware
         _next = next;
     }
 
-    public async Task Invoke(HttpContext context, IUserRepository userRepository)
+    public async Task Invoke(HttpContext context, IUserRepository repository)
     {
         try
         {
@@ -22,7 +22,7 @@ public class BasicAuthMiddleware
             var credentials = Encoding.UTF8.GetString(credentialBytes).Split(':', 2);
             var email = credentials[0];
             
-            context.Items["Data"] = userRepository.Login(email);
+            context.Items["Data"] = repository.Login(email);
         }
         catch
         {

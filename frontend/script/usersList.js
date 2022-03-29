@@ -77,8 +77,8 @@ const usersList = async (ev) => {
   const responseCard = document.querySelector('.request');
   
   if (responseCard) {
-    if (main.className === 'main-hidden') {      
-      responseCard.style.left = 0;
+    if (window.innerWidth <= 1280) {      
+      responseCard.style.left = '60px';
     } 
     setTimeout(() => {
       const parent = responseCard.parentElement;

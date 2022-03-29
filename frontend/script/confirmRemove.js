@@ -5,6 +5,10 @@ export const confirmRemove = (event) => {
   const main = document.querySelector('.main') || document.querySelector('.main-hidden');
   const container = document.createElement('div');
   container.classList.add('modal');
+  if (window.innerWidth <= 1280) {
+    container.style.left = 0;
+    container.style.width = '250px';
+  }
   const text = document.createElement('p');
   text.textContent = 'Você realmente deseja excluir este usuário?';
   container.appendChild(text);

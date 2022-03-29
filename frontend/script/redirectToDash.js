@@ -19,6 +19,21 @@ const redirectToDash = async (response) => {
   history.pushState({}, '', id + '.html');
   document.title = 'Dashboard';
 
+  const card = document.querySelector('.request');
+
+  if (window.innerWidth <= 1280) {
+    card.style.left = '60px';
+  } else {
+    card.style.left = '250px';
+  }
+
+  if (card) {    
+    setTimeout(() => {
+      const parent = card.parentElement;
+      parent.removeChild(card);
+    }, 2000);
+  }
+
   const div = document.querySelector('.wrapper');
   const page = await getData(id);
   
@@ -35,6 +50,19 @@ const redirectToDash = async (response) => {
 
   spaFunction();
   localStorage.setItem('auth', JSON.stringify(response.data));
+
+  if (window.innerWidth <= 1280) {
+    const logo = document.querySelector('.logo');
+    if (logo) {
+      logo.src = './img/icon-branco.png';
+    }
+  }
+  if (window.innerWidth > 1280) {
+    const logo = document.querySelector('.logo');
+    if (logo) {
+      logo.src = './img/logo-branca.png';
+    }
+  }
 }
 
 export { redirectToDash };

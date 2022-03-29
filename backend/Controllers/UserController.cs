@@ -1,138 +1,71 @@
 using Microsoft.AspNetCore.Mvc;
-using backend.Data;
 using backend.Models;
 using backend.DTOs;
 using backend.Extensions;
-using backend.Repositories;
-using AutoMapper;
 using backend.Authorization;
+using backend.Interfaces;
 
-namespace backend.Controllers {
+namespace backend.Controllers 
+{
   
   [Authorize]
   [Route("/users")]
-  public class UserController : ControllerBase {
-    private readonly IUserRepository _repository;
-    public readonly IMapper _mapper;
-    public UserController(IUserRepository repository, IMapper mapper)
+  public class UserController : ControllerBase 
+  {
+    private readonly IUserService _service;
+    public UserController(IUserService service)
     {
-        _repository = repository;
-        _mapper = mapper;
+      _service = service;
     }
     
     [HttpGet]
     [Route("")]
-    public async Task<ActionResult<List<ResponseGetUser>>> GetAll([FromServices] DataContext context)
+    public async Task<ActionResult<List<ResponseGetUser>>> GetAll()
     {
-      try
-      {
-        var users = await _repository.GetAll();
-        return Ok(users);
-      }
-      catch (Exception) 
-      {
-        return BadRequest(new { message = "Oops, parece que ainda não existem usuários cadastrados. :(" });
-      }
+      var users = await _service.GetAll();
+      return Ok(users);
     }  
 
-  [HttpPost]
-  [Route("")]
-  public async Task<ActionResult> Create(
-      [FromServices] DataContext context,
-      [FromBody] RequestCreateUser model)
+    [HttpPost]
+    [Route("")]
+    public async Task<ActionResult> Create([FromBody] RequestCreateUser model)
     {
       if (!ModelState.IsValid)
-          return BadRequest(new ResultDTO<User>(null, ModelState.GetErrors()));
+        throw new ApplicationException(ModelState.GetErrors()[0]);
 
-      try
-      {
-          var _mappedUser = _mapper.Map<User>(model);
+      var createdUser = await _service.Create(model);
 
-          var checkIfEmailExists = await _repository.GetByEmail(model.Email);
-
-          if (checkIfEmailExists == null)
-          {
-            var createdUser = await _repository.CreateUser(_mappedUser);
-
-            var auth = new Auth
-            { 
-              UserId = createdUser.Id, 
-              Password = model.Password,
-              Status = model.Status
-            };
-
-            await _repository.CreateAuth(auth);
-
-            return Created("/users", new ResultDTO<User>(_mappedUser, new List<string> { "Usuário criado com sucesso!" }));
-          }
-        return BadRequest(new { message = "O email inserido já está em uso." });
-      }
-      catch (Exception)
-      {
-          return BadRequest(new { message = "Não foi possível criar o usuário." });
-      }
+      return Created("/users", new ResultDTO<User>(createdUser, "Usuário criado com sucesso!"));
     }
 
 
     [HttpGet]
     [Route("{id:int}")]
-    public async Task<ActionResult<ResponseGetUser>> GetById([FromServices] DataContext context, int id)
+    public async Task<ActionResult<ResponseGetUser>> GetById(int id)
     {
-      try 
-      {
-        var user = await _repository.GetById(id);
-        return Ok(user);
-      }
-      catch (Exception)
-      {
-        return BadRequest(new { message = "Não foi possível encontrar o usuário." });
-      }
+      var user = await _service.GetById(id);
+      return Ok(user);
     }
 
     [HttpPut]
     [Route("{id:int}")]
     public async Task<ActionResult> Update(
-      [FromServices] DataContext context,
       int id,
       [FromBody] RequestEditUser model)
     {      
       if (!ModelState.IsValid)
-          return BadRequest(new ResultDTO<User>(null, ModelState.GetErrors()));
+        throw new ApplicationException(ModelState.GetErrors()[0]);
 
-      try
-      {          
-          var result = await _repository.Update(model, id);
-          return Ok(new ResultDTO<User>(result, new List<string> { "Usuário editado com sucesso!" }));
-      }
-      catch (ArgumentNullException)
-      {
-          return NotFound(new { message = "Usuário não encontrado." });
-      }
-      catch (Exception)
-      {
-          return BadRequest(new { message = "Não foi possível editar o usuário." });
-      }
+      var result = await _service.Update(id, model);
+      return Ok(new ResultDTO<User>(result, "Usuário editado com sucesso!"));
     }
 
     [HttpDelete]
     [Route("{id:int}")]
-    public async Task<ActionResult> Remove(
-      [FromServices] DataContext context,
-      int id)
+    public async Task<ActionResult> Remove(int id)
     {
-      try
-      {
-          await _repository.Remove(id);
-          return Ok(new { message = "O usuário foi removido com sucesso!" });
-      }
-      catch (ArgumentNullException)
-      {
-          return NotFound(new { message = "Usuário não encontrado." });
-      }
-      catch (Exception)
-      {
-          return BadRequest(new { message = "Não foi possível remover o usuário." });
-      }
+      var result = await _service.Remove(id);
+      return Ok(new ResultDTO<User>(result, "O usuário foi removido com sucesso!"));
     }
   }
 }
