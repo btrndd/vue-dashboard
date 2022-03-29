@@ -1,4 +1,3 @@
-using backend.Data;
 using backend.Models;
 using backend.DTOs;
 using backend.Interfaces;
@@ -9,10 +8,12 @@ namespace backend.Services
   public class UserService : IUserService
   {
     private readonly IUserRepository _repository;
+    private readonly IAuthService _authService;
     public readonly IMapper _mapper;
-    public UserService(IUserRepository repository, IMapper mapper)
+    public UserService(IUserRepository repository, IAuthService service, IMapper mapper)
     {
         _repository = repository;
+        _authService = service;
         _mapper = mapper;
     }
     
@@ -31,23 +32,23 @@ namespace backend.Services
 
       var checkIfEmailExists = await _repository.GetByEmail(model.Email);
 
-      var _mappedResponseGetUser = _mapper.Map<User>(checkIfEmailExists);
-
-      if (checkIfEmailExists == null)
+      if (checkIfEmailExists != null)
         throw new ApplicationException("O email inserido já está em uso.");
+
+      var _mappedResponseGetUser = _mapper.Map<User>(checkIfEmailExists);
       
-      var createdUser = await _repository.CreateUser(_mappedUser);
+      var createdUser = await _repository.Create(_mappedUser);
 
       var auth = new Auth
       { 
         UserId = createdUser.Id, 
-        Password = model.Password,
+        Password = MD5Hash.CalculaHash(model.Password),
         Status = model.Status
       };
 
-      var createdAuth = await _repository.CreateAuth(auth);
+      var createdAuth = await _authService.Create(auth);
 
-      if (createdUser == null | createdAuth == null)
+      if (createdUser == null)
         throw new ApplicationException("Não foi possível criar o usuário.");
 
       return _mappedUser;
@@ -56,6 +57,14 @@ namespace backend.Services
     public async Task<ResponseGetUser> GetById(int id)
     {
       var user = await _repository.GetById(id);
+      if (user == null)
+        throw new KeyNotFoundException("Não foi possível encontrar o usuário.");
+      
+      return user;
+    }
+    public async Task<ResponseGetUser> GetByEmail(string email)
+    {
+      var user = await _repository.GetByEmail(email);
       if (user == null)
         throw new KeyNotFoundException("Não foi possível encontrar o usuário.");
       
@@ -70,11 +79,13 @@ namespace backend.Services
       if (user == null)
         throw new KeyNotFoundException("Não foi possível encontrar o usuário.");
 
-      var result = await _repository.Update(model, id);
-      if (result == null)
+      var userResult = await _repository.Update(model, id);
+      if (userResult == null)
         throw new ApplicationException("Não foi possível editar o usuário.");
 
-      return result;    
+      var authResult = await _authService.Update(id, model);      
+
+      return userResult;
     }
 
     public async Task<User> Remove(int id)
@@ -99,8 +110,10 @@ namespace backend.Services
         throw new UnauthorizedAccessException("Email ou senha inválido!");
 
       var authenticated = _repository.Login(model.Email);
+
+      var encryptPassword = MD5Hash.CalculaHash(model.Password);
         
-      if (authenticated.Password != model.Password)
+      if (authenticated.Password != encryptPassword)
         throw new UnauthorizedAccessException("Email ou senha inválido!");
 
       if (authenticated == null)
