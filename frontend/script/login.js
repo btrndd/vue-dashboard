@@ -2,30 +2,18 @@ import { isRequiredNew, verifyEmail, verifyPassword } from "./formValidation.js"
 import { responseCard } from "./responseCard.js";
 import { loadingSpinner } from "./loadingSpinner.js";
 import { redirectToDash } from "./redirectToDash.js";
+import { loginRequest } from "./loginRequest.js";
 
-const callLogin = async  (email, password) => {
-  const body = {
-    email,
-    password
-  };
-  
-  const json = JSON.stringify(body);
-  
-  const request = await fetch("https://localhost:7271/login", {
-    method: "POST",
-    body: json,
-    headers: {
-      "Content-type": "application/json; charset=UTF-8"
-    },
-  });
-  
-  const response = await request.json();
+const callLogin = async  (email, password) => {  
+  const response = await loginRequest(email, password);
+  console.log(response);
   window.localStorage.setItem('auth', JSON.stringify(response.data));
 
   responseCard(response);
   const card = document.querySelector('.request');
-  card.style.left = 0;
-  if (response.data === null) {
+  card.style.left = 0; 
+  
+  if (response.success === false) {
     if (card) {    
       setTimeout(() => {
         const parent = card.parentElement;
