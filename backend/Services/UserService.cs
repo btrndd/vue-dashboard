@@ -26,7 +26,7 @@ namespace backend.Services
         return users;
     }  
 
-  public async Task<User> Create(RequestCreateUser model)
+  public async Task<ResponseGetUser> Create(RequestCreateUser model)
     {
       var _mappedUser = _mapper.Map<User>(model);
 
@@ -51,7 +51,9 @@ namespace backend.Services
       if (createdUser == null)
         throw new ApplicationException("Não foi possível criar o usuário.");
 
-      return _mappedUser;
+      var resultUser = _mapper.Map<ResponseGetUser>(_mappedUser);
+
+      return resultUser;
     }
 
     public async Task<ResponseGetUser> GetById(int id)
@@ -71,7 +73,7 @@ namespace backend.Services
       return user;
     }
 
-    public async Task<User> Update(
+    public async Task<ResponseGetUser> Update(
       int id,
       RequestEditUser model)
     {         
@@ -83,12 +85,14 @@ namespace backend.Services
       if (userResult == null)
         throw new ApplicationException("Não foi possível editar o usuário.");
 
-      var authResult = await _authService.Update(id, model);      
+      var authResult = await _authService.Update(id, model);  
 
-      return userResult;
+      var mapUser = _mapper.Map<ResponseGetUser>(userResult);    
+
+      return mapUser;
     }
 
-    public async Task<User> Remove(int id)
+    public async Task<ResponseGetUser> Remove(int id)
     {
       var user = await _repository.GetById(id);
       if (user == null)
@@ -99,8 +103,10 @@ namespace backend.Services
       var result = await _repository.Remove(_mappedResponseGetUser);
       if (result == null)
         throw new ApplicationException("Não foi possível remover o usuário.");
+      
+      var mapResult = _mapper.Map<ResponseGetUser>(result);
 
-      return result;
+      return mapResult;
     }
 
     public async Task<ResponseLogin> Login(RequestLogin model)

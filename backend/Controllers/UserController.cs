@@ -35,7 +35,7 @@ namespace backend.Controllers
 
       var createdUser = await _service.Create(model);
 
-      return Created("/users", new ResultDTO<User>(createdUser, "Usuário criado com sucesso!"));
+      return Created("/users", new ResultDTO<ResponseGetUser>(createdUser, "Usuário criado com sucesso!"));
     }
 
 
@@ -57,7 +57,7 @@ namespace backend.Controllers
         throw new ApplicationException(ModelState.GetErrors()[0]);
 
       var result = await _service.Update(id, model);
-      return Ok(new ResultDTO<User>(result, "Usuário editado com sucesso!"));
+      return Ok(new ResultDTO<ResponseGetUser>(result, "Usuário editado com sucesso!"));
     }
 
     [HttpDelete]
@@ -65,7 +65,7 @@ namespace backend.Controllers
     public async Task<ActionResult> Remove(int id)
     {
       var result = await _service.Remove(id);
-      return Ok(new ResultDTO<User>(result, "O usuário foi removido com sucesso!"));
+      return Ok(new ResultDTO<ResponseGetUser>(result, "O usuário foi removido com sucesso!"));
     }
   }
 }

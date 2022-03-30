@@ -31,12 +31,6 @@ namespace backend.Data.Mappings
                 .IsRequired()
                 .HasColumnName("Status")
                 .HasColumnType("BIT");
-
-             // Relacionamentos
-            builder.HasOne<User>()
-                .WithOne()
-                .HasConstraintName("FK_Auth_User")
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

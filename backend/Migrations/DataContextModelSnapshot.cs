@@ -96,11 +96,16 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Models.Auth", b =>
                 {
                     b.HasOne("backend.Models.User", null)
-                        .WithOne()
+                        .WithOne("Status")
                         .HasForeignKey("backend.Models.Auth", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("FK_Auth_User");
+                        .HasConstraintName("FK_User_Auth");
+                });
+
+            modelBuilder.Entity("backend.Models.User", b =>
+                {
+                    b.Navigation("Status");
                 });
 #pragma warning restore 612, 618
         }

@@ -16,77 +16,66 @@ namespace backend.Repositories
     }
     public async Task<User> Create(User user)
     {
-        _context.Users.Add(user);
-        await _context.SaveChangesAsync();
-        return user;
+      _context.Users.Add(user);
+      await _context.SaveChangesAsync();
+      return user;
     }
 
     public async Task<List<ResponseGetUser>> GetAll()
     {
-        return await _context.Users
-        .Join(
-          _context.Auths,
-          user => user.Id,
-          auth => auth.UserId,
-          (user, auth) => new ResponseGetUser
-            { 
-              Id = user.Id,
-              Name = user.Name,
-              LastName = user.LastName,
-              Phone = user.Phone,
-              Email = user.Email,
-              BirthDate = user.BirthDate,
-              Status = auth.Status
-            }
-          )
-        .AsNoTracking()
-        .ToListAsync();
+      return await _context
+      .Users
+      .AsNoTracking()
+      .Include(x => x.Status)
+      .Select(x => new ResponseGetUser
+        { 
+          Id = x.Id,
+          Name = x.Name,
+          LastName = x.LastName,
+          Phone = x.Phone,
+          Email = x.Email,
+          BirthDate = x.BirthDate,
+          Status = x.Status.Status
+        })        
+      .ToListAsync();  
     }
 
     public async Task<ResponseGetUser> GetById(int id)
     {
-        return await _context.Users
-        .Where(user => user.Id == id)
-        .Join(
-          _context.Auths,
-          user => user.Id,
-          auth => auth.UserId,
-          (user, auth) => new ResponseGetUser
-            { 
-              Id = user.Id,
-              Name = user.Name,
-              LastName = user.LastName,
-              Phone = user.Phone,
-              Email = user.Email,
-              BirthDate = user.BirthDate,
-              Status = auth.Status
-            }
-          )
-        .AsNoTracking()            
-        .FirstOrDefaultAsync();
+      return await _context.Users
+      .Where(user => user.Id == id)
+      .AsNoTracking()
+      .Include(x => x.Status)
+      .Select(x => new ResponseGetUser
+        { 
+          Id = x.Id,
+          Name = x.Name,
+          LastName = x.LastName,
+          Phone = x.Phone,
+          Email = x.Email,
+          BirthDate = x.BirthDate,
+          Status = x.Status.Status
+        })          
+      .FirstOrDefaultAsync();
     }
 
     public async Task<ResponseGetUser> GetByEmail(string email)
     {
-        return await _context.Users
-        .Where(user => user.Email == email)
-        .Join(
-          _context.Auths,
-          user => user.Id,
-          auth => auth.UserId,
-          (user, auth) => new ResponseGetUser
-            { 
-              Id = user.Id,
-              Name = user.Name,
-              LastName = user.LastName,
-              Phone = user.Phone,
-              Email = user.Email,
-              BirthDate = user.BirthDate,
-              Status = auth.Status
-            }
-          )
-        .AsNoTracking()            
-        .FirstOrDefaultAsync();
+      return await _context.Users
+      .Where(user => user.Email == email)
+      .AsNoTracking()
+      .Include(x => x.Status)
+      .Select(x => new ResponseGetUser
+        { 
+          Id = x.Id,
+          Name = x.Name,
+          LastName = x.LastName,
+          Phone = x.Phone,
+          Email = x.Email,
+          BirthDate = x.BirthDate,
+          Status = x.Status.Status
+        })          
+      .FirstOrDefaultAsync();
     }
 
     public async Task<User> Update(RequestEditUser model, int id)

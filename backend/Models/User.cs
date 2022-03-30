@@ -23,6 +23,7 @@ namespace backend.Models {
     public string Phone { get; set; }
 
     [Required(ErrorMessage = "O campo 'data de nascimento' é obrigatório")]
-    public DateTime? BirthDate { get; set; }     
+    public DateTime? BirthDate { get; set; }
+    public Auth Status { get; set; }
   }
 }
