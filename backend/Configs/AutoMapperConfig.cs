@@ -8,9 +8,22 @@ namespace backend.Configs
   {
     public AutoMapperConfig()
     {
-        CreateMap<User, RequestCreateUser>().ReverseMap();
-        CreateMap<User, RequestEditUser>().ReverseMap();
-        CreateMap<User, ResponseGetUser>().ReverseMap();
+        CreateMap<RequestCreateUser, User>()
+          .ForMember(dest =>
+          dest.Status,
+          opt => opt.Ignore()).ReverseMap();
+        CreateMap<RequestEditUser, User>()
+          .ForMember(dest =>
+          dest.Status,
+          opt => opt.Ignore()).ReverseMap();
+        CreateMap<User, ResponseGetUser>()
+          .ForMember(dest =>
+          dest.Status,
+          opt => opt.MapFrom(src => src.Status.Status));
+        CreateMap<ResponseGetUser, User>()
+          .ForMember(dest =>
+          dest.Status,
+          opt => opt.Ignore());
     }
   }
 }

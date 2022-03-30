@@ -49,6 +49,13 @@ namespace backend.Data.Mappings
                 .IsRequired()
                 .HasColumnName("BirthDate")
                 .HasColumnType("DATE");
+            
+            builder
+                .HasOne(x => x.Status)
+                .WithOne()
+                .HasForeignKey<Auth>(x => x.UserId)
+                .HasConstraintName("FK_User_Auth")
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

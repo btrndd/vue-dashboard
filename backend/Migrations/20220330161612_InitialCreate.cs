@@ -40,7 +40,7 @@ namespace backend.Migrations
                 {
                     table.PrimaryKey("PK_Auth", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Auth_User",
+                        name: "FK_User_Auth",
                         column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id",

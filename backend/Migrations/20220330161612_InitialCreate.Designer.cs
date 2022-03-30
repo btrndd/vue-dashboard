@@ -12,7 +12,7 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220316031411_InitialCreate")]
+    [Migration("20220330161612_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -98,11 +98,16 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Models.Auth", b =>
                 {
                     b.HasOne("backend.Models.User", null)
-                        .WithOne()
+                        .WithOne("Status")
                         .HasForeignKey("backend.Models.Auth", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("FK_Auth_User");
+                        .HasConstraintName("FK_User_Auth");
+                });
+
+            modelBuilder.Entity("backend.Models.User", b =>
+                {
+                    b.Navigation("Status");
                 });
 #pragma warning restore 612, 618
         }
