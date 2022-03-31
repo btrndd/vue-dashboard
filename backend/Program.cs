@@ -1,4 +1,3 @@
-
 using backend.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -32,16 +31,16 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    var dataContext = scope.ServiceProvider.GetRequiredService<DataContext>();
-    dataContext.Database.Migrate();
+  var dataContext = scope.ServiceProvider.GetRequiredService<DataContext>();
+  dataContext.Database.Migrate();
 }
 
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Backend API V1"));
-    app.UseDeveloperExceptionPage();
+  app.UseSwagger();
+  app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Backend API V1"));
+  app.UseDeveloperExceptionPage();
 }
 
 app.UseSwagger();

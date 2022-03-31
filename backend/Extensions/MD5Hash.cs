@@ -8,9 +8,9 @@ public static class MD5Hash
     System.Text.StringBuilder sb = new System.Text.StringBuilder();
     for (int i = 0; i < hash.Length; i++)
     {
-        sb.Append(hash[i].ToString("X2"));
+      sb.Append(hash[i].ToString("X2"));
     }
-      
-    return sb.ToString();        
+
+    return sb.ToString();
   }
 }

@@ -1,7 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace backend.Models {
-  public class Auth : Entity {
+namespace backend.Models
+{
+  public class Auth : Entity
+  {
 
     [Required(ErrorMessage = "O campo 'userId' é obrigatório")]
     public int UserId { get; set; }
