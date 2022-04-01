@@ -4,17 +4,18 @@ using backend.Extensions;
 using backend.Authorization;
 using backend.Interfaces;
 
-namespace backend.Controllers {
+namespace backend.Controllers
+{
 
   [Authorize]
   [Route("/login")]
-  public class LoginController : ControllerBase 
+  public class LoginController : ControllerBase
   {
     private readonly IUserService _service;
-    
+
     public LoginController(IUserService service)
     {
-        _service = service;     
+      _service = service;
     }
 
     [AllowAnonymous]
@@ -25,8 +26,8 @@ namespace backend.Controllers {
       if (!ModelState.IsValid)
         throw new ApplicationException(ModelState.GetErrors()[0]);
 
-      var authenticated = await _service.Login(model);
-      return Ok(new ResultDTO<ResponseLogin>(authenticated, "Login realizado com sucesso!"));
+      var responseLogin = await _service.Login(model);
+      return Ok(new ResultDTO<ResponseLogin>(responseLogin, "Login realizado com sucesso!"));
     }
   }
 }

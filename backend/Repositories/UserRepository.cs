@@ -12,7 +12,7 @@ namespace backend.Repositories
 
     public UserRepository(DataContext context)
     {
-        _context = context;
+      _context = context;
     }
     public async Task<User> Create(User user)
     {
@@ -26,18 +26,18 @@ namespace backend.Repositories
       return await _context
       .Users
       .AsNoTracking()
-      .Include(x => x.Status)
+      .Include(x => x.Auth)
       .Select(x => new ResponseGetUser
-        { 
-          Id = x.Id,
-          Name = x.Name,
-          LastName = x.LastName,
-          Phone = x.Phone,
-          Email = x.Email,
-          BirthDate = x.BirthDate,
-          Status = x.Status.Status
-        })        
-      .ToListAsync();  
+      {
+        Id = x.Id,
+        Name = x.Name,
+        LastName = x.LastName,
+        Phone = x.Phone,
+        Email = x.Email,
+        BirthDate = x.BirthDate,
+        Status = x.Auth.Status
+      })
+      .ToListAsync();
     }
 
     public async Task<ResponseGetUser> GetById(int id)
@@ -45,17 +45,17 @@ namespace backend.Repositories
       return await _context.Users
       .Where(user => user.Id == id)
       .AsNoTracking()
-      .Include(x => x.Status)
+      .Include(x => x.Auth)
       .Select(x => new ResponseGetUser
-        { 
-          Id = x.Id,
-          Name = x.Name,
-          LastName = x.LastName,
-          Phone = x.Phone,
-          Email = x.Email,
-          BirthDate = x.BirthDate,
-          Status = x.Status.Status
-        })          
+      {
+        Id = x.Id,
+        Name = x.Name,
+        LastName = x.LastName,
+        Phone = x.Phone,
+        Email = x.Email,
+        BirthDate = x.BirthDate,
+        Status = x.Auth.Status
+      })
       .FirstOrDefaultAsync();
     }
 
@@ -64,55 +64,55 @@ namespace backend.Repositories
       return await _context.Users
       .Where(user => user.Email == email)
       .AsNoTracking()
-      .Include(x => x.Status)
+      .Include(x => x.Auth)
       .Select(x => new ResponseGetUser
-        { 
-          Id = x.Id,
-          Name = x.Name,
-          LastName = x.LastName,
-          Phone = x.Phone,
-          Email = x.Email,
-          BirthDate = x.BirthDate,
-          Status = x.Status.Status
-        })          
+      {
+        Id = x.Id,
+        Name = x.Name,
+        LastName = x.LastName,
+        Phone = x.Phone,
+        Email = x.Email,
+        BirthDate = x.BirthDate,
+        Status = x.Auth.Status
+      })
       .FirstOrDefaultAsync();
     }
 
     public async Task<User> Update(RequestEditUser model, int id)
     {
 
-      var currUserModel = _context.Users.FirstOrDefault(x => x.Id == id);
+      var currentUser = _context.Users.FirstOrDefault(x => x.Id == id);
 
-      currUserModel.Name = model.Name;
-      currUserModel.LastName = model.LastName;
-      currUserModel.Email = model.Email;
-      currUserModel.Phone = model.Phone;
-      currUserModel.BirthDate = model.BirthDate;
+      currentUser.Name = model.Name;
+      currentUser.LastName = model.LastName;
+      currentUser.Email = model.Email;
+      currentUser.Phone = model.Phone;
+      currentUser.BirthDate = model.BirthDate;
 
-      _context.Users.Update(currUserModel);
+      var updatedUser = _context.Users.Update(currentUser);
 
       await _context.SaveChangesAsync();
-      return currUserModel;
+      return updatedUser.Entity;
     }
 
     public async Task<User> Remove(User user)
     {
-      var result = _context.Users.Remove(user);
+      var removedUser = _context.Users.Remove(user);
       await _context.SaveChangesAsync();
-      return result.Entity;
+      return removedUser.Entity;
     }
     public ResponseLogin Login(string email)
     {
-      var currUserModel = _context.Users.FirstOrDefault(x => x.Email == email);
-      var currAuthModel = _context.Auths.FirstOrDefault(x => x.UserId == currUserModel.Id);
-      var authenticated = new ResponseLogin
+      var currentUser = _context.Users.FirstOrDefault(x => x.Email == email);
+      var currentAuth = _context.Auths.FirstOrDefault(x => x.UserId == currentUser.Id);
+      var responseLogin = new ResponseLogin
       {
-        Id = currAuthModel.Id,
-        Email = currUserModel.Email,
-        Password = currAuthModel.Password,
+        Id = currentAuth.Id,
+        Email = currentUser.Email,
+        Password = currentAuth.Password,
       };
 
-      return authenticated;
+      return responseLogin;
     }
   }
 }

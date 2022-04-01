@@ -1,7 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace backend.Models {
-  public class User : Entity {
+namespace backend.Models
+{
+  public class User : Entity
+  {
 
     [Required(ErrorMessage = "O campo 'nome' é obrigatório")]
     [MaxLength(60, ErrorMessage = "Este campo deve conter entre 3 e 60 caracteres")]
@@ -24,6 +26,6 @@ namespace backend.Models {
 
     [Required(ErrorMessage = "O campo 'data de nascimento' é obrigatório")]
     public DateTime? BirthDate { get; set; }
-    public Auth Status { get; set; }
+    public Auth Auth { get; set; }
   }
 }

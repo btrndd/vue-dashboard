@@ -6,29 +6,29 @@ using backend.Interfaces;
 
 public class BasicAuthMiddleware
 {
-    private readonly RequestDelegate _next;
+  private readonly RequestDelegate _next;
 
-    public BasicAuthMiddleware(RequestDelegate next)
+  public BasicAuthMiddleware(RequestDelegate next)
+  {
+    _next = next;
+  }
+
+  public async Task Invoke(HttpContext context, IUserRepository repository)
+  {
+    try
     {
-        _next = next;
+      var authHeader = AuthenticationHeaderValue.Parse(context.Request.Headers["Authorization"]);
+      var credentialBytes = Convert.FromBase64String(authHeader.Parameter);
+      var credentials = Encoding.UTF8.GetString(credentialBytes).Split(':', 2);
+      var email = credentials[0];
+
+      context.Items["Data"] = repository.Login(email);
+    }
+    catch
+    {
+      // do nothing if invalid auth header
     }
 
-    public async Task Invoke(HttpContext context, IUserRepository repository)
-    {
-        try
-        {
-            var authHeader = AuthenticationHeaderValue.Parse(context.Request.Headers["Authorization"]);
-            var credentialBytes = Convert.FromBase64String(authHeader.Parameter);
-            var credentials = Encoding.UTF8.GetString(credentialBytes).Split(':', 2);
-            var email = credentials[0];
-            
-            context.Items["Data"] = repository.Login(email);
-        }
-        catch
-        {
-            // do nothing if invalid auth header
-        }
-
-        await _next(context);
-    }
+    await _next(context);
+  }
 }

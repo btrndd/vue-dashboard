@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using backend.Data;
 
 #nullable disable
@@ -7,9 +8,10 @@ using backend.Data;
 namespace backend.Migrations
 {
   [DbContext(typeof(DataContext))]
-  partial class DataContextModelSnapshot : ModelSnapshot
+  [Migration("20220331184023_InitialCreate")]
+  partial class InitialCreate
   {
-    protected override void BuildModel(ModelBuilder modelBuilder)
+    protected override void BuildTargetModel(ModelBuilder modelBuilder)
     {
 #pragma warning disable 612, 618
       modelBuilder

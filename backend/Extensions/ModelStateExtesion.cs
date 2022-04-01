@@ -2,15 +2,15 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace backend.Extensions
 {
-    public static class ModelStateExtension
+  public static class ModelStateExtension
+  {
+    public static List<string> GetErrors(this ModelStateDictionary modelState)
     {
-        public static List<string> GetErrors(this ModelStateDictionary modelState)
-        {
-            var result = new List<string>();
-            foreach (var item in modelState.Values)
-                result.AddRange(item.Errors.Select(error => error.ErrorMessage));
+      var result = new List<string>();
+      foreach (var item in modelState.Values)
+        result.AddRange(item.Errors.Select(error => error.ErrorMessage));
 
-            return result;
-        }
+      return result;
     }
+  }
 }
