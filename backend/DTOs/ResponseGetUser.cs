@@ -29,6 +29,7 @@ namespace backend.DTOs
     [Required(ErrorMessage = "O campo 'data de nascimento' é obrigatório")]
     public DateTime? BirthDate { get; set; }
 
+    // public string Password { get; set; }
     public bool Status { get; set; }
   }
 }

@@ -51,7 +51,7 @@ namespace backend.Data.Mappings
 
       builder
           .HasOne(x => x.Auth)
-          .WithOne()
+          .WithOne(x => x.User)
           .HasForeignKey<Auth>(x => x.UserId)
           .HasConstraintName("FK_User_Auth")
           .OnDelete(DeleteBehavior.Cascade);

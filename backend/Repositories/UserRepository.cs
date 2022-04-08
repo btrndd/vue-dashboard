@@ -59,6 +59,15 @@ namespace backend.Repositories
       .FirstOrDefaultAsync();
     }
 
+    public async Task<User> GetByIdUser(int id)
+    {
+      return await _context.Users
+      .Where(user => user.Id == id)
+      .AsNoTracking()
+      .Include(x => x.Auth)
+      .FirstOrDefaultAsync();
+    }
+
     public async Task<ResponseGetUser> GetByEmail(string email)
     {
       return await _context.Users
@@ -78,19 +87,9 @@ namespace backend.Repositories
       .FirstOrDefaultAsync();
     }
 
-    public async Task<User> Update(RequestEditUser model, int id)
+    public async Task<User> Update(User user)
     {
-
-      var currentUser = _context.Users.FirstOrDefault(x => x.Id == id);
-
-      currentUser.Name = model.Name;
-      currentUser.LastName = model.LastName;
-      currentUser.Email = model.Email;
-      currentUser.Phone = model.Phone;
-      currentUser.BirthDate = model.BirthDate;
-
-      var updatedUser = _context.Users.Update(currentUser);
-
+      var updatedUser = _context.Users.Update(user);
       await _context.SaveChangesAsync();
       return updatedUser.Entity;
     }

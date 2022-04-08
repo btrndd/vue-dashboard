@@ -9,21 +9,18 @@ namespace backend.Configs
     public AutoMapperConfig()
     {
       CreateMap<RequestCreateUser, User>()
-        .ForMember(dest =>
-        dest.Auth,
-        opt => opt.Ignore()).ReverseMap();
+        .ForPath(dest => dest.Auth.Password, opt => opt.MapFrom(src => src.Password))
+        .ForPath(dest => dest.Auth.Status, opt => opt.MapFrom(src => src.Status))
+        .ReverseMap();
       CreateMap<RequestEditUser, User>()
-        .ForMember(dest =>
-        dest.Auth,
-        opt => opt.Ignore()).ReverseMap();
+        .ForPath(dest => dest.Auth.Password, opt => opt.MapFrom(src => src.Password))
+        .ForPath(dest => dest.Auth.Status, opt => opt.MapFrom(src => src.Status))
+        .ReverseMap();
       CreateMap<User, ResponseGetUser>()
         .ForMember(dest =>
         dest.Status,
-        opt => opt.MapFrom(src => src.Auth.Status));
-      CreateMap<ResponseGetUser, User>()
-        .ForMember(dest =>
-        dest.Auth,
-        opt => opt.Ignore());
+        opt => opt.MapFrom(src => src.Auth.Status))
+        .ReverseMap();
     }
   }
 }

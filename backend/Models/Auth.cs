@@ -4,7 +4,6 @@ namespace backend.Models
 {
   public class Auth : Entity
   {
-
     [Required(ErrorMessage = "O campo 'userId' é obrigatório")]
     public int UserId { get; set; }
 
@@ -13,5 +12,6 @@ namespace backend.Models
     [RegularExpression(@"(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,60})$", ErrorMessage = "Sua senha precisa ter no mínimo um número.")]
     public string Password { get; set; }
     public bool Status { get; set; }
+    public virtual User User { get; set; }
   }
 }
