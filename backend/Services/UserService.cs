@@ -8,12 +8,10 @@ namespace backend.Services
   public class UserService : IUserService
   {
     private readonly IUserRepository _repository;
-    private readonly IAuthService _authService;
-    public readonly IMapper _mapper;
-    public UserService(IUserRepository repository, IAuthService service, IMapper mapper)
+    private readonly IMapper _mapper;
+    public UserService(IUserRepository repository, IMapper mapper)
     {
       _repository = repository;
-      _authService = service;
       _mapper = mapper;
     }
 
@@ -29,7 +27,7 @@ namespace backend.Services
 
     public async Task<ResponseGetUser> Create(RequestCreateUser model)
     {
-      var user = await _repository.GetByEmail(model.Email);
+      var user = _repository.GetByEmail(model.Email);
 
       if (user != null)
         throw new ApplicationException("O email inserido já está em uso.");
@@ -53,15 +51,24 @@ namespace backend.Services
     {
       var user = await _repository.GetById(id);
 
+      var mappedToResponseUser = _mapper.Map<ResponseGetUser>(user);
+
       if (user == null)
         throw new KeyNotFoundException("Não foi possível encontrar o usuário.");
+
+      return mappedToResponseUser;
+    }
+
+    public async Task<User> GetByEmail(string email)
+    {
+      var user = await _repository.GetByEmail(email);
 
       return user;
     }
 
     public async Task<ResponseGetUser> Update(int id, RequestEditUser model)
     {
-      var user = await _repository.GetByIdUser(id);
+      var user = await _repository.GetById(id);
       if (user == null)
         throw new KeyNotFoundException("Não foi possível encontrar o usuário.");
 
@@ -103,26 +110,6 @@ namespace backend.Services
       var mappedToResponseUser = _mapper.Map<ResponseGetUser>(removedUser);
 
       return mappedToResponseUser;
-    }
-
-    public async Task<ResponseLogin> Login(RequestLogin model)
-    {
-      var user = await _repository.GetByEmail(model.Email);
-      
-      if (user == null)
-        throw new UnauthorizedAccessException("Email ou senha inválido!");
-
-      var responseLogin = _repository.Login(model.Email);
-
-      var encryptedPassword = MD5Hash.CalculaHash(model.Password);
-
-      if (responseLogin.Password != encryptedPassword)
-        throw new UnauthorizedAccessException("Email ou senha inválido!");
-
-      if (responseLogin == null)
-        throw new ApplicationException("Oops! Aconteceu algo de errado.");
-
-      return responseLogin;
     }
   }
 }

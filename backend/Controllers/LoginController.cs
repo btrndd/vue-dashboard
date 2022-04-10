@@ -11,9 +11,9 @@ namespace backend.Controllers
   [Route("/login")]
   public class LoginController : ControllerBase
   {
-    private readonly IUserService _service;
+    private readonly ILoginService _service;
 
-    public LoginController(IUserService service)
+    public LoginController(ILoginService service)
     {
       _service = service;
     }
