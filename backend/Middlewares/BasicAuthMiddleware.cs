@@ -22,7 +22,7 @@ public class BasicAuthMiddleware
       var credentials = Encoding.UTF8.GetString(credentialBytes).Split(':', 2);
       var email = credentials[0];
 
-      context.Items["Data"] = repository.Login(email);
+      context.Items["Data"] = await repository.GetByEmail(email);
     }
     catch
     {

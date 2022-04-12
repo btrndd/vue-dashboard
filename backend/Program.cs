@@ -16,11 +16,9 @@ builder.Services.AddScoped<DataContext, DataContext>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
-builder.Services.AddScoped<IAuthRepository, AuthRepository>();
-
 builder.Services.AddScoped<IUserService, UserService>();
 
-builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ILoginService, LoginService>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -42,10 +40,6 @@ if (app.Environment.IsDevelopment())
   app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Backend API V1"));
   app.UseDeveloperExceptionPage();
 }
-
-app.UseSwagger();
-
-app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Backend API V1"));
 
 app.UseHttpsRedirection();
 
