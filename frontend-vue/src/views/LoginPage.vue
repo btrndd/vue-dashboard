@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <main class="login-container">
-      <img src="@/assets/logo-azul.png" alt="Logo da Lyncas" class="logo-login" />
+      <img src="@/assets/img/logo-azul.png" alt="Logo da Lyncas" class="logo-login" />
       <form class="form-card">
         <h3 class="form-title">LOGIN</h3>
         <input-text :name="email" :type="text" :placeholder="Email" />
