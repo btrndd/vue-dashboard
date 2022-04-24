@@ -1,11 +1,13 @@
 <template>
-  <header class="header">
-    <button type="button" class="show-sidebar"><i class="fas fa-align-right fa-lg"></i></button>
+  <header class="header"  :class="{'thin-left': hiddenLeft}">
+    <button type="button" class="show-sidebar" @click="hideSidebar">
+      <i class="fas fa-align-right fa-lg"></i>
+    </button>
     <div class="avatar-wrapper">
       <img src="@/assets/img/avatar.png" alt="Imagem de perfil" class="avatar" />
       <div class="logoff-wrapper">
         <p class="user">Nome de Usuário</p>
-        <button class="logout" type="button">Sair</button>
+        <button @click="handleLogout" class="logout" type="button">Sair</button>
       </div>
     </div>
   </header>
@@ -13,6 +15,29 @@
 
 <script>
 export default {
+  computed: {
+    applyHide() {
+      return this.$store.state.hiddenWidth;
+    },
+    hiddenLeft() {
+      return this.$store.state.hiddenLeft;
+    },
+  },
+  methods: {
+    goToLogin() {
+      this.$router.push({ name: 'login' });
+    },
+
+    handleLogout() {
+      localStorage.clear();
+      this.goToLogin();
+    },
+
+    hideSidebar() {
+      const payload = this.applyHide === true ? false : true;
+      this.$store.commit('hidden', payload);
+    }
+  }
 
 }
 </script>
@@ -26,7 +51,7 @@ export default {
     height: 60px;
     background-color: white;
   }
-  
+
   .avatar {
     height: 50px;
     border-radius: 50%;

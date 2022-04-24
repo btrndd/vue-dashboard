@@ -8,20 +8,27 @@ import Router from 'vue-router';
 Vue.use(Router)
 
 const LoginPage = () => import(/* webpackChunkName: "login" */'@/views/LoginPage');
-const SideBar = () => import(/* webpackChunkName: "main" */'@/components/SideBar');
-const MainHeader = () => import(/* webpackChunkName: "main" */'@/components/MainHeader');
+// const SideBar = () => import(/* webpackChunkName: "main" */'@/components/SideBar');
+// const MainHeader = () => import(/* webpackChunkName: "main" */'@/components/MainHeader');
+const MainPage = () => import(/* webpackChunkName: "main" */'@/views/MainPage');
 
 const router = new Router({
     mode: 'history',
     routes: [{
+        name: 'login',
         path: '/',
         component: LoginPage
     }, {
-        name: 'Dashboard',
+        name: 'dash',
         path: '/dashboard',
         components: {
-            sidebar: SideBar,
-            header: MainHeader
+            page: MainPage,
+        }
+    }, {
+        name: 'users',
+        path: '/users',
+        components: {
+            page: MainPage,
         }
     }]
 });

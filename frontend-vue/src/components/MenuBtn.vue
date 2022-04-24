@@ -4,6 +4,7 @@
     :id="name"
     :data-page="name"
     class="menu-btn"
+    :class="{'thin-width': hiddenWidth}"
   >
     <i :class="icon" :id="name" :data-page="name"></i>
     {{ title }}
@@ -16,6 +17,12 @@ export default {
     name: String,
     title: String,
     icon: String,
+  },
+  
+  computed: {
+    hiddenWidth() {
+      return this.$store.state.hiddenWidth;
+    }
   }
 }
 </script>

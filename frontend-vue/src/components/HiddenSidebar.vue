@@ -1,6 +1,6 @@
 <template>
-  <aside class="side-menu" :class="{'thin-width': hiddenWidth}">
-    <img :src="imgPath" alt="Logo da Lyncas" class="logo" :class="{'logo-thin': hiddenWidth}" />
+  <aside class="side-menu">
+    <img src="@/assets/img/logo-branca.png" alt="Logo da Lyncas" class="logo" />
     <ul>
       <li @click="goToDash" class="menu-wrapper" id="dashboard" data-page="dashboard">
         <menu-btn :icon="dashIcon" :name="dashName" :title="dashTitle" />
@@ -24,17 +24,7 @@ export default {
       usersIcon: 'fas fa-users',
       dashName: 'dashboard',
       dashTitle: 'Dashboard',
-      dashIcon: 'fas fa-th-large',
-    }
-  },
-  computed: {
-    hiddenWidth() {
-      return this.$store.state.hiddenWidth;
-    },
-    imgPath() {
-      return this.hiddenWidth ? 
-      require('../assets/img/icon-branco.png') 
-      : require('../assets/img/logo-branca.png');
+      dashIcon: 'fas fa-th-large'
     }
   },
   methods: {
@@ -51,7 +41,7 @@ export default {
 
 <style scoped>
   .side-menu {
-    width: 250px;
+    width: 80px;
     height: 100vh;
     background-color: #00174a;
     display: flex;
@@ -63,13 +53,12 @@ export default {
     border-bottom: 130px solid #00174a;
   }
 
-  .logo {
-    width: 180px;
+  .menu-btn {
+    width: 60px;
   }
 
-  .logo-thin {
-    width: 40px;
-    margin: 40px 0 40px 0;
+  .logo {
+    width: 180px;
   }
 
   ul {
