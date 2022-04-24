@@ -5,9 +5,11 @@
     :data-page="name"
     class="menu-btn"
     :class="{'thin-width': hiddenWidth}"
+    ref="dash"
   >
     <i :class="icon" :id="name" :data-page="name"></i>
     {{ title }}
+    <i :class="{'fas fa-chevron-right arrow': arrow}"></i>
   </button>
 </template>
 
@@ -17,8 +19,8 @@ export default {
     name: String,
     title: String,
     icon: String,
-  },
-  
+    arrow: Boolean,
+  },  
   computed: {
     hiddenWidth() {
       return this.$store.state.hiddenWidth;
@@ -39,6 +41,11 @@ export default {
     height: 40px;
     opacity: 0.5;
     padding: 0;
+  }
+
+  .arrow {
+    position: absolute;
+    left: 200px;
   }
 
   .menu-btn i {

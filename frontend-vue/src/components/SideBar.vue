@@ -2,11 +2,21 @@
   <aside class="side-menu" :class="{'thin-width': hiddenWidth}">
     <img :src="imgPath" alt="Logo da Lyncas" class="logo" :class="{'logo-thin': hiddenWidth}" />
     <ul>
-      <li @click="goToDash" class="menu-wrapper" id="dashboard" data-page="dashboard">
-        <menu-btn :icon="dashIcon" :name="dashName" :title="dashTitle" />
+      <li
+        @click="handleDashClick"
+        class="menu-wrapper"
+        :id="dashName"
+        :data-page="dashName"
+      >
+        <menu-btn :arrow="dashArrow" :icon="dashIcon" :name="dashName" :title="dashTitle" />
       </li>
-      <li @click="goToUsers" class="menu-wrapper" :id="usersName" :data-page="usersName">
-        <menu-btn :icon="usersIcon" :name="usersName" :title="usersTitle" />
+      <li
+        @click="handleUsersClick"
+        class="menu-wrapper"
+        :id="usersName"
+        :data-page="usersName"
+      >
+        <menu-btn :arrow="usersArrow" :icon="usersIcon" :name="usersName" :title="usersTitle" />
       </li>
     </ul>
   </aside>
@@ -25,6 +35,8 @@ export default {
       dashName: 'dashboard',
       dashTitle: 'Dashboard',
       dashIcon: 'fas fa-th-large',
+      usersArrow: false,
+      dashArrow: false,
     }
   },
   computed: {
@@ -38,11 +50,15 @@ export default {
     }
   },
   methods: {
-    goToDash() {
+    handleDashClick() {
+      this.dashArrow = true;
+      this.usersArrow = false;
       this.$router.push({ name: 'dash' });
     },
 
-    goToUsers() {
+    handleUsersClick() {
+      this.dashArrow = false;
+      this.usersArrow = true;
       this.$router.push({ name: 'users' });
     }
   }

@@ -8,9 +8,9 @@ import Router from 'vue-router';
 Vue.use(Router)
 
 const LoginPage = () => import(/* webpackChunkName: "login" */'@/views/LoginPage');
-// const SideBar = () => import(/* webpackChunkName: "main" */'@/components/SideBar');
-// const MainHeader = () => import(/* webpackChunkName: "main" */'@/components/MainHeader');
-const MainPage = () => import(/* webpackChunkName: "main" */'@/views/MainPage');
+const Sidebar = () => import(/* webpackChunkName: "main" */'@/components/SideBar');
+const Header = () => import(/* webpackChunkName: "main" */'@/components/MainHeader');
+const Dashboard = () => import(/* webpackChunkName: "dashboard" */'@/components/DashBoard');
 
 const router = new Router({
     mode: 'history',
@@ -22,13 +22,17 @@ const router = new Router({
         name: 'dash',
         path: '/dashboard',
         components: {
-            page: MainPage,
+            sidebar: Sidebar,
+            header: Header,
+            page: Dashboard,
         }
     }, {
         name: 'users',
         path: '/users',
         components: {
-            page: MainPage,
+            sidebar: Sidebar,
+            header: Header,
+            page: Dashboard,
         }
     }]
 });

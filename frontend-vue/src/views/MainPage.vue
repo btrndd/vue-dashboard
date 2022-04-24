@@ -2,30 +2,27 @@
   <Fragment>
     <Header />
     <Sidebar />
-    <!-- <Dashboard /> -->
+    <Dashboard />
   </Fragment>
 </template>
 
 <script>
 import { Fragment } from 'vue-fragment';
-import Sidebar from '@/components/SideBar'
-import Header from '@/components/MainHeader'
+import Sidebar from '@/components/SideBar';
+import Header from '@/components/MainHeader';
+import Dashboard from '@/components/DashBoard';
 
 export default {
-  components: { Fragment, Sidebar, Header }
+  components: { Fragment, Sidebar, Header, Dashboard }
 }
 </script>
 
 <style>
   button, button:focus {
-    outline: none;
-    background: transparent;
     border: 1px solid transparent;
   }
 
   button:active {
-    outline: none;
-    background: transparent;
     border: 1px solid grey;
   }
 
