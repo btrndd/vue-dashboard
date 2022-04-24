@@ -32,6 +32,16 @@ export default {
     border: 1px solid grey;
   }
 
+  .main {
+    position: relative;
+    margin-left: 250px;
+    background-color: white;
+    border-left: 30px solid #f5f4f4;
+    border-right: 30px solid #f5f4f4;
+    border-top: 30px solid #f5f4f4;
+    padding: 20px;
+  }
+
   .thin-width {
     width: 60px !important;
   }

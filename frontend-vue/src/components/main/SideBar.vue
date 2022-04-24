@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import MenuBtn from '@/components/MenuBtn';
+import MenuBtn from '@/components/main/MenuBtn';
 
 export default {
   components: { MenuBtn },
@@ -45,8 +45,8 @@ export default {
     },
     imgPath() {
       return this.hiddenWidth ? 
-      require('../assets/img/icon-branco.png') 
-      : require('../assets/img/logo-branca.png');
+      require('@/assets/img/icon-branco.png') 
+      : require('@/assets/img/logo-branca.png');
     }
   },
   methods: {

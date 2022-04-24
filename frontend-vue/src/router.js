@@ -1,16 +1,13 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-// import Usuario from './components/usuario/Usuario'
-// import UsuarioLista from './components/usuario/UsuarioLista'
-// import UsuarioDetalhe from './components/usuario/UsuarioDetalhe'
-// import UsuarioEditar from './components/usuario/UsuarioEditar'
 Vue.use(Router)
 
 const LoginPage = () => import(/* webpackChunkName: "login" */'@/views/LoginPage');
-const Sidebar = () => import(/* webpackChunkName: "main" */'@/components/SideBar');
-const Header = () => import(/* webpackChunkName: "main" */'@/components/MainHeader');
-const Dashboard = () => import(/* webpackChunkName: "dashboard" */'@/components/DashBoard');
+const Sidebar = () => import(/* webpackChunkName: "main" */'@/components/main/SideBar');
+const Header = () => import(/* webpackChunkName: "main" */'@/components/main/MainHeader');
+const Dashboard = () => import(/* webpackChunkName: "dashboard" */'@/components/dashboard/DashBoard');
+const Users = () => import(/* webpackChunkName: "users" */'@/components/users/UsersList');
 
 const router = new Router({
     mode: 'history',
@@ -32,7 +29,7 @@ const router = new Router({
         components: {
             sidebar: Sidebar,
             header: Header,
-            page: Dashboard,
+            page: Users,
         }
     }]
 });

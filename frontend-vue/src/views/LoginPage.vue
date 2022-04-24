@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import SubmitBtn from '@/components/SubmitBtn';
-import InputText from '@/components/InputText';
+import SubmitBtn from '@/components/login/SubmitBtn';
+import InputText from '@/components/login/InputText';
 
 export default {
   components: { SubmitBtn, InputText },
