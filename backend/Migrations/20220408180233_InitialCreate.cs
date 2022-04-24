@@ -10,7 +10,7 @@ namespace backend.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "User",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -27,7 +27,7 @@ namespace backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Auth",
+                name: "Auths",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -42,23 +42,23 @@ namespace backend.Migrations
                     table.ForeignKey(
                         name: "FK_User_Auth",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Auth_UserId",
-                table: "Auth",
+                table: "Auths",
                 column: "UserId",
                 unique: true);
                 
         var commandText = @"
-        INSERT INTO ProjectLyncas.dbo.[User] (Name, LastName, Email, Phone, BirthDate)
+        INSERT INTO Users (Name, LastName, Email, Phone, BirthDate)
         VALUES
         ('Admin', 'Admin', 'admin@mail.com', '27999009999', '1996-04-01');
 
-        INSERT INTO ProjectLyncas.dbo.[Auth] (UserId, Password, Status)
+        INSERT INTO Auths (UserId, Password, Status)
         VALUES
         (@@IDENTITY, 'E10ADC3949BA59ABBE56E057F20F883E', 1);";
 
@@ -69,10 +69,10 @@ namespace backend.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Auth");
+                name: "Auths");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "Users");
         }
     }
 }

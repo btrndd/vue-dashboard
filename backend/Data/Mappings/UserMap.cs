@@ -9,7 +9,7 @@ namespace backend.Data.Mappings
     public void Configure(EntityTypeBuilder<User> builder)
     {
       // Tabela
-      builder.ToTable("User");
+      builder.ToTable("Users");
 
       // Chave Primária
       builder.HasKey(x => x.Id);

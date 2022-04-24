@@ -44,7 +44,7 @@ namespace backend.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Auth", (string)null);
+                    b.ToTable("Auths", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.User", b =>
@@ -86,7 +86,7 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User", (string)null);
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Auth", b =>
