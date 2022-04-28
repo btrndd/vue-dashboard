@@ -8,6 +8,7 @@ const Sidebar = () => import(/* webpackChunkName: "layout" */'@/layout/AppSideba
 const Header = () => import(/* webpackChunkName: "layout" */'@/layout/AppHeader');
 const Dashboard = () => import(/* webpackChunkName: "dashboard" */'@/views/dashboard/IndexDashboard');
 const Users = () => import(/* webpackChunkName: "users" */'@/views/users/IndexUsers');
+const Register = () => import(/* webpackChunkName: "register" */'@/views/register/IndexRegister');
 
 // import Login from '@/views/login/IndexLogin';
 // import Sidebar from '@/layout/AppSidebar';
@@ -36,6 +37,14 @@ const router = new Router({
             sidebar: Sidebar,
             header: Header,
             page: Users,
+        }
+    }, {
+        name: 'register',
+        path: '/register',
+        components: {
+            sidebar: Sidebar,
+            header: Header,
+            page: Register,
         }
     }]
 });
