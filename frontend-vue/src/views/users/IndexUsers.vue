@@ -10,21 +10,33 @@
       </thead>
       <tr class="separator"></tr>
       <tbody class="tbody">
+        <row-item v-for="(user, i) in users" :key="i" :user="user" />
       </tbody>
     </table>
   </main>
 </template>
 
 <script>
-import ThItem from '@/components/users/ThItem';
-import SearchWrapper from '@/components/users/SearchWrapper';
+import ThItem from '@/views/users/components/ThItem';
+import SearchWrapper from '@/views/users/components/SearchWrapper';
+import RowItem from '@/views/users/components/RowItem';
+import UsersService from '@/services/users/users.service';
 
 export default {
-  components: { ThItem, SearchWrapper },
+  components: { ThItem, SearchWrapper, RowItem},
   data() {
     return {
       titles: ['Nome', 'Telefone', 'Email', 'Data Nasc.', 'Status', 'Ações'],
+      users: []
     }
+  },
+  methods: {
+    async list() {
+      this.users = await UsersService.list();
+    }
+  },
+  mounted() {
+    this.list();
   }
 }
 </script>

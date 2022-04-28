@@ -8,8 +8,10 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "axios": "0.21.1",
     "core-js": "^3.8.3",
     "vue": "^2.6.14",
+    "vue-axios": "^3.4.1",
     "vue-fragment": "^1.5.2",
     "vue-router": "3.0.2",
     "vuex": "3.0.1"
@@ -37,6 +39,11 @@
       "parser": "@babel/eslint-parser"
     },
     "rules": {}
+  },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
   },
   "browserslist": [
     "> 1%",

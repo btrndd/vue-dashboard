@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import MenuBtn from '@/components/main/MenuBtn';
+import MenuBtn from '@/layout/MenuSidebar';
 
 export default {
   components: { MenuBtn },
