@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="main" :class="{'thin-left': hiddenLeft}" >
     <div class="container">
       <h2>Usuários / Cadastrar</h2>      
     </div>  
@@ -11,7 +11,11 @@
 import UserForm from '@/components/UserForm.vue'
 export default {
   components: { UserForm },
-
+  computed: {
+    hiddenLeft() {
+      return this.$store.state.hiddenLeft;
+    },
+  },
 }
 </script>
 

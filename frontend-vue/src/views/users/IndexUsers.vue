@@ -1,5 +1,5 @@
 <template>
-  <main class="main">
+  <main class="main" :class="{'thin-left': hiddenLeft}">
     <div class="container">
       <h2>Usuários</h2>
       <search-wrapper />
@@ -29,6 +29,11 @@ export default {
       titles: ['Nome', 'Telefone', 'Email', 'Data Nasc.', 'Status', 'Ações'],
       users: []
     }
+  },
+  computed: {
+    hiddenLeft() {
+      return this.$store.state.hiddenLeft;
+    },
   },
   methods: {
     async list() {
