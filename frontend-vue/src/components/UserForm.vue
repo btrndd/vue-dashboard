@@ -1,24 +1,24 @@
 <template>    
   <form class="form">
     <div class="inputWrapper">
-      <text-input field="name" label="Nome" />
-      <text-input field="lastName" label="Sobrenome" />
+      <text-input field="name" label="Nome" v-model="name" />
+      <text-input field="lastName" label="Sobrenome" v-model="lastName" />
     </div>
     <div class="inputWrapper">
-      <text-input field="phone" label="Telefone" placeholder="(99) 99999-9999" maxLength="15" />
-      <text-input field="birthDate" type="date" label="Data de Nascimento" min="1900-01-01" max="2030-12-31" />
+      <text-input field="phone" label="Telefone" placeholder="(99) 99999-9999" maxLength="15" v-model="phone" />
+      <text-input field="birthDate" type="date" label="Data de Nascimento" v-model="birthDate" />
     </div>
-    <text-input field="email" label="Email" />
+    <text-input field="email" label="Email" v-model="email" />
     <div class="inputWrapper">
-      <text-input field="password" type="password" label="Senha" />
-      <text-input field="checkPassword" type="password" label="Repetir Senha" />
+      <text-input field="password" type="password" label="Senha" v-model="password" />
+      <text-input field="checkPassword" type="password" label="Repetir Senha" v-model="checkPassword"/>
     </div>
     <div class="checkbox">
       <input type="checkbox" name="status" id="status" />
       <label for="status">Ativo</label>
     </div>
-    <button type="button" id="cadastrar" class="register-btn" data-page="register">Cadastrar</button>
-    <button type="button" id="cadastrar" class="cancel-btn" data-page="register">Cancelar</button>
+    <button type="button" id="cadastrar" class="register-btn" data-page="register" @click="handleSubmit">Cadastrar</button>
+    <button type="button" class="cancel-btn" @click="goBack" >Cancelar</button>
   </form>
 </template>
 
@@ -26,7 +26,48 @@
 import TextInput from '@/components/TextInput.vue'
 export default {
   components: { TextInput },
-
+  data() {
+    return {
+      name: {
+        content: '',
+        fulfilled: false,
+      },
+      lastName: {
+        content: '',
+        fulfilled: false,
+      },
+      phone: {
+        content: '',
+        fulfilled: false,
+      },
+      email: {
+        content: '',
+        fulfilled: false,
+      },
+      birthDate: {
+        content: '',
+        fulfilled: false,
+      },
+      password: {
+        content: '',
+        fulfilled: false,
+      },
+      checkPassword: {
+        content: '',
+        fulfilled: false,
+      }
+    }
+  },
+  methods: {
+    goBack() {
+      this.$store.commit('updateUsersArrow', true);
+      this.$router.push({ name: 'users' });
+    },
+    handleSubmit() {
+      // console.log('aqui');
+      // this.$emit('checkRequired');
+    }
+  }
 }
 </script>
 

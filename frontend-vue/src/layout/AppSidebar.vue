@@ -16,7 +16,7 @@
         :id="usersName"
         :data-page="usersName"
       >
-        <menu-btn :arrow="usersArrow" :icon="usersIcon" :name="usersName" :title="usersTitle" />
+        <menu-btn :arrow="userArrow" :icon="usersIcon" :name="usersName" :title="usersTitle" />
       </li>
     </ul>
   </aside>
@@ -35,7 +35,6 @@ export default {
       dashName: 'dashboard',
       dashTitle: 'Dashboard',
       dashIcon: 'fas fa-th-large',
-      usersArrow: false,
       dashArrow: false,
     }
   },
@@ -47,20 +46,23 @@ export default {
       return this.hiddenWidth ? 
       require('@/assets/img/icon-branco.png') 
       : require('@/assets/img/logo-branca.png');
+    },
+    userArrow() {
+      return this.$store.state.arrow;
     }
   },
   methods: {
     handleDashClick() {
       this.dashArrow = true;
-      this.usersArrow = false;
+      this.$store.commit('updateUsersArrow', false);
       this.$router.push({ name: 'dash' });
     },
 
     handleUsersClick() {
       this.dashArrow = false;
-      this.usersArrow = true;
+      this.$store.commit('updateUsersArrow', true);
       this.$router.push({ name: 'users' });
-    }
+    },
   }
 }
 </script>

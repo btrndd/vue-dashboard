@@ -21,16 +21,4 @@ export default {
     background-color: #00174a;
     font-weight: 600;
   }
-
-  /* button:focus {
-    outline: none;
-    background: transparent;
-    border: 1px solid transparent;
-  }
-  
-  button:active {
-      outline: none;
-      background: transparent;
-      border: 1px solid grey;
-  } */
 </style>

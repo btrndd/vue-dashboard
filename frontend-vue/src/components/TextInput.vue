@@ -1,7 +1,8 @@
 <template>
   <div class="input" :class="type">
     <label :for="field">{{ label }}</label>
-    <input :name="field" :id="field" :type="type" :min="min" :max="max" :placeholder="placeholder" :maxlength="maxLength" required />
+    <input :name="field" :id="field" :type="type" :placeholder="placeholder" :maxlength="maxLength" :value="value.content" @input="handleInput" required />
+    <small class="warning" v-if="value.fulfilled">Por favor, preencha este campo.</small>
   </div>
 </template>
 
@@ -13,10 +14,25 @@ export default {
     maxLength: String,
     placeholder: String,
     type: String,
-    min: String,
-    max: String,
-  }
-
+    value: {
+      type: Object,
+    }
+  },
+  methods: {
+    handleInput(event) {
+      if (event.target.value === '') {
+        this.$emit('input', {
+          content: event.target.value,
+          fulfilled: true,
+        });
+      } else {
+        this.$emit('input', {
+          content: event.target.value,
+          fulfilled: false,
+        });
+      }
+    },
+  },
 }
 </script>
 
@@ -47,5 +63,9 @@ export default {
 #email {
   width: 97%;
   padding-left: 2%;
+}
+
+.warning {
+  color: red;
 }
 </style>

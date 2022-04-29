@@ -4,13 +4,17 @@
       <i class="fas fa-search" aria-hidden="true"></i>
     </label>
     <input class="search-bar" placeholder="Buscar usuários">
-    <button class="add-button" type="button" id="register" data-page="register">Adicionar</button>
+    <button @click="goToRegister" class="add-button" type="button" id="register" data-page="register">Adicionar</button>
   </div>
 </template>
 
 <script>
 export default {
-
+  methods: {
+    goToRegister() {
+      this.$router.push({ name: 'register' });
+    }
+  }
 }
 </script>
 
