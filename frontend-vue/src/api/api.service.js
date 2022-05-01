@@ -26,7 +26,11 @@ const ApiService = {
   get(resource, slug = '') {
     this.setHeader();
     return Vue.axios.get(`${resource}/${slug}`)
-  }
+  },
+  post(resource, params, config = null) {
+    this.setHeader();
+    return Vue.axios.post(`${resource}`, params, config)
+  },
 }
 
 export default ApiService;

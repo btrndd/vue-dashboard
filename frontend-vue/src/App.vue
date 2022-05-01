@@ -41,6 +41,7 @@ export default {
     border-right: 30px solid #f5f4f4;
     border-top: 30px solid #f5f4f4;
     padding: 20px;
+    height: 100vh;
   }
 
   .thin-width {

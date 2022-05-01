@@ -10,7 +10,7 @@
       </thead>
       <tr class="separator"></tr>
       <tbody class="tbody">
-        <row-item v-for="(user, i) in users" :key="i" :user="user" />
+        <row-item v-for="(user) in users" :key="user.id" :id="user.id" :user="user" />
       </tbody>
     </table>
   </main>

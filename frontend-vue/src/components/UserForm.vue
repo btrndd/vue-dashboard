@@ -23,7 +23,9 @@
 </template>
 
 <script>
+import UsersService from '@/services/users/users.service';
 import TextInput from '@/components/TextInput.vue'
+
 export default {
   components: { TextInput },
   data() {
@@ -68,6 +70,17 @@ export default {
   computed: {
     form() {
       return [this.name, this.lastName, this.phone, this.email, this.birthDate, this.password, this.checkPassword];
+    },
+    formObject() {
+      return { 
+        name: this.name.content, 
+        lastName: this.lastName.content,
+        email: this.email.content,
+        phone: this.phone.content,
+        birthDate: this.birthDate.content,
+        password: this.password.content,
+        status: true
+      };
     }
   },
   methods: {
@@ -87,8 +100,10 @@ export default {
       if (regexEmail.test(this.email.content)) {
         return true;
       }
-      this.email.feedback = true;
-      this.email.message = 'Por favor, insira um email válido.';
+      if (this.phone.feedback === false) {
+        this.email.feedback = true;
+        this.email.message = 'Por favor, insira um email válido.';
+      }
     },
     verifyPassword() {
       const regex = /\d/g;
@@ -96,25 +111,31 @@ export default {
       if (this.password.content.length >= 6 && haveNumber) {
         return true;
       }
-      this.password.feedback = true;
-      this.password.message = 'Sua senha precisa ter no mínimo 6 digitos e um número.';
+      if (this.phone.feedback === false) {  
+        this.password.feedback = true;
+        this.password.message = 'Sua senha precisa ter no mínimo 6 digitos e um número.';
+      }
     },
     verifyPhone() {
       const onlyNumbers = this.phone.content.replace(/\D/g, '');
       if (onlyNumbers.length >= 10) {
         return true;
       }
-      this.phone.feedback = true;
-      this.phone.message = 'Por favor, insira um número válido.';
+      if (this.phone.feedback === false) {
+        this.phone.feedback = true;
+        this.phone.message = 'Por favor, insira um número válido.';
+      }      
     },
     doubleCheckPassword() {
       if (this.password.content === this.checkPassword.content) {
         return true;
       }
-      this.checkPassword.feedback = true;
-      this.checkPassword.message = 'Por favor, verifique a senha inserida.';
+      if (this.phone.feedback === false) {
+        this.checkPassword.feedback = true;
+        this.checkPassword.message = 'Por favor, verifique a senha inserida.';
+      }      
     },
-    handleSubmit() {
+    async handleSubmit() {
       this.verifyRequired();
       this.verifyEmail();
       this.verifyPhone();
@@ -123,7 +144,7 @@ export default {
       const allowSubmit = this.form.some((e) => e.feedback === true);
       if (!allowSubmit) {
         // call spinner
-        // call post api
+        await UsersService.save(this.formObject);
         this.goBack();
       }
     }

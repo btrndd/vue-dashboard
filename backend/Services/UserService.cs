@@ -29,7 +29,7 @@ namespace backend.Services
     {
       var user = _repository.GetByEmail(model.Email);
 
-      if (user != null)
+      if (user.Result is not null && user.Result.Email == model.Email)
         throw new ApplicationException("O email inserido já está em uso.");
 
       var encryptedPassword = MD5Hash.CalculaHash(model.Password);
