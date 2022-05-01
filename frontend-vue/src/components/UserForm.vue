@@ -30,32 +30,44 @@ export default {
     return {
       name: {
         content: '',
-        fulfilled: false,
+        feedback: false,
+        message: 'Por favor, preencha este campo.'
       },
       lastName: {
         content: '',
-        fulfilled: false,
+        feedback: false,
+        message: 'Por favor, preencha este campo.'
       },
       phone: {
         content: '',
-        fulfilled: false,
+        feedback: false,
+        message: 'Por favor, preencha este campo.'
       },
       email: {
         content: '',
-        fulfilled: false,
+        feedback: false,
+        message: 'Por favor, preencha este campo.'
       },
       birthDate: {
         content: '',
-        fulfilled: false,
+        feedback: false,
+        message: 'Por favor, preencha este campo.'
       },
       password: {
         content: '',
-        fulfilled: false,
+        feedback: false,
+        message: 'Por favor, preencha este campo.'
       },
       checkPassword: {
         content: '',
-        fulfilled: false,
+        feedback: false,
+        message: 'Por favor, preencha este campo.'
       }
+    }
+  },
+  computed: {
+    form() {
+      return [this.name, this.lastName, this.phone, this.email, this.birthDate, this.password, this.checkPassword];
     }
   },
   methods: {
@@ -63,9 +75,57 @@ export default {
       this.$store.commit('updateUsersArrow', true);
       this.$router.push({ name: 'users' });
     },
+    verifyRequired() {
+      const required = this.form.filter((e) => e.content === '' || e.content === null);
+      if (required === 0) {
+        return true;
+      }
+      required.forEach((e) => e.feedback = true);
+    },
+    verifyEmail() {
+      const regexEmail = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+      if (regexEmail.test(this.email.content)) {
+        return true;
+      }
+      this.email.feedback = true;
+      this.email.message = 'Por favor, insira um email válido.';
+    },
+    verifyPassword() {
+      const regex = /\d/g;
+      const haveNumber = regex.test(this.password.content);
+      if (this.password.content.length >= 6 && haveNumber) {
+        return true;
+      }
+      this.password.feedback = true;
+      this.password.message = 'Sua senha precisa ter no mínimo 6 digitos e um número.';
+    },
+    verifyPhone() {
+      const onlyNumbers = this.phone.content.replace(/\D/g, '');
+      if (onlyNumbers.length >= 10) {
+        return true;
+      }
+      this.phone.feedback = true;
+      this.phone.message = 'Por favor, insira um número válido.';
+    },
+    doubleCheckPassword() {
+      if (this.password.content === this.checkPassword.content) {
+        return true;
+      }
+      this.checkPassword.feedback = true;
+      this.checkPassword.message = 'Por favor, verifique a senha inserida.';
+    },
     handleSubmit() {
-      // console.log('aqui');
-      // this.$emit('checkRequired');
+      this.verifyRequired();
+      this.verifyEmail();
+      this.verifyPhone();
+      this.verifyPassword();
+      this.doubleCheckPassword();
+      const allowSubmit = this.form.some((e) => e.feedback === true);
+      if (!allowSubmit) {
+        // call spinner
+        // call post api
+        this.goBack();
+      }
     }
   }
 }

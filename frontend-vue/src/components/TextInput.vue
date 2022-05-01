@@ -2,7 +2,7 @@
   <div class="input" :class="type">
     <label :for="field">{{ label }}</label>
     <input :name="field" :id="field" :type="type" :placeholder="placeholder" :maxlength="maxLength" :value="value.content" @input="handleInput" required />
-    <small class="warning" v-if="value.fulfilled">Por favor, preencha este campo.</small>
+    <small class="warning" v-if="value.feedback">{{ value.message }}</small>
   </div>
 </template>
 
@@ -18,17 +18,25 @@ export default {
       type: Object,
     }
   },
+  data() {
+    return {
+      inputValue: this.value.content,
+      validForm: false,
+    }
+  },
   methods: {
     handleInput(event) {
       if (event.target.value === '') {
         this.$emit('input', {
           content: event.target.value,
-          fulfilled: true,
+          feedback: true,
+          message: 'Por favor, preencha este campo.'
         });
       } else {
         this.$emit('input', {
           content: event.target.value,
-          fulfilled: false,
+          feedback: false,
+          message: 'Por favor, preencha este campo.'
         });
       }
     },
