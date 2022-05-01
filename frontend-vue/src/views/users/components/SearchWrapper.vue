@@ -3,17 +3,25 @@
     <label>
       <i class="fas fa-search" aria-hidden="true"></i>
     </label>
-    <input class="search-bar" placeholder="Buscar usuários">
+    <input class="search-bar" placeholder="Buscar usuários" :value="this.value" @input="handleInput">
     <button @click="goToRegister" class="add-button" type="button" id="register" data-page="register">Adicionar</button>
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+    value: {
+      type: String,
+    },
+  },
   methods: {
     goToRegister() {
       this.$router.push({ name: 'register' });
-    }
+    },
+    handleInput(event) {
+    this.$emit('input', event.target.value);
+    },
   }
 }
 </script>

@@ -2,7 +2,7 @@
   <main class="main" :class="{'thin-left': hiddenLeft}">
     <div class="container">
       <h2>Usuários</h2>
-      <search-wrapper />
+      <search-wrapper v-model.lazy.trim="search" />
     </div>
     <table>
       <thead class="table-header">
@@ -27,7 +27,9 @@ export default {
   data() {
     return {
       titles: ['Nome', 'Telefone', 'Email', 'Data Nasc.', 'Status', 'Ações'],
-      users: []
+      users: [],
+      usersBackup: [],
+      search: ''
     }
   },
   computed: {
@@ -38,7 +40,26 @@ export default {
   methods: {
     async list() {      
       this.users = await UsersService.list();
+      this.usersBackup = this.users;
       this.$store.commit('showSpinner', false);
+    },
+    searchUsers(){
+      let status = this.search;
+      if(this.search.toLowerCase() === 'ativo') {
+        status = true;
+      }
+      if(this.search.toLowerCase() ==='inativo') {
+        status = false;
+      }
+      let result = [];
+      result = [...result, ...(this.usersBackup.filter((user) => user.name.toLowerCase().includes(this.search.toLowerCase())))]
+      result = [...result, ...this.usersBackup.filter((user) => user.lastName.toLowerCase().includes(this.search.toLowerCase()))];
+      result = [...result, ...this.usersBackup.filter((user) => user.email.toLowerCase().includes(this.search.toLowerCase()))];
+      result = [...result, ...this.usersBackup.filter((user) => user.phone.toLowerCase().includes(this.search.toLowerCase()))];
+      result = [...result, ...this.usersBackup.filter((user) => user.status === status)]
+      const makeUnique = (result) =>  Array.from(new Set(result)); 
+      const unique = makeUnique(result);
+      this.users = unique;
     }
   },
   mounted() {
@@ -46,6 +67,11 @@ export default {
   },
   beforeMount() {
     this.$store.commit('showSpinner', true);
+  },
+  watch: {
+    search() {
+      this.searchUsers();
+    }
   }
 }
 </script>

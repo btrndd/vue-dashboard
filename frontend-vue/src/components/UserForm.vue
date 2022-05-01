@@ -18,7 +18,7 @@
       <label for="status">Ativo</label>
     </div>
     <button type="button" id="cadastrar" class="register-btn" data-page="register" @click="handleSubmit">Enviar</button>
-    <button type="button" class="cancel-btn" @click="goBack" >Cancelar</button>
+    <button type="button" class="cancel-btn" @click="goBack">Cancelar</button>
   </form>
 </template>
 
