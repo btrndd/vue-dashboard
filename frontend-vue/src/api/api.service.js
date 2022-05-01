@@ -3,8 +3,6 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 import { API_URL } from '@/config/config';
 
-console.log(API_URL);
-
 const ApiService = {
   init() {
     Vue.use(VueAxios, axios);
@@ -30,6 +28,10 @@ const ApiService = {
   post(resource, params, config = null) {
     this.setHeader();
     return Vue.axios.post(`${resource}`, params, config)
+  },
+  put(resource, params, slug, config = null) {
+    this.setHeader();
+    return Vue.axios.put(`${resource}/${slug}`, params, config)
   },
 }
 

@@ -17,7 +17,7 @@
       <input type="checkbox" name="status" id="status" v-model="status.content"/>
       <label for="status">Ativo</label>
     </div>
-    <button type="button" id="cadastrar" class="register-btn" data-page="register" @click="handleSubmit">Cadastrar</button>
+    <button type="button" id="cadastrar" class="register-btn" data-page="register" @click="handleSubmit">Enviar</button>
     <button type="button" class="cancel-btn" @click="goBack" >Cancelar</button>
   </form>
 </template>
@@ -72,9 +72,12 @@ export default {
       }
     }
   },
+  mounted() {
+    this.getById();
+  },
   computed: {
     form() {
-      return [this.name, this.lastName, this.phone, this.email, this.birthDate, this.password, this.checkPassword];
+      return [this.name, this.lastName, this.email, this.phone, this.birthDate, this.password, this.checkPassword];
     },
     formObject() {
       return { 
@@ -92,6 +95,15 @@ export default {
     goBack() {
       this.$store.commit('updateUsersArrow', true);
       this.$router.push({ name: 'users' });
+    },
+    async getById() {
+      if (this.$route.params.id !== undefined) {
+        this.$store.commit('showSpinner', true);
+        const user = await UsersService.getById(this.$route.params.id);   
+        const keys = Object.keys(user).slice(1);
+        keys.forEach((key) => this[key].content = user[key]);
+        this.$store.commit('showSpinner', false);
+      }
     },
     verifyRequired() {
       const required = this.form.filter((e) => e.content === '' || e.content === null);
@@ -141,15 +153,19 @@ export default {
       }      
     },
     async handleSubmit() {
-      this.verifyRequired();
+      if(!this.$route.params.id) {
+        this.verifyRequired();
+      }
       this.verifyEmail();
       this.verifyPhone();
-      this.verifyPassword();
-      this.doubleCheckPassword();
+      if(this.password.content !== '') {
+        this.verifyPassword();
+        this.doubleCheckPassword();
+      }
       const allowSubmit = this.form.some((e) => e.feedback === true);
       if (!allowSubmit) {
         this.$store.commit('showSpinner', true);
-        await UsersService.save(this.formObject);
+        await UsersService.save(this.formObject, this.$route.params.id);
         this.$store.commit('showSpinner', false);
         this.goBack();
       }

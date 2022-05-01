@@ -43,7 +43,7 @@ const router = new Router({
             page: Register,
         }
     }, {
-        name: 'register',
+        name: 'edit',
         path: '/users/edit/:id',
         components: {
             sidebar: Sidebar,

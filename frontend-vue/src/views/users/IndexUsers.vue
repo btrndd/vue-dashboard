@@ -36,14 +36,16 @@ export default {
     },
   },
   methods: {
-    async list() {
-      this.$store.commit('showSpinner', true);
+    async list() {      
       this.users = await UsersService.list();
       this.$store.commit('showSpinner', false);
     }
   },
   mounted() {
     this.list();
+  },
+  beforeMount() {
+    this.$store.commit('showSpinner', true);
   }
 }
 </script>

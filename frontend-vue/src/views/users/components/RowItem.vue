@@ -14,11 +14,11 @@
     </td>
     <td>
       <div class="acoes-wrapper">
-        <button type="button" id="1" data-name="edit">
-          <i class="fas fa-edit" id="1" data-name="edit" aria-hidden="true"></i>
+        <button type="button" data-name="edit" @click="editUser">
+          <i class="fas fa-edit" data-name="edit" aria-hidden="true"></i>
         </button>
-        <button type="button" id="1" data-name="remove">
-          <i class="fas fa-trash" id="1" data-name="remove" aria-hidden="true"></i>
+        <button type="button" data-name="remove">
+          <i class="fas fa-trash" data-name="remove" aria-hidden="true"></i>
         </button>
       </div>
     </td>
@@ -38,6 +38,9 @@ export default {
   methods: {
     addZero(number) {
       return (number <= 9 ? "0" + number : number);
+    },
+    editUser() {
+      this.$router.push({ name: 'edit', params: { id: this.user.id } });
     }
   },
   computed: {
