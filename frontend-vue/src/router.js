@@ -8,19 +8,15 @@ const Sidebar = () => import(/* webpackChunkName: "layout" */'@/layout/AppSideba
 const Header = () => import(/* webpackChunkName: "layout" */'@/layout/AppHeader');
 const Dashboard = () => import(/* webpackChunkName: "dashboard" */'@/views/dashboard/IndexDashboard');
 const Users = () => import(/* webpackChunkName: "users" */'@/views/users/IndexUsers');
-const Register = () => import(/* webpackChunkName: "register" */'@/views/register/IndexRegister');
-
-// import Login from '@/views/login/IndexLogin';
-// import Sidebar from '@/layout/AppSidebar';
-// import Header from '@/layout/AppHeader';
-// import Dashboard from '@/views/dashboard/IndexDashboard';
-// import Users from '@/views/users/IndexUsers';
+const Register = () => import(/* webpackChunkName: "update" */'@/views/register/IndexRegister');
+const Edit = () => import(/* webpackChunkName: "update" */'@/views/edit/IndexEdit');
 
 const router = new Router({
     mode: 'history',
     routes: [{
         name: 'login',
         path: '/',
+        redirect: '/login',
         component: Login
     }, {
         name: 'dash',
@@ -40,11 +36,19 @@ const router = new Router({
         }
     }, {
         name: 'register',
-        path: '/register',
+        path: '/users/register',
         components: {
             sidebar: Sidebar,
             header: Header,
             page: Register,
+        }
+    }, {
+        name: 'register',
+        path: '/users/edit/:id',
+        components: {
+            sidebar: Sidebar,
+            header: Header,
+            page: Edit,
         }
     }]
 });

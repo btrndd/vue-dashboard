@@ -13,6 +13,7 @@ export default new Vuex.Store({
         hiddenWidth: false,
         hiddenLeft: false,
         arrow: false,
+        spinner: false,
     },
 
     getters: {
@@ -27,6 +28,10 @@ export default new Vuex.Store({
         arrow(state) {
             return state.arrow;
         },
+        
+        spinner(state) {
+            return state.showSpinner;
+        }
     },
 
     mutations: {
@@ -37,6 +42,9 @@ export default new Vuex.Store({
         updateUsersArrow(state, payload) {
             state.arrow = payload;
         },
+        showSpinner(state, payload) {
+            state.spinner = payload;
+        }
     },
 
     // actions: {

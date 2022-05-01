@@ -3,13 +3,22 @@
     <router-view />
     <router-view name="header" />
     <router-view name="sidebar" />
+    <router-view name="spinner" />
     <router-view name="page" />
+    <loading-spinner v-if="showSpinner" />
   </div>
 </template>
 
 <script>
+import LoadingSpinner from './components/LoadingSpinner.vue'
 export default {
+  components: { LoadingSpinner },
   name: 'App',
+  computed: {
+    showSpinner() {
+      return this.$store.state.spinner;
+    },
+  }  
 }
 </script>
 

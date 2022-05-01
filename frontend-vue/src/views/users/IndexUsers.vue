@@ -37,7 +37,9 @@ export default {
   },
   methods: {
     async list() {
+      this.$store.commit('showSpinner', true);
       this.users = await UsersService.list();
+      this.$store.commit('showSpinner', false);
     }
   },
   mounted() {

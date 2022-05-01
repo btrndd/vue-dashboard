@@ -1,7 +1,16 @@
 <template>
   <div class="input" :class="type">
     <label :for="field">{{ label }}</label>
-    <input :name="field" :id="field" :type="type" :placeholder="placeholder" :maxlength="maxLength" :value="value.content" @input="handleInput" required />
+    <input
+      :name="field"
+      :id="field"
+      :type="type"
+      :placeholder="placeholder"
+      :maxlength="maxLength"
+      :value="this.value.content" 
+      @keyup="executeMask"
+      @input="handleInput"
+    />
     <small class="warning" v-if="value.feedback">{{ value.message }}</small>
   </div>
 </template>
@@ -18,13 +27,22 @@ export default {
       type: Object,
     }
   },
-  data() {
-    return {
-      inputValue: this.value.content,
-      validForm: false,
-    }
-  },
   methods: {
+    formatPhone() {
+      const onlyNumbers = this.value.content.replace(/\D/g, '');
+      const numberWithParenteses = onlyNumbers.replace(/^(\d{2})(\d)/g, '($1) $2');
+      const numberWithHifen = numberWithParenteses.replace(/(\d)(\d{4})$/, '$1-$2');
+      return numberWithHifen;
+    },
+    executeMask() {
+      if (this.field === 'phone') {
+        this.$emit('input', {
+          content: this.formatPhone(),
+          feedback: false,
+          message: 'Por favor, preencha este campo.'
+        });
+      }
+    },
     handleInput(event) {
       if (event.target.value === '') {
         this.$emit('input', {

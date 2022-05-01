@@ -14,7 +14,7 @@
       <text-input field="checkPassword" type="password" label="Repetir Senha" v-model="checkPassword"/>
     </div>
     <div class="checkbox">
-      <input type="checkbox" name="status" id="status" />
+      <input type="checkbox" name="status" id="status" v-model="status.content"/>
       <label for="status">Ativo</label>
     </div>
     <button type="button" id="cadastrar" class="register-btn" data-page="register" @click="handleSubmit">Cadastrar</button>
@@ -64,6 +64,11 @@ export default {
         content: '',
         feedback: false,
         message: 'Por favor, preencha este campo.'
+      },
+      status: {
+        content: false,
+        feedback: false,
+        message: 'Por favor, preencha este campo.'
       }
     }
   },
@@ -76,10 +81,10 @@ export default {
         name: this.name.content, 
         lastName: this.lastName.content,
         email: this.email.content,
-        phone: this.phone.content,
+        phone: this.phone.content.replace(/\D/g, ''),
         birthDate: this.birthDate.content,
         password: this.password.content,
-        status: true
+        status: this.status.content
       };
     }
   },
@@ -143,8 +148,9 @@ export default {
       this.doubleCheckPassword();
       const allowSubmit = this.form.some((e) => e.feedback === true);
       if (!allowSubmit) {
-        // call spinner
+        this.$store.commit('showSpinner', true);
         await UsersService.save(this.formObject);
+        this.$store.commit('showSpinner', false);
         this.goBack();
       }
     }

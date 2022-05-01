@@ -6,10 +6,11 @@
         <p class="name-text">{{ user.name }} {{ user.lastName }}</p>
       </div>
     </td>
-    <td data-title="Telefone">{{ user.phone }}</td>
+    <td data-title="Telefone">{{ user.phone | phoneNumber }}</td>
     <td data-title="Email">{{ user.email }}</td>
     <td data-title="Data Nasc.">{{ this.date }}</td>
-    <td data-title="Status"><p class="active">{{ user.status | active }}</p>
+    <td data-title="Status">
+      <p :class="statusClass">{{ user.status | active }}</p>
     </td>
     <td>
       <div class="acoes-wrapper">
@@ -44,10 +45,16 @@ export default {
       return (this.addZero(this.birthDate.getDate().toString()) 
         + "/" + (this.addZero(this.birthDate.getMonth()+1).toString()) + "/" + this.birthDate.getFullYear());
     },
+    statusClass() {
+      return (this.user.status ? 'active' : 'inactive');
+    }
   },
   filters: {
     active(value) {
       return (value ? 'Ativo' : 'Inativo');
+    },
+    phoneNumber(value) {
+      return value.replace(/\D/g, '').replace(/^(\d{2})(\d)/g, '($1) $2').replace(/(\d)(\d{4})$/, '$1-$2');
     }
   },
 }
