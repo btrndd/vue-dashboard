@@ -2,7 +2,7 @@
   <th class="header-items">
     <div class="th-wrapper">
       <p>{{ item }}</p>
-      <div>
+      <div v-if="this.sort">
         <button type="button">
           <i class="fas fa-arrow-up" aria-hidden="true"></i>
         </button>
@@ -18,6 +18,11 @@
 export default {
   props: {
     item: String,
+  },
+  computed: {
+    sort() {
+      return (this.item !== 'Ações' ? true : false);
+    }
   }
 }
 </script>
@@ -26,7 +31,7 @@ export default {
 .th-wrapper {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
   padding-left: 20px;
   padding-right: 10px;
 }

@@ -10,9 +10,10 @@
       </thead>
       <tr class="separator"></tr>
       <tbody class="tbody">
-        <row-item v-for="(user) in users" :key="user.id" :id="user.id" :user="user" />
+        <row-item v-for="(user) in users" :key="user.id" :id="user.id" :user="user" @confirmRemove="handleModal($event)" />
       </tbody>
     </table>
+    <remove-modal :userId="this.userId" v-if="modal" @confirmRemove="handleModal($event)" />
   </main>
 </template>
 
@@ -21,15 +22,19 @@ import ThItem from '@/views/users/components/ThItem';
 import SearchWrapper from '@/views/users/components/SearchWrapper';
 import RowItem from '@/views/users/components/RowItem';
 import UsersService from '@/services/users/users.service';
+import RemoveModal from '@/views/users/components/removeModal';
 
 export default {
-  components: { ThItem, SearchWrapper, RowItem},
+  components: { ThItem, SearchWrapper, RowItem, RemoveModal},
   data() {
     return {
       titles: ['Nome', 'Telefone', 'Email', 'Data Nasc.', 'Status', 'Ações'],
       users: [],
       usersBackup: [],
-      search: ''
+      search: '',
+      modal: false,
+      userId: '',
+      update: false,
     }
   },
   computed: {
@@ -39,9 +44,9 @@ export default {
   },
   methods: {
     async list() {      
-      this.users = await UsersService.list();
-      this.usersBackup = this.users;
+      const users = await UsersService.list();
       this.$store.commit('showSpinner', false);
+      return users;
     },
     searchUsers(){
       let status = this.search;
@@ -60,10 +65,24 @@ export default {
       const makeUnique = (result) =>  Array.from(new Set(result)); 
       const unique = makeUnique(result);
       this.users = unique;
+    },
+    async handleModal(event) {
+      const { id } = event;
+      const { className } = event;
+      if (id) {
+        this.userId = event.id;
+      } 
+      if (className === 'confirm-btn') {
+        this.update = true;
+      }
+      if (this.modal === true) {
+        return this.modal = false;
+      }
+      return this.modal = true;
     }
   },
-  mounted() {
-    this.list();
+  async mounted() {
+    this.users = await this.list();
   },
   beforeMount() {
     this.$store.commit('showSpinner', true);
@@ -71,6 +90,11 @@ export default {
   watch: {
     search() {
       this.searchUsers();
+    },
+    async update() {
+      this.$store.commit('showSpinner', true);
+      this.users = await this.list();
+      this.update = false;
     }
   }
 }

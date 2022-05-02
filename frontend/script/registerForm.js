@@ -88,6 +88,7 @@ const registerForm = async (ev, id, edit) => {
   phone.addEventListener('keyup', () => {
     const adjustedPhone = formatNumber(phone.value);
     executeMask(phone, adjustedPhone);
+    
   });
 }
 

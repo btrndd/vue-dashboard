@@ -33,6 +33,10 @@ const ApiService = {
     this.setHeader();
     return Vue.axios.put(`${resource}/${slug}`, params, config)
   },
+  delete(resource, slug) {
+    this.setHeader();
+    return Vue.axios.delete(`${resource}/${slug}`)
+  },
 }
 
 export default ApiService;

@@ -21,6 +21,10 @@ const UsersService = {
     const { data } = await ApiService.get('users', id);
     data.birthDate = new Date(data.birthDate).toISOString().split('T')[0];
     return data;
+  },
+  async remove(id) {
+    const { data } = await ApiService.delete('users', id);
+    return data;
   }
 }
 

@@ -17,8 +17,8 @@
         <button type="button" data-name="edit" @click="editUser">
           <i class="fas fa-edit" data-name="edit" aria-hidden="true"></i>
         </button>
-        <button type="button" data-name="remove">
-          <i class="fas fa-trash" data-name="remove" aria-hidden="true"></i>
+        <button type="button" data-name="remove" @click="removeUser" :id="this.user.id">
+          <i class="fas fa-trash" data-name="remove" aria-hidden="true" :id="this.user.id"></i>
         </button>
       </div>
     </td>
@@ -41,6 +41,9 @@ export default {
     },
     editUser() {
       this.$router.push({ name: 'edit', params: { id: this.user.id } });
+    },
+    removeUser(event) {
+      this.$emit('confirmRemove', event.target);
     }
   },
   computed: {
