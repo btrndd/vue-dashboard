@@ -13,7 +13,9 @@ export default new Vuex.Store({
         hiddenWidth: false,
         hiddenLeft: false,
         arrow: false,
+        dashArrow: false,
         spinner: false,
+        username: ''
     },
 
     getters: {
@@ -28,9 +30,17 @@ export default new Vuex.Store({
         arrow(state) {
             return state.arrow;
         },
+
+        dashArrow(state) {
+            return state.dashArrow;
+        },
         
         spinner(state) {
             return state.showSpinner;
+        },
+
+        username(state) {
+            return state.username;
         }
     },
 
@@ -44,7 +54,13 @@ export default new Vuex.Store({
         },
         showSpinner(state, payload) {
             state.spinner = payload;
-        }
+        },
+        updateDashArrow(state, payload) {
+            state.dashArrow = payload;
+        },
+        updateUsername(state, payload) {
+            state.username = payload;
+        },
     },
 
     // actions: {

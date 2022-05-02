@@ -19,7 +19,7 @@ export default {
   overflow: show;
   margin: auto;
   top: 0;
-  left: 250px;
+  left: 0;
   bottom: 0;
   right: 0;
 }

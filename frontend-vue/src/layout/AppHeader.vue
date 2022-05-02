@@ -6,7 +6,7 @@
     <div class="avatar-wrapper">
       <img src="@/assets/img/avatar.png" alt="Imagem de perfil" class="avatar" />
       <div class="logoff-wrapper">
-        <p class="user">Nome de Usuário</p>
+        <p class="user">{{ username }}</p>
         <button @click="handleLogout" class="logout" type="button">Sair</button>
       </div>
     </div>
@@ -22,6 +22,9 @@ export default {
     hiddenLeft() {
       return this.$store.state.hiddenLeft;
     },
+    username() {
+      return this.$store.state.username;
+    }
   },
   methods: {
     goToLogin() {

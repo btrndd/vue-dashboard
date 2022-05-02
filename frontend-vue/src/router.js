@@ -14,9 +14,11 @@ const Edit = () => import(/* webpackChunkName: "update" */'@/views/edit/IndexEdi
 const router = new Router({
     mode: 'history',
     routes: [{
-        name: 'login',
         path: '/',
         redirect: '/login',
+    },{
+        name: 'login',
+        path: '/login',
         component: Login
     }, {
         name: 'dash',

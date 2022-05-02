@@ -25,7 +25,15 @@ const UsersService = {
   async remove(id) {
     const { data } = await ApiService.delete('users', id);
     return data;
-  }
+  },
+  async login(form) {
+    try {
+      const { data } = await ApiService.post('login', {...form});
+      return data;
+    } catch (error) {
+      return error.response.data;
+    }
+  },
 }
 
 export default UsersService;

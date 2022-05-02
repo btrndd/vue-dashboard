@@ -35,7 +35,6 @@ export default {
       dashName: 'dashboard',
       dashTitle: 'Dashboard',
       dashIcon: 'fas fa-th-large',
-      dashArrow: false,
     }
   },
   computed: {
@@ -49,17 +48,20 @@ export default {
     },
     userArrow() {
       return this.$store.state.arrow;
+    },
+    dashArrow() {
+      return this.$store.state.dashArrow;
     }
   },
   methods: {
     handleDashClick() {
-      this.dashArrow = true;
+      this.$store.commit('updateDashArrow', true);
       this.$store.commit('updateUsersArrow', false);
       this.$router.push({ name: 'dash' });
     },
 
     handleUsersClick() {
-      this.dashArrow = false;
+      this.$store.commit('updateDashArrow', false);
       this.$store.commit('updateUsersArrow', true);
       this.$router.push({ name: 'users' });
     },
