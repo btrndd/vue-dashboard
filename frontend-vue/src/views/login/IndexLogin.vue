@@ -71,7 +71,9 @@ export default {
           this.goDash();
           console.log(result);
         } else {
-          window.alert(result.message);
+          this.$store.commit('updateMessage', result.message);
+          this.$store.commit('updateColor', 'red');
+          this.$store.dispatch('showAlert');
         }
         this.$store.commit('showSpinner', false);        
       }

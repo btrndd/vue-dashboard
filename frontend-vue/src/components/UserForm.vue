@@ -99,10 +99,16 @@ export default {
     async getById() {
       if (this.$route.params.id !== undefined) {
         this.$store.commit('showSpinner', true);
-        const user = await UsersService.getById(this.$route.params.id);   
-        const keys = Object.keys(user).slice(1);
-        keys.forEach((key) => this[key].content = user[key]);
-        this.$store.commit('showSpinner', false);
+        const user = await UsersService.getById(this.$route.params.id);        
+        if (user.id) {
+          const keys = Object.keys(user).slice(1);
+          keys.forEach((key) => this[key].content = user[key]);
+          this.$store.commit('showSpinner', false);
+        } else {
+          this.$store.commit('updateMessage', user.message);
+          this.$store.commit('updateColor', 'red');
+          this.$store.dispatch('showAlert');
+        }
       }
     },
     verifyRequired() {
@@ -165,9 +171,18 @@ export default {
       const allowSubmit = this.form.some((e) => e.feedback === true);
       if (!allowSubmit) {
         this.$store.commit('showSpinner', true);
-        await UsersService.save(this.formObject, this.$route.params.id);
+        const result = await UsersService.save(this.formObject, this.$route.params.id);
         this.$store.commit('showSpinner', false);
-        this.goBack();
+        if (result.data) {
+          this.$store.commit('updateMessage', result.message);
+          this.$store.commit('updateColor', 'green');
+          this.$store.dispatch('showAlert');          
+          this.goBack();
+        } else {
+          this.$store.commit('updateMessage', result.message);
+          this.$store.commit('updateColor', 'red');
+          this.$store.dispatch('showAlert');
+        }
       }
     }
   }
@@ -209,5 +224,23 @@ form {
   height: 40px;
   border-radius: 6px;
   margin-left: 5px;
+}
+
+@media only screen and (max-width: 545px) {
+  .inputWrapper {
+    flex-direction: column;
+  }
+
+  form {
+    padding-top: 30px
+  }
+
+  .register-btn {
+    margin-left: 5px;
+  }
+
+  .cancel-btn {
+    margin-top: 5px;  
+  }
 }
 </style>

@@ -35,6 +35,7 @@ export default {
       dashName: 'dashboard',
       dashTitle: 'Dashboard',
       dashIcon: 'fas fa-th-large',
+      windowWidth: window.innerWidth,
     }
   },
   computed: {
@@ -65,34 +66,58 @@ export default {
       this.$store.commit('updateUsersArrow', true);
       this.$router.push({ name: 'users' });
     },
-  }
+    onResize() {
+      this.windowWidth = window.innerWidth
+    }
+  },
+
+  watch: {
+    windowWidth() {
+      if (this.windowWidth <= 1120) {
+        this.$store.commit('hidden', true);
+      }
+      if (this.windowWidth > 1120) {
+        this.$store.commit('hidden', false);
+      }
+    }
+  },
+
+  mounted() {
+    this.$nextTick(() => {
+        window.addEventListener('resize', this.onResize);
+    })
+  },
+
+  beforeDestroy() { 
+    window.removeEventListener('resize', this.onResize); 
+  },
 }
 </script>
 
 <style scoped>
-  .side-menu {
-    width: 250px;
-    height: 100vh;
-    background-color: #00174a;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    position: fixed;
-    left: 0;
-    top: 0;
-    border-bottom: 130px solid #00174a;
-  }
+.side-menu {
+  width: 250px;
+  height: 100vh;
+  background-color: #00174a;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  border-bottom: 130px solid #00174a;
+}
 
-  .logo {
-    width: 180px;
-  }
+.logo {
+  width: 180px;
+}
 
-  .logo-thin {
-    width: 40px;
-    margin: 40px 0 40px 0;
-  }
+.logo-thin {
+  width: 40px;
+  margin: 40px 0 40px 0;
+}
 
-  ul {
-    list-style: none;
-  }
+ul {
+  list-style: none;
+}
 </style>

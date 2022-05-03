@@ -31,4 +31,17 @@ export default {
 .container h2 {
   margin: 30px 0 0 15px
 }
+
+@media only screen and (max-width: 920px) {
+  .container h2 {
+    margin: 20px 0 0 0;
+  }
+}
+
+@media only screen and (max-width: 545px) {
+  .container h2 {
+    font-size: 19px;
+    width: 100%;
+  }
+}
 </style>

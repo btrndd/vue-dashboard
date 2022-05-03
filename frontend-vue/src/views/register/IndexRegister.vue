@@ -1,7 +1,7 @@
 <template>
   <div class="main" :class="{'thin-left': hiddenLeft}" >
     <div class="container">
-      <h2>Usuários / Cadastrar</h2>      
+      <h2 class="title">Usuários / Cadastrar</h2>      
     </div>  
     <user-form />
   </div>
@@ -29,6 +29,19 @@ export default {
 }
 
 .container h2 {
-  margin: 30px 0 0 15px
+  margin: 30px 0 0 15px;
+}
+
+@media only screen and (max-width: 920px) {
+  .container h2 {
+    margin: 20px 0 0 0;
+  }
+}
+
+@media only screen and (max-width: 545px) {
+  .container h2 {
+    font-size: 19px;
+    width: 100%;
+  }
 }
 </style>

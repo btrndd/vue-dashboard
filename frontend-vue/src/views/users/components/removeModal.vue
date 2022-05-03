@@ -26,7 +26,15 @@ export default {
       const result = await UsersService.remove(this.userId);
       this.$store.commit('showSpinner', false);
       this.$emit('confirmRemove', event.target);
-      return result;
+      if (result.data) {
+        this.$store.commit('updateMessage', result.message);
+        this.$store.commit('updateColor', 'green');
+        this.$store.dispatch('showAlert');
+      } else {
+        this.$store.commit('updateMessage', result.message);
+        this.$store.commit('updateColor', 'red');
+        this.$store.dispatch('showAlert');
+      }
     }
   }
 }
@@ -86,5 +94,19 @@ export default {
   height: 40px;
   border-radius: 6px;
   margin-top: 10px;
+}
+
+@media only screen and (max-width: 720px) {
+  .modal {
+    width: 200px;
+  }
+
+  .modal p {
+    text-align: center;
+  }
+
+  .confirm-btn {
+    margin-right: 5px;
+  }
 }
 </style>

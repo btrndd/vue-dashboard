@@ -94,4 +94,22 @@ export default {
 .warning {
   color: red;
 }
+
+
+
+@media only screen and (max-width: 545px) {
+  .input input {
+    padding-left: 8%;
+  }
+
+  #email {
+    padding-left: 8%;
+  }
+}
+
+@media only screen and (max-width: 360px) {  
+  .input input::placeholder {
+    font-size: 10px;
+  }
+}
 </style>

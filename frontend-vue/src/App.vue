@@ -6,19 +6,24 @@
     <router-view name="spinner" />
     <router-view name="page" />
     <loading-spinner v-if="showSpinner" />
+    <alert-box v-if="alert" />
   </div>
 </template>
 
 <script>
-import LoadingSpinner from './components/LoadingSpinner.vue'
+import AlertBox from '@/components/alertBox';
+import LoadingSpinner from '@/components/LoadingSpinner'
 export default {
-  components: { LoadingSpinner },
+  components: { LoadingSpinner, AlertBox },
   name: 'App',
   computed: {
     showSpinner() {
       return this.$store.state.spinner;
     },
-  }  
+    alert() {
+      return this.$store.state.alert;
+    },
+  }
 }
 </script>
 

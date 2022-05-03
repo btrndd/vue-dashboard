@@ -45,6 +45,7 @@ export default {
   methods: {
     async list() {      
       const users = await UsersService.list();
+      this.usersBackup = users;
       this.$store.commit('showSpinner', false);
       return users;
     },
@@ -246,12 +247,110 @@ table {
 }
 
 @media only screen and (max-width: 1280px) {
-  .request {
-    left: 80px;
-  }
-
   .modal {
     left: 80px;
+  }
+}
+
+@media only screen and (max-width: 906px) {
+  .name-wrapper {
+    justify-content: center;
+    align-items: unset;
+    padding-left: 0;
+    right: 0;
+  }
+
+  .list-avatar {
+    display: none;
+  }
+
+  table tr td:before {
+    content: attr(data-title);
+    position: relative;
+    left: 0;
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  table tr td {
+    display: block;    
+  }
+  
+  .user-row td {
+    height: 40px;
+    background-color: #fafafa;
+    color: grey;
+    border-bottom: 5px solid white;
+    padding-top: 8px;
+    padding-bottom: 12px;
+    font-size: 13px;
+  }
+
+  table tr {
+    border-bottom: 2px solid #00174a;
+  }
+
+  table {
+    margin-top: 20px;
+  }
+
+  .table-header {
+    display: none;
+  }
+
+  .container {
+    flex-direction: column;
+    height: 130px;
+  }
+
+  .search-wrapper {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+
+  .search-bar {
+    width: 160px;
+  }
+
+  .add-button {
+    margin-top: 10px;
+    width: 150px;
+  }
+
+  .acoes-wrapper {
+    align-items: center;
+    height: 100%;
+  }
+
+  .search-wrapper label {
+    position: relative;
+    right: 80px;
+    top: 30px;
+    color: gray;
+  }
+
+  .active {
+    margin: auto;
+  }
+  .inactive {
+    margin: auto;
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  .search-bar {
+    width: 120px;
+  }
+
+  .search-wrapper label {
+    right: 60px;
+  }
+
+  .avatar-wrapper{
+    margin-right: 0;
   }
 }
 </style>

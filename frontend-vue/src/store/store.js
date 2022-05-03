@@ -1,21 +1,23 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
-// import carrinho from './modules/carrinho'
-// import parametros from './modules/parametros'
-
-// import * as getters from './getters'
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+    plugins: [createPersistedState({
+        storage: window.sessionStorage,
+    })],
     state: {
         hiddenWidth: false,
         hiddenLeft: false,
         arrow: false,
         dashArrow: false,
         spinner: false,
-        username: ''
+        username: '',
+        message: 'Usuário criado com sucesso!',
+        alert: false,
+        color: 'red'
     },
 
     getters: {
@@ -36,11 +38,23 @@ export default new Vuex.Store({
         },
         
         spinner(state) {
-            return state.showSpinner;
+            return state.spinner;
         },
 
         username(state) {
             return state.username;
+        },
+
+        message(state) {
+            return state.message;
+        },
+
+        alert(state) {
+            return state.alert;
+        },
+
+        color(state) {
+            return state.color;
         }
     },
 
@@ -61,15 +75,23 @@ export default new Vuex.Store({
         updateUsername(state, payload) {
             state.username = payload;
         },
+        updateMessage(state, payload) {
+            state.message = payload;
+        },
+        showAlert(state, payload) {
+            state.alert = payload;
+        },
+        updateColor(state, payload) {
+            state.color = payload;
+        },
     },
 
-    // actions: {
-    //     adicionarProduto({ commit }, payload) {
-    //         setTimeout(() => {
-    //             commit('adicionarProduto', payload)
-    //         }, 1000)
-    //     }
-    // }
-    // getters,
-    // modules: { carrinho, parametros }
+    actions: {
+        async showAlert(context) {
+            context.commit('showAlert', true);
+            setTimeout(() => {
+                context.commit('showAlert', false)
+            }, 3000);
+        }
+    }
 })
