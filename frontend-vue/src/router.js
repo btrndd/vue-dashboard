@@ -13,14 +13,17 @@ const Edit = () => import(/* webpackChunkName: "update" */'@/views/edit/IndexEdi
 
 const router = new Router({
     mode: 'history',
-    routes: [{
+    routes: [
+    {
         path: '/',
         redirect: '/login',
-    },{
+    },
+    {
         name: 'login',
         path: '/login',
         component: Login
-    }, {
+    },
+    {
         name: 'dash',
         path: '/dashboard',
         components: {
@@ -28,7 +31,8 @@ const router = new Router({
             header: Header,
             page: Dashboard,
         }
-    }, {
+    }, 
+    {
         name: 'users',
         path: '/users',
         components: {
@@ -36,7 +40,8 @@ const router = new Router({
             header: Header,
             page: Users,
         }
-    }, {
+    }, 
+    {
         name: 'register',
         path: '/users/register',
         components: {
@@ -44,7 +49,8 @@ const router = new Router({
             header: Header,
             page: Register,
         }
-    }, {
+    }, 
+    {
         name: 'edit',
         path: '/users/edit/:id',
         components: {
@@ -54,5 +60,10 @@ const router = new Router({
         }
     }]
 });
+
+router.beforeEach((to, _from, next) => {
+    if (to.name !== 'login' && !(localStorage.getItem('auth'))) next({ name: 'login' })
+    else next()
+})
 
 export default router

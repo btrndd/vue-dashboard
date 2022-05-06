@@ -68,8 +68,9 @@ export default {
         const result = await UsersService.login(this.formObject);
         if (result.data) {
           await this.updateUsername(result.data.id);
+           window.localStorage.setItem('auth', JSON.stringify(result.data));
           this.goDash();
-          console.log(result);
+          console.log(result.data);
         } else {
           this.$store.commit('updateMessage', result.message);
           this.$store.commit('updateColor', 'red');
