@@ -17,16 +17,20 @@ const ApiService = {
   },
   setHeader() {
     this.init();
-    // const auth = JSON.parse(localStorage.getItem('auth'));
-    const credentials = btoa('admin@mail.com' + ':' + '123456', 'base64');
-    Vue.axios.defaults.headers.common["Authorization"] = `Basic ${credentials}`;
+    const auth = JSON.parse(localStorage.getItem('auth'));
+    const credentials = btoa(auth.email + ':' + auth.password);
+    Vue.axios.defaults.headers.common = { 'Authorization': `Basic ${credentials}` };
   },
   get(resource, slug = '') {
     this.setHeader();
     return Vue.axios.get(`${resource}/${slug}`)
   },
   post(resource, params, config = null) {
-    this.setHeader();
+    if (resource === 'login') {
+      this.init();
+    } else {
+      this.setHeader();
+    }   
     return Vue.axios.post(`${resource}`, params, config)
   },
   put(resource, params, slug, config = null) {
